@@ -1,7 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
 
 html, body, #root {
   height: 100%;
 }
+
+.logo {
+  font-family: 'Fleur De Leah', cursive;
+}
+
