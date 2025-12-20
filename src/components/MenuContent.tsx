@@ -49,12 +49,6 @@ export default function MenuContent() {
                     </button>
                 </div>
             </div>
-
-            {/* Bottom Info */}
-            <div className="mt-auto pb-6">
-                <div className="h-px w-full bg-slate-100 dark:bg-slate-800 mb-6" />
-                <p className="text-[10px] text-slate-400 tracking-widest uppercase text-center">© 2024 PORTFOLIO</p>
-            </div>
         </div>
     );
 }
