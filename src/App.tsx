@@ -147,6 +147,25 @@ function App() {
                                         <ArrowUpRight className="w-6 h-6 text-slate-300 dark:text-slate-700 group-hover:text-slate-900 dark:group-hover:text-slate-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
                                     </article>
                                 </a>
+                                {/* Project Item 5 */}
+                                <a
+                                    className="group block py-6 border-b border-slate-100 dark:border-slate-800 hover:border-slate-900 dark:hover:border-slate-100 transition-colors duration-500"
+                                    href="https://narcissus-tazetta.github.io/music-autoplay-instruction-manual/"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    <article className="flex items-start justify-between gap-4">
+                                        <div className="space-y-2">
+                                            <h3 className="text-2xl font-medium tracking-tight group-hover:translate-x-1 transition-transform duration-300">
+                                                music-autoplay-instruction-manual
+                                            </h3>
+                                            <p className="text-slate-500 dark:text-slate-400 font-light text-sm group-hover:translate-x-1 transition-transform duration-300 delay-75">
+                                                music-autoplayの取扱説明書をまとめたwebページ
+                                            </p>
+                                        </div>
+                                        <ArrowUpRight className="w-6 h-6 text-slate-300 dark:text-slate-700 group-hover:text-slate-900 dark:group-hover:text-slate-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+                                    </article>
+                                </a>
                             </div>
                         </div>
                     </div>
