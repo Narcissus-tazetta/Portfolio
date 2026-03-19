@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowUpRight, Github, Mail, Slack } from "lucide-react";
+import { ArrowUpRight, Github, Mail } from "lucide-react";
 import SidebarDrawer from "./components/SidebarDrawer";
 
 // --- Main App Component ---
@@ -37,24 +37,13 @@ function App() {
                             </a>
                             <a
                                 className="group inline-flex items-center gap-3 text-lg font-medium text-slate-900 dark:text-slate-100 hover:text-slate-600 dark:hover:text-slate-400 transition-colors"
-                                href="https://n-highschool.slack.com/team/U04VDPX7ZHV"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                <Slack className="w-5 h-5 transition-transform group-hover:-translate-y-0.5" />
-                                <span className="underline decoration-1 decoration-slate-200 dark:decoration-slate-700 underline-offset-4 group-hover:decoration-slate-400 dark:group-hover:decoration-slate-500 transition-all">
-                                    https://n-highschool.slack.com/team/U04VDPX7ZHV
-                                </span>
-                            </a>
-                            <a
-                                className="group inline-flex items-center gap-3 text-lg font-medium text-slate-900 dark:text-slate-100 hover:text-slate-600 dark:hover:text-slate-400 transition-colors"
-                                href="mailto:clownfish11621@gmail.com?subject=Hello&body="
+                                href="mailto:ibaragiakira2007@gmail.com?subject=Hello&body="
                                 target="_blank"
                                 rel="noreferrer"
                             >
                                 <Mail className="w-5 h-5 transition-transform group-hover:-translate-y-0.5" />
                                 <span className="underline decoration-1 decoration-slate-200 dark:decoration-slate-700 underline-offset-4 group-hover:decoration-slate-400 dark:group-hover:decoration-slate-500 transition-all">
-                                    clownfish11621@gmail.com
+                                    ibaragiakira2007@gmail.com
                                 </span>
                             </a>
                         </div>
