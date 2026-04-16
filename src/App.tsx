@@ -174,6 +174,44 @@ function App() {
                                         <ArrowUpRight className="w-6 h-6 text-slate-300 dark:text-slate-700 group-hover:text-slate-900 dark:group-hover:text-slate-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
                                     </article>
                                 </a>
+                                {/* Project Item 7 */}
+                                <a
+                                    className="group block py-6 border-b border-slate-100 dark:border-slate-800 hover:border-slate-900 dark:hover:border-slate-100 transition-colors duration-500"
+                                    href="https://github.com/Narcissus-tazetta/YouTube-Notification-Discord-bot"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    <article className="flex items-start justify-between gap-4">
+                                        <div className="space-y-2">
+                                            <h3 className="text-2xl font-medium tracking-tight group-hover:translate-x-1 transition-transform duration-300">
+                                                YouTube-Notification-Discord-bot
+                                            </h3>
+                                            <p className="text-slate-500 dark:text-slate-400 font-light text-sm group-hover:translate-x-1 transition-transform duration-300 delay-75">
+                                                DiscordでYoutubeの通知を送信するBotです
+                                            </p>
+                                        </div>
+                                        <ArrowUpRight className="w-6 h-6 text-slate-300 dark:text-slate-700 group-hover:text-slate-900 dark:group-hover:text-slate-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+                                    </article>
+                                </a>
+                                {/* Project Item 8 */}
+                                <a
+                                    className="group block py-6 border-b border-slate-100 dark:border-slate-800 hover:border-slate-900 dark:hover:border-slate-100 transition-colors duration-500"
+                                    href="https://discord.com/oauth2/authorize?client_id=1487820490822254723&permissions=19923984&integration_type=0&scope=bot+applications.commands"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    <article className="flex items-start justify-between gap-4">
+                                        <div className="space-y-2">
+                                            <h3 className="text-2xl font-medium tracking-tight group-hover:translate-x-1 transition-transform duration-300">
+                                                Discord-VC-Bot
+                                            </h3>
+                                            <p className="text-slate-500 dark:text-slate-400 font-light text-sm group-hover:translate-x-1 transition-transform duration-300 delay-75">
+                                                DiscordのVCチャンネルを追加してくれる便利なbotです。
+                                            </p>
+                                        </div>
+                                        <ArrowUpRight className="w-6 h-6 text-slate-300 dark:text-slate-700 group-hover:text-slate-900 dark:group-hover:text-slate-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+                                    </article>
+                                </a>
                             </div>
                         </div>
                     </div>

@@ -2,7 +2,15 @@
 @variant dark (&:where(.dark, .dark *));
 
 html, body, #root {
-  height: 100%;
+  min-height: 100%;
+}
+
+html, body {
+  background-color: rgb(255 255 255);
+}
+
+html.dark, html.dark body {
+  background-color: rgb(2 6 23);
 }
 
 .logo {
