@@ -116,15 +116,11 @@ export function translate(text: LocalizedText, language: Language): string {
 interface UiState {
     pageVisible: boolean;
     setPageVisible: (visible: boolean) => void;
-    notFoundBikeParked: boolean;
-    parkNotFoundBike: () => void;
 }
 
 export const useUiStore = create<UiState>((set) => ({
     pageVisible: true,
     setPageVisible: (pageVisible) => set({ pageVisible }),
-    notFoundBikeParked: false,
-    parkNotFoundBike: () => set({ notFoundBikeParked: true }),
 }));
 
 const initialPreferences = usePreferencesStore.getState();

@@ -1,4 +1,4 @@
-import { siteUpdates, updatesLabels } from "../content/updates";
+import { commitUrl, siteUpdates, updatesLabels } from "../content/updates";
 import { useLanguage } from "../contexts/LanguageContext";
 
 function formatUpdateDate(date: string, language: "ja" | "en"): string {
@@ -23,7 +23,7 @@ export default function SiteFooter() {
                 <ul className="mt-6 space-y-3">
                     {siteUpdates.map((update) => (
                         <li
-                            key={update.date}
+                            key={update.commit}
                             className="flex flex-col gap-1 text-sm leading-relaxed sm:flex-row sm:items-baseline sm:gap-4"
                         >
                             <time
@@ -32,7 +32,15 @@ export default function SiteFooter() {
                             >
                                 {formatUpdateDate(update.date, language)}
                             </time>
-                            <span className="text-muted">{t(update.message)}</span>
+                            <a
+                                href={commitUrl(update.commit)}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-muted transition-colors hover:text-accent-soft"
+                            >
+                                {t(update.message)}
+                                <span className="sr-only"> — {t(updatesLabels.commitLink)}</span>
+                            </a>
                         </li>
                     ))}
                 </ul>

@@ -10,8 +10,4 @@ export const notFoundPage = {
         en: "The page you are looking for does not exist or may have moved.",
     } satisfies LocalizedText,
     backHome: { ja: "Home へ戻る", en: "Back to Home" } satisfies LocalizedText,
-    bikeAction: {
-        ja: "バイクを線の右端まで走らせる",
-        en: "Ride the bike to the right end of the line",
-    } satisfies LocalizedText,
 } as const;

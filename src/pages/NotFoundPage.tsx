@@ -1,4 +1,5 @@
-import { useUiStore } from "../stores/portfolioStore";
+import { onInitialLoaderHidden } from "../lib/initialLoader";
+import { useEffect, useState } from "react";
 import { Motorbike } from "lucide-react";
 import { Link } from "react-router-dom";
 import { notFoundPage } from "../content/notFound";
@@ -6,8 +7,15 @@ import { useLanguage } from "../contexts/LanguageContext";
 
 export default function NotFoundPage() {
     const { t } = useLanguage();
-    const isParked = useUiStore((state) => state.notFoundBikeParked);
-    const parkNotFoundBike = useUiStore((state) => state.parkNotFoundBike);
+    const [isParked, setIsParked] = useState(false);
+
+    useEffect(() => {
+        return onInitialLoaderHidden(() => {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => setIsParked(true));
+            });
+        });
+    }, []);
 
     return (
         <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-2xl flex-col justify-center px-6 py-16">
@@ -16,17 +24,14 @@ export default function NotFoundPage() {
 
             <div className="mt-10">
                 <div className="relative">
-                    <button
-                        type="button"
-                        onClick={parkNotFoundBike}
-                        disabled={isParked}
-                        aria-label={t(notFoundPage.bikeAction)}
-                        className={`not-found-bike absolute top-0 h-5 w-5 -translate-y-full text-accent-soft enabled:cursor-pointer disabled:cursor-default md:h-6 md:w-6 ${
+                    <div
+                        aria-hidden="true"
+                        className={`not-found-bike absolute top-0 h-5 w-5 -translate-y-full text-accent-soft md:h-6 md:w-6 ${
                             isParked ? "not-found-bike--parked" : ""
                         }`}
                     >
-                        <Motorbike className="h-full w-full" strokeWidth={1.5} aria-hidden="true" />
-                    </button>
+                        <Motorbike className="h-full w-full" strokeWidth={1.5} />
+                    </div>
                     <div className="border-t border-accent/25" aria-hidden="true" />
                 </div>
                 <Link

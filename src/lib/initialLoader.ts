@@ -3,6 +3,30 @@ const SLOW_LOAD_MS = 600;
 
 let currentProgress = 0;
 let slowLoadTimer: number | undefined;
+let initialLoaderHidden = false;
+const initialLoaderHiddenListeners = new Set<() => void>();
+
+export function isInitialLoaderHidden(): boolean {
+    return initialLoaderHidden || document.getElementById("initial-loader") === null;
+}
+
+export function onInitialLoaderHidden(callback: () => void): () => void {
+    if (isInitialLoaderHidden()) {
+        callback();
+        return () => undefined;
+    }
+
+    initialLoaderHiddenListeners.add(callback);
+    return () => initialLoaderHiddenListeners.delete(callback);
+}
+
+function notifyInitialLoaderHidden() {
+    initialLoaderHidden = true;
+    for (const listener of initialLoaderHiddenListeners) {
+        listener();
+    }
+    initialLoaderHiddenListeners.clear();
+}
 
 export function getLoaderDelayMs(): number {
     const value = new URLSearchParams(window.location.search).get("loaderMs");
@@ -84,12 +108,14 @@ export function hideInitialLoader() {
     stopSlowLoadAnimation();
     const loader = document.getElementById("initial-loader");
     if (!loader || loader.classList.contains("initial-loader--hidden")) {
+        notifyInitialLoaderHidden();
         return;
     }
 
     loader.classList.add("initial-loader--hidden");
     loader.setAttribute("aria-busy", "false");
     loader.setAttribute("aria-valuenow", "100");
+    notifyInitialLoaderHidden();
     window.setTimeout(() => loader.remove(), 400);
 }
 
