@@ -35,3 +35,5 @@ public/
 ```
 
 Content edits: update files under `src/content/`. Project images live in `public/works/`.
+
+Loader preview: append `?loaderMs=3000` to the URL (local or GitHub Pages) to hold the splash for 3 seconds.

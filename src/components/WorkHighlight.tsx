@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { projectHasMedia } from "../content/projects";
 import type { Project } from "../content/types";
@@ -12,11 +12,18 @@ export default function WorkHighlight({ project }: { project: Project }) {
     const hasMedia = projectHasMedia(project);
 
     const objectClass = project.thumbnailFit === "cover" ? "object-cover" : "object-contain";
-    const imageSrc = assetUrl(
-        project.animateOnHover && isHovered && project.thumbnailAnimated
-            ? project.thumbnailAnimated
-            : project.thumbnail,
-    );
+    const posterSrc = assetUrl(project.thumbnail);
+    const animatedSrc =
+        project.animateOnHover && project.thumbnailAnimated ? assetUrl(project.thumbnailAnimated) : null;
+
+    useEffect(() => {
+        if (!animatedSrc) {
+            return;
+        }
+
+        const preload = new Image();
+        preload.src = animatedSrc;
+    }, [animatedSrc]);
 
     return (
         <a
@@ -30,16 +37,36 @@ export default function WorkHighlight({ project }: { project: Project }) {
             onBlur={() => setIsHovered(false)}
         >
             <div
-                className="flex items-center justify-center bg-surface"
+                className="relative flex items-center justify-center overflow-hidden bg-surface"
                 style={{ aspectRatio: project.thumbnailAspect ?? "16 / 9" }}
             >
                 {hasMedia ? (
-                    <img
-                        src={imageSrc}
-                        alt=""
-                        className={`h-full w-full ${objectClass} transition-transform duration-500 group-hover:scale-[1.01]`}
-                        loading="lazy"
-                    />
+                    animatedSrc ? (
+                        <>
+                            <img
+                                src={posterSrc}
+                                alt=""
+                                className={`h-full w-full ${objectClass} transition-opacity duration-300 ${
+                                    isHovered ? "opacity-0" : "opacity-100"
+                                }`}
+                                loading="lazy"
+                            />
+                            <img
+                                src={animatedSrc}
+                                alt=""
+                                className={`absolute inset-0 h-full w-full ${objectClass} transition-opacity duration-300 ${
+                                    isHovered ? "opacity-100" : "opacity-0"
+                                }`}
+                            />
+                        </>
+                    ) : (
+                        <img
+                            src={posterSrc}
+                            alt=""
+                            className={`h-full w-full ${objectClass} transition-transform duration-500 group-hover:scale-[1.01]`}
+                            loading="lazy"
+                        />
+                    )
                 ) : (
                     <ProjectCategoryIcon category={project.category} />
                 )}

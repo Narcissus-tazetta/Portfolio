@@ -23,19 +23,19 @@
 @layer base {
   .light {
     color-scheme: light;
-    --page: #f8fafc;
-    --foreground: #0f172a;
-    --muted: #475569;
-    --subtle: #64748b;
+    --page: #c4c4c4;
+    --foreground: #1a1a1a;
+    --muted: #454545;
+    --subtle: #5e5e5e;
     --heading: #0369a1;
-    --border: #0f172a;
-    --border-strong: #0f172a;
-    --surface: #f1f5f9;
-    --surface-muted: #0f172a;
-    --nav: #f8fafc;
+    --border: #1a1a1a;
+    --border-strong: #1a1a1a;
+    --surface: #b5b5b5;
+    --surface-muted: #1a1a1a;
+    --nav: #c4c4c4;
     --accent: #0284c7;
     --accent-soft: #0369a1;
-    --accent-muted: rgb(2 132 199 / 0.1);
+    --accent-muted: rgb(2 132 199 / 0.16);
   }
 
   .dark {
@@ -70,5 +70,9 @@
 @layer utilities {
   .tag-accent {
     @apply rounded-full border border-accent/25 bg-accent-muted px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted transition-colors hover:border-accent/40 hover:text-accent-soft;
+  }
+
+  .initial-loader--hidden {
+    @apply pointer-events-none opacity-0 invisible;
   }
 }
