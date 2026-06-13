@@ -55,6 +55,20 @@
     --accent-muted: rgb(56 189 248 / 0.12);
   }
 
+  .dark.accent-purple {
+    --heading: #d4c0f5;
+    --accent: #8343d2;
+    --accent-soft: #b593ef;
+    --accent-muted: rgb(131 67 210 / 0.12);
+  }
+
+  .light.accent-purple {
+    --heading: #582a9e;
+    --accent: #8343d2;
+    --accent-soft: #6432aa;
+    --accent-muted: rgb(131 67 210 / 0.18);
+  }
+
   html,
   body,
   #root {

@@ -28,6 +28,9 @@
                         : theme;
                 document.documentElement.classList.remove("light", "dark");
                 document.documentElement.classList.add(resolved);
+                if (localStorage.getItem("portfolio-accent-purple") === "1") {
+                    document.documentElement.classList.add("accent-purple");
+                }
             })();
         </script>
         <style>
@@ -58,11 +61,19 @@
                 background: #c4c4c4;
             }
 
+            .initial-loader__content {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+                width: min(22rem, calc(100vw - 3rem));
+            }
+
             .initial-loader__row {
                 display: flex;
                 align-items: center;
                 gap: 1rem;
-                width: min(22rem, calc(100vw - 3rem));
+                width: 100%;
             }
 
             .initial-loader__track {
@@ -102,6 +113,80 @@
             html.light .initial-loader__percent {
                 color: #0369a1;
             }
+
+            .initial-loader__label {
+                margin: 0;
+                font-family: "Orbitron", ui-sans-serif, system-ui, sans-serif;
+                font-size: 0.65rem;
+                letter-spacing: 0.28em;
+                text-align: center;
+                text-transform: uppercase;
+                color: #7dd3fc;
+            }
+
+            html.light .initial-loader__label {
+                color: #0369a1;
+            }
+
+            html.dark.accent-purple .initial-loader__track,
+            html.light.accent-purple .initial-loader__track {
+                background: rgb(131 67 210 / 0.2);
+            }
+
+            html.dark.accent-purple .initial-loader__bar,
+            html.dark.accent-purple .initial-loader__percent,
+            html.dark.accent-purple .initial-loader__label {
+                color: #b593ef;
+            }
+
+            html.dark.accent-purple .initial-loader__bar {
+                background: #8343d2;
+            }
+
+            html.light.accent-purple .initial-loader__bar,
+            html.light.accent-purple .initial-loader__percent,
+            html.light.accent-purple .initial-loader__label {
+                color: #6432aa;
+            }
+
+            html.light.accent-purple .initial-loader__bar {
+                background: #8343d2;
+            }
+
+            .initial-loader__dots {
+                margin-left: 0.65em;
+            }
+
+            .initial-loader__dots span {
+                display: inline-block;
+                opacity: 0.45;
+            }
+
+            #initial-loader.initial-loader--wave .initial-loader__dots span {
+                animation: initial-loader-dot-wave 1.15s ease-in-out infinite;
+            }
+
+            #initial-loader.initial-loader--wave .initial-loader__dots span:nth-child(2) {
+                animation-delay: 0.16s;
+            }
+
+            #initial-loader.initial-loader--wave .initial-loader__dots span:nth-child(3) {
+                animation-delay: 0.32s;
+            }
+
+            @keyframes initial-loader-dot-wave {
+                0%,
+                55%,
+                100% {
+                    transform: translateY(0);
+                    opacity: 0.35;
+                }
+
+                28% {
+                    transform: translateY(-0.45em);
+                    opacity: 1;
+                }
+            }
         </style>
     </head>
     <body>
@@ -115,11 +200,16 @@
             aria-valuemax="100"
             aria-valuenow="0"
         >
-            <div class="initial-loader__row">
-                <div class="initial-loader__track">
-                    <div id="initial-loader-bar" class="initial-loader__bar"></div>
+            <div class="initial-loader__content">
+                <div class="initial-loader__row">
+                    <div class="initial-loader__track">
+                        <div id="initial-loader-bar" class="initial-loader__bar"></div>
+                    </div>
+                    <span id="initial-loader-percent" class="initial-loader__percent">0%</span>
                 </div>
-                <span id="initial-loader-percent" class="initial-loader__percent">0%</span>
+                <p class="initial-loader__label">
+                    Loading<span class="initial-loader__dots" aria-hidden="true"><span>.</span><span>.</span><span>.</span></span>
+                </p>
             </div>
         </div>
         <div id="root"></div>

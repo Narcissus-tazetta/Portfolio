@@ -5,6 +5,7 @@ import { navigation } from "../content/navigation";
 import { profile, social } from "../content/profile";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useTheme } from "../contexts/ThemeContext";
+import { useLogoAccentToggle } from "../hooks/useLogoAccentToggle";
 
 function navLinkClassName({ isActive }: { isActive: boolean }) {
     return [
@@ -17,11 +18,16 @@ export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const { language, setLanguage, t } = useLanguage();
     const { resolvedTheme, setTheme } = useTheme();
+    const { handleLogoClick } = useLogoAccentToggle();
 
     return (
         <header className="fixed inset-x-0 top-0 z-50 border-b border-accent/25 bg-nav/80 backdrop-blur-md">
             <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-                <NavLink to="/" className="font-brand text-2xl leading-none text-foreground">
+                <NavLink
+                    to="/"
+                    onClick={handleLogoClick}
+                    className="font-brand text-2xl leading-none text-foreground select-none"
+                >
                     {profile.displayName}
                 </NavLink>
 

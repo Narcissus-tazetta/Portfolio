@@ -1,6 +1,8 @@
 const MAX_LOADER_DELAY_MS = 30_000;
+const SLOW_LOAD_MS = 600;
 
 let currentProgress = 0;
+let slowLoadTimer: number | undefined;
 
 export function getLoaderDelayMs(): number {
     const value = new URLSearchParams(window.location.search).get("loaderMs");
@@ -65,7 +67,21 @@ function waitForPaint() {
     });
 }
 
+function startSlowLoadAnimation() {
+    slowLoadTimer = window.setTimeout(() => {
+        document.getElementById("initial-loader")?.classList.add("initial-loader--wave");
+    }, SLOW_LOAD_MS);
+}
+
+function stopSlowLoadAnimation() {
+    if (slowLoadTimer !== undefined) {
+        window.clearTimeout(slowLoadTimer);
+        slowLoadTimer = undefined;
+    }
+}
+
 export function hideInitialLoader() {
+    stopSlowLoadAnimation();
     const loader = document.getElementById("initial-loader");
     if (!loader || loader.classList.contains("initial-loader--hidden")) {
         return;
@@ -76,6 +92,7 @@ export function hideInitialLoader() {
 }
 
 export async function bootstrapApp(render: () => void) {
+    startSlowLoadAnimation();
     setLoaderProgress(5);
 
     const delay = getLoaderDelayMs();
