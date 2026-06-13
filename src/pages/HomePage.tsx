@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { homeHighlights } from "../content/projects";
 import { profile, sectionLabels, social } from "../content/profile";
 import WorkHighlight from "../components/WorkHighlight";
+import { assetUrl } from "../lib/assetUrl";
 import { useLanguage } from "../contexts/LanguageContext";
 
 export default function HomePage() {
@@ -13,7 +14,7 @@ export default function HomePage() {
             <section className="max-w-2xl border-b border-accent/25 pb-16">
                 <div className="flex items-start gap-5">
                     <img
-                        src={profile.avatar}
+                        src={assetUrl(profile.avatar)}
                         alt=""
                         className="h-16 w-16 shrink-0 rounded-2xl border border-border/15 object-cover"
                     />

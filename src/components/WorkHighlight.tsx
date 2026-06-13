@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { projectHasMedia } from "../content/projects";
 import type { Project } from "../content/types";
+import { assetUrl } from "../lib/assetUrl";
 import { useLanguage } from "../contexts/LanguageContext";
 import ProjectCategoryIcon from "./ProjectCategoryIcon";
 
@@ -11,10 +12,11 @@ export default function WorkHighlight({ project }: { project: Project }) {
     const hasMedia = projectHasMedia(project);
 
     const objectClass = project.thumbnailFit === "cover" ? "object-cover" : "object-contain";
-    const imageSrc =
+    const imageSrc = assetUrl(
         project.animateOnHover && isHovered && project.thumbnailAnimated
             ? project.thumbnailAnimated
-            : project.thumbnail;
+            : project.thumbnail,
+    );
 
     return (
         <a

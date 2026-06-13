@@ -4,6 +4,7 @@ import AboutBuildItemRow from "../components/AboutBuildItemRow";
 import TechStackTag from "../components/TechStackTag";
 import { aboutPage } from "../content/about";
 import { profile, social } from "../content/profile";
+import { assetUrl } from "../lib/assetUrl";
 import { useLanguage } from "../contexts/LanguageContext";
 
 export default function AboutPage() {
@@ -21,7 +22,7 @@ export default function AboutPage() {
                     </div>
 
                     <img
-                        src={profile.avatar}
+                        src={assetUrl(profile.avatar)}
                         alt=""
                         className="h-24 w-24 shrink-0 rounded-2xl border border-border/15 object-cover md:h-28 md:w-28"
                     />
