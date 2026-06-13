@@ -1,4 +1,5 @@
-import { Github, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
+import GithubIcon from "../components/icons/GithubIcon";
 import { contactPage } from "../content/contact";
 import { social } from "../content/profile";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -23,7 +24,7 @@ export default function ContactPage() {
                     className="group flex items-start gap-4 rounded-xl border border-border/15 p-6 transition-colors hover:border-accent/40"
                 >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border/15 bg-surface-muted/5">
-                        <Github className="h-5 w-5 text-accent-soft" />
+                        <GithubIcon className="h-5 w-5 text-accent-soft" />
                     </div>
                     <div className="min-w-0 flex-1">
                         <p className="font-sans text-sm text-foreground">GitHub</p>

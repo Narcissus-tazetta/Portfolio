@@ -2,10 +2,8 @@ import { createRoot } from "react-dom/client";
 import { StrictMode } from "react";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
-import { AccentProvider } from "./contexts/AccentContext";
-import { LanguageProvider } from "./contexts/LanguageContext";
-import { ThemeProvider } from "./contexts/ThemeContext";
 import { bootstrapApp } from "./lib/initialLoader";
+import { AppProviders } from "./providers/AppProviders";
 import "./index.css";
 
 if (typeof document !== "undefined") {
@@ -13,17 +11,18 @@ if (typeof document !== "undefined") {
 }
 
 void bootstrapApp(() => {
-    createRoot(document.getElementById("root")!).render(
+    const root = document.getElementById("root");
+    if (!root) {
+        throw new Error("Root element #root was not found");
+    }
+
+    createRoot(root).render(
         <StrictMode>
-            <ThemeProvider>
-                <AccentProvider>
-                    <LanguageProvider>
-                        <BrowserRouter basename={import.meta.env.BASE_URL}>
-                            <App />
-                        </BrowserRouter>
-                    </LanguageProvider>
-                </AccentProvider>
-            </ThemeProvider>
+            <BrowserRouter basename={import.meta.env.BASE_URL}>
+                <AppProviders>
+                    <App />
+                </AppProviders>
+            </BrowserRouter>
         </StrictMode>,
     );
 });

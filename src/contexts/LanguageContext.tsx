@@ -1,30 +1,19 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import { useCallback, type ReactNode } from "react";
 import type { LocalizedText } from "../content/types";
-
-type Language = "ja" | "en";
-
-interface LanguageContextType {
-    language: Language;
-    setLanguage: (language: Language) => void;
-    t: (text: LocalizedText) => string;
-}
-
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+import { translate, usePreferencesStore, type Language } from "../stores/portfolioStore";
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-    const [language, setLanguage] = useState<Language>("ja");
-
-    const t = (text: LocalizedText) => text[language];
-
-    return (
-        <LanguageContext.Provider value={{ language, setLanguage, t }}>{children}</LanguageContext.Provider>
-    );
+    return children;
 }
 
 export function useLanguage() {
-    const context = useContext(LanguageContext);
-    if (context === undefined) {
-        throw new Error("useLanguage must be used within a LanguageProvider");
-    }
-    return context;
+    const language = usePreferencesStore((state) => state.language);
+    const setLanguage = usePreferencesStore((state) => state.setLanguage);
+    const t = useCallback((text: LocalizedText) => translate(text, language), [language]);
+
+    return { language, setLanguage, t } satisfies {
+        language: Language;
+        setLanguage: (language: Language) => void;
+        t: (text: LocalizedText) => string;
+    };
 }

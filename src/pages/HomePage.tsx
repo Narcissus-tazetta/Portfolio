@@ -1,4 +1,5 @@
-import { Github, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
+import GithubIcon from "../components/icons/GithubIcon";
 import { Link } from "react-router-dom";
 import { homeHighlights } from "../content/projects";
 import { profile, sectionLabels, social } from "../content/profile";
@@ -15,7 +16,7 @@ export default function HomePage() {
                 <div className="flex items-start gap-5">
                     <img
                         src={assetUrl(profile.avatar)}
-                        alt=""
+                        alt={profile.displayName}
                         className="h-16 w-16 shrink-0 rounded-2xl border border-border/15 object-cover"
                     />
 
@@ -48,7 +49,7 @@ export default function HomePage() {
                         rel="noreferrer"
                         className="font-sans inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted transition-colors hover:text-foreground"
                     >
-                        <Github className="h-4 w-4" />
+                        <GithubIcon className="h-4 w-4" />
                         GitHub
                     </a>
                     <a

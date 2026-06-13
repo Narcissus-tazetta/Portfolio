@@ -88,6 +88,8 @@ export function hideInitialLoader() {
     }
 
     loader.classList.add("initial-loader--hidden");
+    loader.setAttribute("aria-busy", "false");
+    loader.setAttribute("aria-valuenow", "100");
     window.setTimeout(() => loader.remove(), 400);
 }
 

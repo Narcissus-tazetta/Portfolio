@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Github, Menu, Moon, Sun, X } from "lucide-react";
+import { Menu, Moon, Sun, X } from "lucide-react";
+import GithubIcon from "./icons/GithubIcon";
 import { NavLink } from "react-router-dom";
 import { navigation } from "../content/navigation";
 import { profile, social } from "../content/profile";
@@ -47,7 +48,7 @@ export default function Navbar() {
                         aria-label="GitHub"
                         className="text-muted transition-colors hover:text-foreground"
                     >
-                        <Github className="h-4 w-4" />
+                        <GithubIcon className="h-4 w-4" />
                     </a>
 
                     <button

@@ -1,4 +1,5 @@
-import { Github, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
+import GithubIcon from "../components/icons/GithubIcon";
 import { Link } from "react-router-dom";
 import AboutBuildItemRow from "../components/AboutBuildItemRow";
 import TechStackTag from "../components/TechStackTag";
@@ -23,7 +24,7 @@ export default function AboutPage() {
 
                     <img
                         src={assetUrl(profile.avatar)}
-                        alt=""
+                        alt={profile.displayName}
                         className="h-24 w-24 shrink-0 rounded-2xl border border-border/15 object-cover md:h-28 md:w-28"
                     />
                 </div>
@@ -87,7 +88,7 @@ export default function AboutPage() {
                     rel="noreferrer"
                     className="font-sans inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted transition-colors hover:text-foreground"
                 >
-                    <Github className="h-4 w-4" />
+                    <GithubIcon className="h-4 w-4" />
                     GitHub
                 </a>
                 <a

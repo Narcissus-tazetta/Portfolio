@@ -1,5 +1,8 @@
 import { useRef } from "react";
-import { LOGO_CLICK_RESET_MS, LOGO_CLICKS_REQUIRED, useAccent } from "../contexts/AccentContext";
+import { useAccent } from "../contexts/AccentContext";
+
+export const LOGO_CLICKS_REQUIRED = 3;
+export const LOGO_CLICK_RESET_MS = 1200;
 
 export function useLogoAccentToggle() {
     const { togglePurple } = useAccent();

@@ -89,4 +89,45 @@
   .initial-loader--hidden {
     @apply pointer-events-none opacity-0 invisible;
   }
+
+  .page-transition {
+    @apply transition-opacity duration-100 ease-out;
+  }
+
+  .page-transition--hidden {
+    @apply opacity-0;
+  }
+
+  .page-transition--visible {
+    @apply opacity-100;
+  }
+
+  .not-found-bike {
+    left: 0;
+    transition: left 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .not-found-bike--parked {
+    left: calc(100% - 1.25rem);
+  }
+
+  @media (min-width: 768px) {
+    .not-found-bike--parked {
+      left: calc(100% - 1.5rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .page-transition {
+      transition: none;
+    }
+
+    .not-found-bike {
+      transition: none;
+    }
+
+    .not-found-bike--parked {
+      left: calc(100% - 1.25rem);
+    }
+  }
 }

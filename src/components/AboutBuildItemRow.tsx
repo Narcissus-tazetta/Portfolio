@@ -22,7 +22,7 @@ export default function AboutBuildItemRow({ item }: { item: AboutBuildItem }) {
         <li className="flex items-start gap-4 border-b border-accent/15 pb-4 last:border-0">
             {useAppIcon ? (
                 <div className={iconBoxClassName}>
-                    <img src={assetUrl(item.appIcon!)} alt="" className="h-full w-full object-cover" />
+                    <img src={assetUrl(item.appIcon!)} alt={t(item.label)} className="h-full w-full object-cover" />
                 </div>
             ) : (
                 <div className={iconBoxClassName}>
