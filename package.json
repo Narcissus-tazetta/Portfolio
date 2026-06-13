@@ -1,5 +1,5 @@
 {
-    "name": "page",
+    "name": "portfolio",
     "version": "0.0.0",
     "private": true,
     "scripts": {
@@ -13,16 +13,11 @@
         "prepare": "husky install"
     },
     "dependencies": {
-        "@radix-ui/react-dialog": "^1.1.15",
         "@types/node": "^25.3.4",
-        "class-variance-authority": "^0.7.1",
-        "clsx": "^2.1.1",
         "lucide-react": "^0.577.0",
         "react": "^19.2.4",
         "react-dom": "^19.2.4",
-        "react-router-dom": "^7.13.1",
-        "tailwind-merge": "^3.5.0",
-        "zod": "^4.3.6"
+        "react-router-dom": "^7.13.1"
     },
     "devDependencies": {
         "@tailwindcss/postcss": "^4.2.1",
