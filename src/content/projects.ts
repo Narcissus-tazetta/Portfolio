@@ -156,6 +156,6 @@ export const personalProjects = projects
     });
 export const commissionedProjects = projects.filter((project) => project.kind === "commissioned");
 
-export const homeHighlights = ["live-wallpaper", "classroom-enhancer"]
+export const homeHighlights = ["live-wallpaper", "music-autoplay"]
     .map((id) => projects.find((project) => project.id === id))
     .filter((project): project is Project => project !== undefined);
