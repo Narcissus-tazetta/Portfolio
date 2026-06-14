@@ -34,13 +34,6 @@ export default function HomePage() {
                     {t(profile.catchphrase)}
                 </blockquote>
                 <p className="mt-3 text-sm leading-relaxed text-muted md:text-base">{t(profile.bio)}</p>
-                <ul className="mt-6 flex flex-wrap gap-2">
-                    {profile.focus.map((item) => (
-                        <li key={item.en} className="font-sans tag-accent">
-                            {t(item)}
-                        </li>
-                    ))}
-                </ul>
 
                 <div className="mt-8 flex flex-wrap gap-4">
                     <a

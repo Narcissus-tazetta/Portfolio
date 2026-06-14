@@ -5,32 +5,33 @@ export const projects: Project[] = [
         id: "music-autoplay",
         title: "music-autoplay",
         description: {
-            ja: "キャンパス向けの YouTube 楽曲リクエスト＋自動再生システム",
-            en: "Campus YouTube music request and auto-play system.",
+            ja: "Web + サーバー + Chrome 拡張で動く、YouTube 楽曲リクエスト＋自動再生システム",
+            en: "Full-stack YouTube music request and auto-play — web app, server, and Chrome extension.",
         },
         context: {
             ja: "キャンパスのキャンパス長が作って欲しいと言っていたので作った。自分でもあった方がいいとも思った。",
             en: "The campus leader asked me to build it, and I thought it would be useful for me too.",
         },
-        href: "https://github.com/Narcissus-tazetta/music-autoplay",
-        detailLayout: "github-only",
+        href: "https://music-auto-play.onrender.com",
+        detailLayout: "github-demo",
         links: {
             github: "https://github.com/Narcissus-tazetta/music-autoplay",
+            demo: "https://music-auto-play.onrender.com",
         },
-        tags: ["Web", "Extension", "Real-time"],
+        tags: ["Full-stack", "Web", "Extension", "Real-time"],
         impact: {
-            ja: "リクエストから再生までを自動化",
-            en: "Automates request-to-playback",
+            ja: "Web・サーバー・拡張機能でリクエストから再生までを自動化",
+            en: "Automates request-to-playback across web, server, and extension",
         },
-        techStack: ["TypeScript", "React", "Tailwind CSS", "Vite", "Browser Extensions", "Express", "Socket.IO"],
+        techStack: ["TypeScript", "Bun", "Express", "Socket.IO", "React", "Tailwind CSS", "Browser Extensions"],
         features: [
+            {
+                ja: "Express + Socket.IO のサーバーでキュー管理とリアルタイム同期",
+                en: "Express + Socket.IO server for queue management and real-time sync",
+            },
             {
                 ja: "Web から YouTube URL を送信し、共有キューに追加",
                 en: "Submit YouTube URLs from the web to a shared queue",
-            },
-            {
-                ja: "Socket.IO で Web・拡張機能・複数クライアントをリアルタイム同期",
-                en: "Real-time sync across web UI, extension, and multiple clients via Socket.IO",
             },
             {
                 ja: "Chrome 拡張が動画終了後に次の曲を自動再生",
@@ -39,6 +40,10 @@ export const projects: Project[] = [
             {
                 ja: "再生履歴の検索・期間絞り込み、管理者によるキュー管理",
                 en: "Playback history with filters and admin queue controls",
+            },
+            {
+                ja: "Render 上で本番運用",
+                en: "Production deployment on Render",
             },
         ],
         thumbnail: "/works/music-autoplay.png",

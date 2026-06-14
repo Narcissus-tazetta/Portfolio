@@ -33,11 +33,6 @@ export const profile = {
         ja: "Developer",
         en: "Developer",
     } satisfies LocalizedText,
-    focus: [
-        { ja: "Web App", en: "Web App" },
-        { ja: "Extension", en: "Extension" },
-        { ja: "Discord Bot", en: "Discord Bot" },
-    ],
 } as const;
 
 export const social = {
