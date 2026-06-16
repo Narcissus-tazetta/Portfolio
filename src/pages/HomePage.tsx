@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { homeHighlights } from "../content/projects";
 import { profile, sectionLabels, social } from "../content/profile";
 import WorkHighlight from "../components/WorkHighlight";
+import ScrollReveal from "../components/ScrollReveal";
 import { assetUrl } from "../lib/assetUrl";
 import { useLanguage } from "../contexts/LanguageContext";
 
@@ -61,7 +62,7 @@ export default function HomePage() {
                 </div>
             </section>
 
-            <section className="mt-16">
+            <ScrollReveal as="section" variant="subtle" className="scroll-reveal-stagger-grid mt-16">
                 <div className="mb-6 flex items-end justify-between gap-4 border-b border-accent/25 pb-4">
                     <h2 className="font-sans text-xs font-medium uppercase tracking-[0.35em] text-muted">
                         {t(sectionLabels.highlights)}
@@ -74,12 +75,12 @@ export default function HomePage() {
                     </Link>
                 </div>
 
-                <div className="grid gap-6 md:grid-cols-2">
+                <div className="scroll-reveal-grid grid gap-6 md:grid-cols-2">
                     {homeHighlights.map((project) => (
                         <WorkHighlight key={project.id} project={project} />
                     ))}
                 </div>
-            </section>
+            </ScrollReveal>
         </div>
     );
 }

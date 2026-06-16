@@ -19,7 +19,7 @@ export default function AboutBuildItemRow({ item }: { item: AboutBuildItem }) {
     const useAppIcon = item.id === "desktop" && item.appIcon;
 
     return (
-        <li className="flex items-start gap-4 border-b border-accent/15 pb-4 last:border-0">
+        <div className="flex items-start gap-4">
             {useAppIcon ? (
                 <div className={iconBoxClassName}>
                     <img src={assetUrl(item.appIcon!)} alt={t(item.label)} className="h-full w-full object-cover" />
@@ -34,6 +34,6 @@ export default function AboutBuildItemRow({ item }: { item: AboutBuildItem }) {
                 <p className="font-sans text-sm text-foreground">{t(item.label)}</p>
                 <p className="mt-1 text-sm leading-relaxed text-muted">{t(item.description)}</p>
             </div>
-        </li>
+        </div>
     );
 }

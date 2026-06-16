@@ -2,11 +2,17 @@ import { Mail } from "lucide-react";
 import GithubIcon from "../components/icons/GithubIcon";
 import { Link } from "react-router-dom";
 import AboutBuildItemRow from "../components/AboutBuildItemRow";
+import ScrollReveal from "../components/ScrollReveal";
 import TechStackTag from "../components/TechStackTag";
 import { aboutPage } from "../content/about";
 import { profile, social } from "../content/profile";
 import { assetUrl } from "../lib/assetUrl";
 import { useLanguage } from "../contexts/LanguageContext";
+
+function sectionClassName(index: number, hasItems: boolean) {
+    const classes = [index > 0 ? "border-t border-accent/25 pt-10 mt-10" : "", hasItems ? "scroll-reveal-stagger-list" : ""];
+    return classes.filter(Boolean).join(" ") || undefined;
+}
 
 export default function AboutPage() {
     const { t } = useLanguage();
@@ -44,9 +50,11 @@ export default function AboutPage() {
 
             <div className="mt-12">
                 {aboutPage.sections.map((section, index) => (
-                    <section
+                    <ScrollReveal
                         key={section.title.en}
-                        className={index > 0 ? "border-t border-accent/25 pt-10 mt-10" : undefined}
+                        as="section"
+                        variant="subtle"
+                        className={sectionClassName(index, Boolean(section.items))}
                     >
                         <h2 className="font-sans text-sm uppercase tracking-[0.35em] text-heading/75">
                             {t(section.title)}
@@ -65,7 +73,9 @@ export default function AboutPage() {
                         {section.items ? (
                             <ul className="mt-4 space-y-4">
                                 {section.items.map((item) => (
-                                    <AboutBuildItemRow key={item.id} item={item} />
+                                    <li key={item.id} className="border-b border-accent/15 pb-4 last:border-0">
+                                        <AboutBuildItemRow item={item} />
+                                    </li>
                                 ))}
                             </ul>
                         ) : null}
@@ -77,7 +87,7 @@ export default function AboutPage() {
                                 ))}
                             </ul>
                         ) : null}
-                    </section>
+                    </ScrollReveal>
                 ))}
             </div>
 

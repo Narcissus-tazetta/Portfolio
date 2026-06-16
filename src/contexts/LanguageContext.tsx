@@ -1,10 +1,6 @@
-import { useCallback, type ReactNode } from "react";
+import { useCallback } from "react";
 import type { LocalizedText } from "../content/types";
 import { translate, usePreferencesStore, type Language } from "../stores/portfolioStore";
-
-export function LanguageProvider({ children }: { children: ReactNode }) {
-    return children;
-}
 
 export function useLanguage() {
     const language = usePreferencesStore((state) => state.language);

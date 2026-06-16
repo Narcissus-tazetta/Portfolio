@@ -123,10 +123,11 @@ export const useUiStore = create<UiState>((set) => ({
     setPageVisible: (pageVisible) => set({ pageVisible }),
 }));
 
-const initialPreferences = usePreferencesStore.getState();
-applyLanguage(initialPreferences.language);
-applyAccentPurple(initialPreferences.accentPurple);
-applyTheme(resolveTheme(initialPreferences.theme));
+export function syncPreferencesToDOM() {
+    const state = usePreferencesStore.getState();
+    applyLanguage(state.language);
+    applyAccentPurple(state.accentPurple);
+}
 
 export function syncResolvedTheme(theme: Theme, systemTheme: ResolvedTheme) {
     applyTheme(resolveTheme(theme, systemTheme));

@@ -9,7 +9,7 @@ import ProjectDetailPage from "./pages/ProjectDetailPage";
 import WorksPage from "./pages/WorksPage";
 import { useUiStore } from "./stores/portfolioStore";
 
-const PAGE_FADE_MS = 100;
+const PAGE_FADE_MS = 180;
 
 function App() {
     const location = useLocation();

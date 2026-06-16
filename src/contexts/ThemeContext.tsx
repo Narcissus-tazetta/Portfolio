@@ -1,4 +1,4 @@
-import { useSyncExternalStore, type ReactNode } from "react";
+import { useSyncExternalStore } from "react";
 import {
     getSystemTheme,
     resolveTheme,
@@ -11,10 +11,6 @@ function subscribeSystemTheme(onStoreChange: () => void) {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     mediaQuery.addEventListener("change", onStoreChange);
     return () => mediaQuery.removeEventListener("change", onStoreChange);
-}
-
-export function ThemeProvider({ children }: { children: ReactNode }) {
-    return children;
 }
 
 export function useTheme() {
