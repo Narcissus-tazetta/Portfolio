@@ -4,10 +4,16 @@ import { Motorbike } from "lucide-react";
 import { Link } from "react-router-dom";
 import { notFoundPage } from "../content/notFound";
 import { useLanguage } from "../contexts/LanguageContext";
+import { useDocumentMeta } from "../hooks/useDocumentMeta";
 
 export default function NotFoundPage() {
     const { t } = useLanguage();
     const [isParked, setIsParked] = useState(false);
+
+    useDocumentMeta({
+        title: notFoundPage.title,
+        description: notFoundPage.description,
+    });
 
     useEffect(() => {
         return onInitialLoaderHidden(() => {
@@ -36,7 +42,7 @@ export default function NotFoundPage() {
                 </div>
                 <Link
                     to="/"
-                    className="font-sans mt-10 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted transition-colors hover:text-accent-soft"
+                    className="font-sans mt-10 inline-flex items-center gap-2 text-xs uppercase tracking-[0.06em] text-muted transition-colors hover:text-accent-soft"
                 >
                     {t(notFoundPage.backHome)} →
                 </Link>

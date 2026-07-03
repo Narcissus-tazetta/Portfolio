@@ -2,7 +2,7 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme inline {
-  --font-sans: "Orbitron", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "JetBrains Mono", ui-monospace, monospace;
   --font-brand: "Ephesis", cursive;
   --font-body: "Kiwi Maru", serif;
   --color-accent: var(--accent);
@@ -23,16 +23,16 @@
 @layer base {
   .light {
     color-scheme: light;
-    --page: #f0f0f0;
+    --page: #f8fafc;
     --foreground: #1a1a1a;
     --muted: #454545;
     --subtle: #5e5e5e;
     --heading: #0369a1;
     --border: #1a1a1a;
     --border-strong: #1a1a1a;
-    --surface: #e8e8e8;
+    --surface: #ffffff;
     --surface-muted: #1a1a1a;
-    --nav: #f0f0f0;
+    --nav: #f8fafc;
     --accent: #0284c7;
     --accent-soft: #0369a1;
     --accent-muted: rgb(2 132 199 / 0.16);
@@ -84,16 +84,39 @@
 @layer utilities {
   :root {
     --motion-page-fade: 180ms;
+    --motion-language-fade: 560ms;
     --motion-page-ease: cubic-bezier(0.4, 0, 0.2, 1);
     --motion-reveal-in: 560ms;
     --motion-reveal-out: 320ms;
     --motion-reveal-ease-in: cubic-bezier(0.16, 1, 0.3, 1);
     --motion-reveal-ease-out: cubic-bezier(0.4, 0, 1, 1);
     --motion-stagger-step: 80ms;
+    --motion-theme-icon: 280ms;
+    --motion-theme-icon-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --motion-theme-wipe: 880ms;
+    --motion-theme-wipe-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .theme-toggle-icon__glyph {
+    transform-origin: center;
+    transition:
+      opacity var(--motion-theme-icon) var(--motion-theme-icon-ease),
+      transform var(--motion-theme-icon) var(--motion-theme-icon-ease);
+  }
+
+  .theme-toggle-icon__glyph--visible {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
+  .theme-toggle-icon__glyph--hidden {
+    opacity: 0;
+    transform: rotate(-72deg) scale(0.72);
+    pointer-events: none;
   }
 
   .tag-accent {
-    @apply rounded-full border border-accent/25 bg-accent-muted px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted transition-colors hover:border-accent/40 hover:text-accent-soft;
+    @apply rounded-full border border-accent/25 bg-accent-muted px-3 py-1 text-[10px] uppercase tracking-[0.06em] text-muted transition-colors hover:border-accent/40 hover:text-accent-soft;
   }
 
   .initial-loader--hidden {
@@ -110,6 +133,10 @@
 
   .page-transition--visible {
     @apply opacity-100;
+  }
+
+  .page-transition--slow {
+    transition-duration: var(--motion-language-fade);
   }
 
   .scroll-reveal {
@@ -243,5 +270,75 @@
     .not-found-bike--parked {
       left: calc(100% - 1.25rem);
     }
+
+    .theme-toggle-icon__glyph {
+      transition: none;
+    }
+
+    .theme-toggle-icon__glyph--visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .theme-toggle-icon__glyph--hidden {
+      opacity: 0;
+      transform: none;
+    }
+  }
+}
+
+html.theme-wipe-transition::view-transition-old(root),
+html.theme-wipe-transition::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+.theme-toggle {
+  view-transition-name: theme-toggle;
+}
+
+html.theme-wipe-transition::view-transition-group(theme-toggle) {
+  z-index: 100;
+}
+
+html.theme-wipe-transition::view-transition-old(theme-toggle) {
+  display: none;
+}
+
+html.theme-wipe-transition::view-transition-new(theme-toggle) {
+  animation: none;
+}
+
+html.theme-wipe-transition::view-transition-old(root) {
+  z-index: 1;
+}
+
+html.theme-wipe-transition--to-light::view-transition-new(root) {
+  z-index: 2;
+  animation: theme-wipe-down var(--motion-theme-wipe) var(--motion-theme-wipe-ease) both;
+}
+
+html.theme-wipe-transition--to-dark::view-transition-new(root) {
+  z-index: 2;
+  animation: theme-wipe-up var(--motion-theme-wipe) var(--motion-theme-wipe-ease) both;
+}
+
+@keyframes theme-wipe-down {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes theme-wipe-up {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
   }
 }

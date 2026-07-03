@@ -1,11 +1,12 @@
 import { useEffect, useLayoutEffect, useSyncExternalStore } from "react";
-import { getSystemTheme, syncPreferencesToDOM, syncResolvedTheme, usePreferencesStore } from "../stores/portfolioStore";
-
-function subscribeSystemTheme(onStoreChange: () => void) {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    mediaQuery.addEventListener("change", onStoreChange);
-    return () => mediaQuery.removeEventListener("change", onStoreChange);
-}
+import {
+    consumeThemeApplyOptions,
+    getSystemTheme,
+    syncPreferencesToDOM,
+    syncResolvedTheme,
+    usePreferencesStore,
+} from "../stores/portfolioStore";
+import { subscribeSystemTheme } from "../lib/subscribeSystemTheme";
 
 export default function PreferencesSync() {
     const theme = usePreferencesStore((state) => state.theme);
@@ -16,7 +17,7 @@ export default function PreferencesSync() {
     }, []);
 
     useEffect(() => {
-        syncResolvedTheme(theme, systemTheme);
+        syncResolvedTheme(theme, systemTheme, consumeThemeApplyOptions());
     }, [theme, systemTheme]);
 
     return null;

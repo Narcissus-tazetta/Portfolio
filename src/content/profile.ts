@@ -16,7 +16,7 @@ export const site = {
 export const profile = {
     displayName: "Prason",
     handle: "Narcissus-tazetta",
-    avatar: "/avatar.png",
+    avatar: "/icon.jpeg",
     hero: {
         ja: "Prasonの\nポートフォリオ",
         en: "Prason's\nPortfolio",
@@ -26,8 +26,8 @@ export const profile = {
         en: "I build web apps, browser extensions, Discord bots, and more.",
     } satisfies LocalizedText,
     catchphrase: {
-        ja: "プログラミング的な思考が楽しいです。",
-        en: "I enjoy thinking like a programmer.",
+        ja: "プログラミング的な思考が好き。",
+        en: "I enjoy programming-oriented thinking.",
     } satisfies LocalizedText,
     tagline: {
         ja: "Developer",

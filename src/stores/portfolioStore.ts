@@ -1,54 +1,86 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { LocalizedText } from "../content/types";
+import { applyLanguageWithTransition } from "../lib/languageTransition";
+import { applyThemeToDom } from "../lib/themeTransition";
 
 export type Language = "ja" | "en";
 export type Theme = "light" | "dark" | "system";
 export type ResolvedTheme = "light" | "dark";
 
-const LANGUAGE_KEY = "portfolio-language";
-const THEME_KEY = "portfolio-theme";
-const ACCENT_KEY = "portfolio-accent-purple";
+const PERSIST_KEY = "portfolio-preferences";
+const LEGACY_LANGUAGE_KEY = "portfolio-language";
+const LEGACY_THEME_KEY = "portfolio-theme";
+const LEGACY_ACCENT_KEY = "portfolio-accent-purple";
 
-function isLanguage(value: string | null): value is Language {
+type ThemeApplyOptions = {
+    animate?: boolean;
+};
+
+type LanguageApplyOptions = {
+    animate?: boolean;
+};
+
+let pendingThemeApplyOptions: ThemeApplyOptions | undefined;
+
+function isLanguage(value: unknown): value is Language {
     return value === "ja" || value === "en";
 }
 
-function isTheme(value: string | null): value is Theme {
+function isTheme(value: unknown): value is Theme {
     return value === "light" || value === "dark" || value === "system";
 }
 
-function readLegacyLanguage(): Language {
-    const stored = localStorage.getItem(LANGUAGE_KEY);
-    return isLanguage(stored) ? stored : "ja";
+function readPersistedState(): { language: Language; theme: Theme; accentPurple: boolean } | null {
+    try {
+        const raw = localStorage.getItem(PERSIST_KEY);
+        if (!raw) {
+            return null;
+        }
+
+        const parsed = JSON.parse(raw) as { state?: { language?: unknown; theme?: unknown; accentPurple?: unknown } };
+        const state = parsed.state;
+        if (!state) {
+            return null;
+        }
+
+        return {
+            language: isLanguage(state.language) ? state.language : "ja",
+            theme: isTheme(state.theme) ? state.theme : "system",
+            accentPurple: Boolean(state.accentPurple),
+        };
+    } catch {
+        return null;
+    }
 }
 
-function readLegacyTheme(): Theme {
-    const stored = localStorage.getItem(THEME_KEY);
-    return isTheme(stored) ? stored : "system";
+function readLegacyState(): { language: Language; theme: Theme; accentPurple: boolean } {
+    const language = localStorage.getItem(LEGACY_LANGUAGE_KEY);
+    const theme = localStorage.getItem(LEGACY_THEME_KEY);
+
+    return {
+        language: isLanguage(language) ? language : "ja",
+        theme: isTheme(theme) ? theme : "system",
+        accentPurple: localStorage.getItem(LEGACY_ACCENT_KEY) === "1",
+    };
 }
 
-function readLegacyAccentPurple(): boolean {
-    return localStorage.getItem(ACCENT_KEY) === "1";
+function readInitialPreferences() {
+    return readPersistedState() ?? readLegacyState();
+}
+
+function clearLegacyPreferenceKeys() {
+    localStorage.removeItem(LEGACY_LANGUAGE_KEY);
+    localStorage.removeItem(LEGACY_THEME_KEY);
+    localStorage.removeItem(LEGACY_ACCENT_KEY);
 }
 
 function applyLanguage(language: Language) {
     document.documentElement.lang = language;
-    localStorage.setItem(LANGUAGE_KEY, language);
-}
-
-function applyTheme(resolvedTheme: ResolvedTheme) {
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(resolvedTheme);
 }
 
 function applyAccentPurple(accentPurple: boolean) {
     document.documentElement.classList.toggle("accent-purple", accentPurple);
-    if (accentPurple) {
-        localStorage.setItem(ACCENT_KEY, "1");
-    } else {
-        localStorage.removeItem(ACCENT_KEY);
-    }
 }
 
 export function getSystemTheme(): ResolvedTheme {
@@ -59,27 +91,48 @@ export function resolveTheme(theme: Theme, systemTheme: ResolvedTheme = getSyste
     return theme === "system" ? systemTheme : theme;
 }
 
+export function consumeThemeApplyOptions(): ThemeApplyOptions | undefined {
+    const options = pendingThemeApplyOptions;
+    pendingThemeApplyOptions = undefined;
+    return options;
+}
+
 interface PreferencesState {
     language: Language;
     theme: Theme;
     accentPurple: boolean;
-    setLanguage: (language: Language) => void;
-    setTheme: (theme: Theme) => void;
+    setLanguage: (language: Language, options?: LanguageApplyOptions) => void;
+    setTheme: (theme: Theme, options?: ThemeApplyOptions) => void;
     toggleAccentPurple: () => void;
 }
+
+const initialPreferences = readInitialPreferences();
 
 export const usePreferencesStore = create<PreferencesState>()(
     persist(
         (set) => ({
-            language: readLegacyLanguage(),
-            theme: readLegacyTheme(),
-            accentPurple: readLegacyAccentPurple(),
-            setLanguage: (language) => {
+            language: initialPreferences.language,
+            theme: initialPreferences.theme,
+            accentPurple: initialPreferences.accentPurple,
+            setLanguage: (language, options) => {
+                const currentLanguage = usePreferencesStore.getState().language;
+                if (language === currentLanguage) {
+                    return;
+                }
+
+                if (options?.animate) {
+                    void applyLanguageWithTransition(language, (nextLanguage) => {
+                        applyLanguage(nextLanguage);
+                        set({ language: nextLanguage });
+                    });
+                    return;
+                }
+
                 applyLanguage(language);
                 set({ language });
             },
-            setTheme: (theme) => {
-                localStorage.setItem(THEME_KEY, theme);
+            setTheme: (theme, options) => {
+                pendingThemeApplyOptions = options;
                 set({ theme });
             },
             toggleAccentPurple: () =>
@@ -90,20 +143,22 @@ export const usePreferencesStore = create<PreferencesState>()(
                 }),
         }),
         {
-            name: "portfolio-preferences",
+            name: PERSIST_KEY,
             partialize: (state) => ({
                 language: state.language,
                 theme: state.theme,
                 accentPurple: state.accentPurple,
             }),
             onRehydrateStorage: () => (state) => {
+                clearLegacyPreferenceKeys();
+
                 if (!state) {
                     return;
                 }
 
                 applyLanguage(state.language);
                 applyAccentPurple(state.accentPurple);
-                applyTheme(resolveTheme(state.theme));
+                applyThemeToDom(resolveTheme(state.theme));
             },
         },
     ),
@@ -115,12 +170,16 @@ export function translate(text: LocalizedText, language: Language): string {
 
 interface UiState {
     pageVisible: boolean;
+    slowPageFade: boolean;
     setPageVisible: (visible: boolean) => void;
+    setSlowPageFade: (slow: boolean) => void;
 }
 
 export const useUiStore = create<UiState>((set) => ({
     pageVisible: true,
+    slowPageFade: false,
     setPageVisible: (pageVisible) => set({ pageVisible }),
+    setSlowPageFade: (slowPageFade) => set({ slowPageFade }),
 }));
 
 export function syncPreferencesToDOM() {
@@ -129,6 +188,6 @@ export function syncPreferencesToDOM() {
     applyAccentPurple(state.accentPurple);
 }
 
-export function syncResolvedTheme(theme: Theme, systemTheme: ResolvedTheme) {
-    applyTheme(resolveTheme(theme, systemTheme));
+export function syncResolvedTheme(theme: Theme, systemTheme: ResolvedTheme, options?: ThemeApplyOptions) {
+    applyThemeToDom(resolveTheme(theme, systemTheme), options?.animate ?? false);
 }

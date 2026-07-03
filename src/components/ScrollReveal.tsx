@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type ReactNode } from "react";
+import { getReducedMotionPreference, subscribeReducedMotion } from "../lib/subscribeSystemTheme";
 import { observeScrollReveal } from "../lib/scrollRevealObserver";
 
 const DEFAULT_STAGGER_MS = 70;
@@ -14,16 +15,6 @@ type ScrollRevealProps = {
     variant?: "default" | "subtle";
     as?: ScrollRevealElement;
 };
-
-function subscribeReducedMotion(onStoreChange: () => void) {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    mediaQuery.addEventListener("change", onStoreChange);
-    return () => mediaQuery.removeEventListener("change", onStoreChange);
-}
-
-function getReducedMotionPreference() {
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
 
 export default function ScrollReveal({
     children,
@@ -63,8 +54,6 @@ export default function ScrollReveal({
     return (
         <Tag
             ref={ref as never}
-            inert={visible ? undefined : true}
-            aria-hidden={visible ? undefined : true}
             className={`scroll-reveal ${variant === "subtle" ? "scroll-reveal--subtle" : ""} ${
                 visible ? "scroll-reveal--visible" : ""
             } ${className}`.trim()}

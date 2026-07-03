@@ -17,7 +17,7 @@ export default function ProjectLinkCard({
         <a
             href={href}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="group flex items-start gap-4 rounded-xl border border-border/15 p-6 transition-colors hover:border-accent/40"
         >
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border/15 bg-surface-muted/5">

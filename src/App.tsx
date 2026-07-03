@@ -15,6 +15,7 @@ function App() {
     const location = useLocation();
     const [displayLocation, setDisplayLocation] = useState(location);
     const pageVisible = useUiStore((state) => state.pageVisible);
+    const slowPageFade = useUiStore((state) => state.slowPageFade);
     const setPageVisible = useUiStore((state) => state.setPageVisible);
 
     useEffect(() => {
@@ -34,7 +35,15 @@ function App() {
     }, [location, displayLocation.key, setPageVisible]);
 
     return (
-        <div className={`page-transition ${pageVisible ? "page-transition--visible" : "page-transition--hidden"}`}>
+        <div
+            className={[
+                "page-transition",
+                pageVisible ? "page-transition--visible" : "page-transition--hidden",
+                slowPageFade ? "page-transition--slow" : "",
+            ]
+                .filter(Boolean)
+                .join(" ")}
+        >
             <Routes location={displayLocation}>
                 <Route element={<Layout />}>
                     <Route path="/" element={<HomePage />} />

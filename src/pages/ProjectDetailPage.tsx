@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ArrowUpRight, Globe, Package } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import GithubIcon from "../components/icons/GithubIcon";
 import ProjectLinkCard from "../components/ProjectLinkCard";
+import ProjectMedia from "../components/ProjectMedia";
 import TechStackTag from "../components/TechStackTag";
 import { projectDetailLabels } from "../content/projectDetail";
-import { getProjectById, projectHasMedia } from "../content/projects";
+import { getProjectById } from "../content/projects";
+import { site } from "../content/profile";
+import { uiLabels } from "../content/ui";
 import { useLanguage } from "../contexts/LanguageContext";
-import { assetUrl } from "../lib/assetUrl";
+import { useDocumentMeta } from "../hooks/useDocumentMeta";
 import { projectImageAlt } from "../lib/projectImageAlt";
-import ProjectCategoryIcon from "../components/ProjectCategoryIcon";
 
 export default function ProjectDetailPage() {
     const { projectId } = useParams();
@@ -17,62 +19,41 @@ export default function ProjectDetailPage() {
     const project = projectId ? getProjectById(projectId) : undefined;
     const [isHovered, setIsHovered] = useState(false);
 
-    useEffect(() => {
-        if (project) {
-            document.title = `${project.title} — Prason`;
-        }
-
-        return () => {
-            document.title = "Prasonのポートフォリオ";
-        };
-    }, [project]);
+    useDocumentMeta(
+        project
+            ? {
+                  title: {
+                      ja: `${project.title} — ${uiLabels.titleSuffix.ja}`,
+                      en: `${project.title} — ${uiLabels.titleSuffix.en}`,
+                  },
+                  description: project.description,
+                  path: `works/${project.id}`,
+                  image: project.thumbnail,
+              }
+            : {
+                  title: site.title,
+              },
+    );
 
     if (!project || project.detailLayout === "external" || !project.links) {
         return <Navigate to="/works" replace />;
     }
 
-    const hasMedia = projectHasMedia(project);
-    const objectClass = project.thumbnailFit === "cover" ? "object-cover" : "object-contain";
-    const posterSrc = assetUrl(project.thumbnail);
-    const animatedSrc =
-        project.animateOnHover && project.thumbnailAnimated ? assetUrl(project.thumbnailAnimated) : null;
     const imageAlt = projectImageAlt(project, t(project.description));
 
     return (
         <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-2xl flex-col px-6 py-16">
             <div
-                className="relative mb-8 overflow-hidden rounded-xl border border-border/15 bg-surface"
-                style={{ aspectRatio: project.thumbnailAspect ?? "16 / 9" }}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
-                {hasMedia ? (
-                    animatedSrc ? (
-                        <>
-                            <img
-                                src={posterSrc}
-                                alt={imageAlt}
-                                className={`h-full w-full ${objectClass} transition-opacity duration-300 ${
-                                    isHovered ? "opacity-0" : "opacity-100"
-                                }`}
-                            />
-                            <img
-                                src={animatedSrc}
-                                alt=""
-                                aria-hidden="true"
-                                className={`absolute inset-0 h-full w-full ${objectClass} transition-opacity duration-300 ${
-                                    isHovered ? "opacity-100" : "opacity-0"
-                                }`}
-                            />
-                        </>
-                    ) : (
-                        <img src={posterSrc} alt={imageAlt} className={`h-full w-full ${objectClass}`} />
-                    )
-                ) : (
-                    <div className="flex h-full items-center justify-center">
-                        <ProjectCategoryIcon category={project.category} />
-                    </div>
-                )}
+                <ProjectMedia
+                    project={project}
+                    imageAlt={imageAlt}
+                    loading="eager"
+                    active={isHovered}
+                    className="mb-8 rounded-xl border border-border/15"
+                />
             </div>
 
             <header className="border-b border-accent/25 pb-8">
@@ -85,7 +66,7 @@ export default function ProjectDetailPage() {
 
             {project.techStack?.length ? (
                 <section className="mt-8">
-                    <h2 className="font-sans text-xs uppercase tracking-[0.2em] text-muted">
+                    <h2 className="font-sans text-xs uppercase tracking-[0.06em] text-muted">
                         {t(projectDetailLabels.tech)}
                     </h2>
                     <ul className="mt-4 flex flex-wrap gap-2">
@@ -98,7 +79,7 @@ export default function ProjectDetailPage() {
 
             {project.features?.length ? (
                 <section className="mt-8">
-                    <h2 className="font-sans text-xs uppercase tracking-[0.2em] text-muted">
+                    <h2 className="font-sans text-xs uppercase tracking-[0.06em] text-muted">
                         {t(projectDetailLabels.features)}
                     </h2>
                     <ul className="mt-4 space-y-2">
@@ -147,7 +128,7 @@ export default function ProjectDetailPage() {
             <div className="mt-auto border-t border-accent/25 pt-10">
                 <Link
                     to="/works"
-                    className="font-sans inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted transition-colors hover:text-accent-soft"
+                    className="font-sans inline-flex items-center gap-2 text-xs uppercase tracking-[0.06em] text-muted transition-colors hover:text-accent-soft"
                 >
                     {t(projectDetailLabels.backToWorks)}
                     <ArrowUpRight className="h-4 w-4" />

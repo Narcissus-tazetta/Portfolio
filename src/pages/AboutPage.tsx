@@ -1,13 +1,15 @@
 import { Mail } from "lucide-react";
 import GithubIcon from "../components/icons/GithubIcon";
+import ProfileAvatar from "../components/ProfileAvatar";
 import { Link } from "react-router-dom";
 import AboutBuildItemRow from "../components/AboutBuildItemRow";
 import ScrollReveal from "../components/ScrollReveal";
 import TechStackTag from "../components/TechStackTag";
 import { aboutPage } from "../content/about";
 import { profile, social } from "../content/profile";
-import { assetUrl } from "../lib/assetUrl";
+import { uiLabels } from "../content/ui";
 import { useLanguage } from "../contexts/LanguageContext";
+import { useDocumentMeta } from "../hooks/useDocumentMeta";
 
 function sectionClassName(index: number, hasItems: boolean) {
     const classes = [index > 0 ? "border-t border-accent/25 pt-10 mt-10" : "", hasItems ? "scroll-reveal-stagger-list" : ""];
@@ -17,6 +19,12 @@ function sectionClassName(index: number, hasItems: boolean) {
 export default function AboutPage() {
     const { t } = useLanguage();
 
+    useDocumentMeta({
+        title: aboutPage.title,
+        description: aboutPage.tagline,
+        path: "about",
+    });
+
     return (
         <div className="mx-auto max-w-2xl px-6 py-16">
             <header className="border-b border-accent/25 pb-10">
@@ -25,14 +33,10 @@ export default function AboutPage() {
                         <h1 className="font-brand text-5xl leading-none text-foreground md:text-6xl">
                             {profile.displayName}
                         </h1>
-                        <p className="font-sans mt-4 text-sm tracking-[0.15em] text-muted">{t(aboutPage.roleLine)}</p>
+                        <p className="font-sans mt-4 text-sm tracking-[0.05em] text-muted">{t(aboutPage.roleLine)}</p>
                     </div>
 
-                    <img
-                        src={assetUrl(profile.avatar)}
-                        alt={profile.displayName}
-                        className="h-24 w-24 shrink-0 rounded-2xl border border-border/15 object-cover md:h-28 md:w-28"
-                    />
+                    <ProfileAvatar className="h-24 w-24 shrink-0 rounded-2xl border border-border/15 object-cover md:h-28 md:w-28" />
                 </div>
 
                 <p className="mt-3 text-sm leading-relaxed text-muted md:text-base">{t(aboutPage.tagline)}</p>
@@ -42,7 +46,7 @@ export default function AboutPage() {
                         to="/contact"
                         className="text-foreground underline decoration-foreground/40 underline-offset-4 transition-colors hover:decoration-foreground"
                     >
-                        Contact
+                        {t(uiLabels.contact)}
                     </Link>
                     {t(aboutPage.contactAfter) ? ` ${t(aboutPage.contactAfter)}` : null}
                 </p>
@@ -56,7 +60,7 @@ export default function AboutPage() {
                         variant="subtle"
                         className={sectionClassName(index, Boolean(section.items))}
                     >
-                        <h2 className="font-sans text-sm uppercase tracking-[0.35em] text-heading/75">
+                        <h2 className="font-sans text-sm uppercase tracking-[0.1em] text-heading/75">
                             {t(section.title)}
                         </h2>
 
@@ -95,18 +99,18 @@ export default function AboutPage() {
                 <a
                     href={social.github.url}
                     target="_blank"
-                    rel="noreferrer"
-                    className="font-sans inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted transition-colors hover:text-foreground"
+                    rel="noopener noreferrer"
+                    className="font-sans inline-flex items-center gap-2 text-xs uppercase tracking-[0.06em] text-muted transition-colors hover:text-foreground"
                 >
                     <GithubIcon className="h-4 w-4" />
-                    GitHub
+                    {t(uiLabels.github)}
                 </a>
                 <a
                     href={social.email.url}
-                    className="font-sans inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted transition-colors hover:text-foreground"
+                    className="font-sans inline-flex items-center gap-2 text-xs uppercase tracking-[0.06em] text-muted transition-colors hover:text-foreground"
                 >
                     <Mail className="h-4 w-4" />
-                    Email
+                    {t(uiLabels.email)}
                 </a>
             </div>
         </div>

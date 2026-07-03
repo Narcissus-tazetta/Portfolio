@@ -1,25 +1,49 @@
-import { useState } from "react";
-import { Menu, Moon, Sun, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Menu, X } from "lucide-react";
 import GithubIcon from "./icons/GithubIcon";
+import ThemeToggle from "./ThemeToggle";
 import { NavLink } from "react-router-dom";
 import { navigation } from "../content/navigation";
 import { profile, social } from "../content/profile";
+import { uiLabels } from "../content/ui";
 import { useLanguage } from "../contexts/LanguageContext";
-import { useTheme } from "../contexts/ThemeContext";
 import { useLogoAccentToggle } from "../hooks/useLogoAccentToggle";
 
 function navLinkClassName({ isActive }: { isActive: boolean }) {
     return [
-        "font-sans text-xs uppercase tracking-[0.2em] transition-colors",
+        "font-sans text-xs uppercase tracking-[0.06em] transition-colors",
         isActive ? "text-accent-soft" : "text-muted hover:text-accent-soft",
     ].join(" ");
 }
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
     const { language, setLanguage, t } = useLanguage();
-    const { resolvedTheme, setTheme } = useTheme();
     const { handleLogoClick } = useLogoAccentToggle();
+
+    useEffect(() => {
+        if (!menuOpen) {
+            return;
+        }
+
+        const previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setMenuOpen(false);
+            }
+        };
+
+        document.addEventListener("keydown", onKeyDown);
+        menuRef.current?.querySelector<HTMLElement>("a,button")?.focus();
+
+        return () => {
+            document.body.style.overflow = previousOverflow;
+            document.removeEventListener("keydown", onKeyDown);
+        };
+    }, [menuOpen]);
 
     return (
         <header className="fixed inset-x-0 top-0 z-50 border-b border-accent/25 bg-nav/80 backdrop-blur-md">
@@ -32,7 +56,7 @@ export default function Navbar() {
                     {profile.displayName}
                 </NavLink>
 
-                <nav className="hidden items-center gap-6 md:flex">
+                <nav className="hidden items-center gap-6 md:flex" aria-label="Main">
                     {navigation.map((item) => (
                         <NavLink key={item.path} to={item.path} className={navLinkClassName}>
                             {t(item.label)}
@@ -44,26 +68,21 @@ export default function Navbar() {
                     <a
                         href={social.github.url}
                         target="_blank"
-                        rel="noreferrer"
-                        aria-label="GitHub"
+                        rel="noopener noreferrer"
+                        aria-label={t(uiLabels.github)}
                         className="text-muted transition-colors hover:text-foreground"
                     >
                         <GithubIcon className="h-4 w-4" />
                     </a>
 
-                    <button
-                        type="button"
-                        aria-label={resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-                        onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-                        className="text-muted transition-colors hover:text-foreground"
-                    >
-                        {resolvedTheme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-                    </button>
+                    <ThemeToggle />
 
-                    <div className="flex items-center rounded-full border border-accent/25 p-0.5 text-xs">
+                    <div className="flex items-center rounded-full border border-accent/25 p-0.5 text-xs" role="group" aria-label="Language">
                         <button
                             type="button"
-                            onClick={() => setLanguage("ja")}
+                            onClick={() => setLanguage("ja", { animate: true })}
+                            aria-pressed={language === "ja"}
+                            aria-label={t(uiLabels.languageJa)}
                             className={`rounded-full px-2 py-1 transition-colors ${
                                 language === "ja"
                                     ? "bg-accent-muted text-accent-soft"
@@ -74,7 +93,9 @@ export default function Navbar() {
                         </button>
                         <button
                             type="button"
-                            onClick={() => setLanguage("en")}
+                            onClick={() => setLanguage("en", { animate: true })}
+                            aria-pressed={language === "en"}
+                            aria-label={t(uiLabels.languageEn)}
                             className={`rounded-full px-2 py-1 transition-colors ${
                                 language === "en"
                                     ? "bg-accent-muted text-accent-soft"
@@ -87,7 +108,9 @@ export default function Navbar() {
 
                     <button
                         type="button"
-                        aria-label={menuOpen ? "Close menu" : "Open menu"}
+                        aria-expanded={menuOpen}
+                        aria-controls="mobile-nav"
+                        aria-label={menuOpen ? t(uiLabels.closeMenu) : t(uiLabels.openMenu)}
                         onClick={() => setMenuOpen((open) => !open)}
                         className="text-muted transition-colors hover:text-foreground md:hidden"
                     >
@@ -97,7 +120,12 @@ export default function Navbar() {
             </div>
 
             {menuOpen ? (
-                <nav className="border-t border-accent/25 px-6 py-4 md:hidden">
+                <nav
+                    id="mobile-nav"
+                    ref={menuRef}
+                    className="border-t border-accent/25 px-6 py-4 md:hidden"
+                    aria-label="Main"
+                >
                     <div className="flex flex-col gap-4">
                         {navigation.map((item) => (
                             <NavLink

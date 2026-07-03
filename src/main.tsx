@@ -6,10 +6,6 @@ import { bootstrapApp } from "./lib/initialLoader";
 import { AppProviders } from "./providers/AppProviders";
 import "./index.css";
 
-if (typeof document !== "undefined") {
-    document.title = "Prasonのポートフォリオ";
-}
-
 void bootstrapApp(() => {
     const root = document.getElementById("root");
     if (!root) {

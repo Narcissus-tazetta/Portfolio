@@ -6,12 +6,11 @@ import {
     type ResolvedTheme,
     type Theme,
 } from "../stores/portfolioStore";
+import { subscribeSystemTheme } from "../lib/subscribeSystemTheme";
 
-function subscribeSystemTheme(onStoreChange: () => void) {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    mediaQuery.addEventListener("change", onStoreChange);
-    return () => mediaQuery.removeEventListener("change", onStoreChange);
-}
+type ThemeApplyOptions = {
+    animate?: boolean;
+};
 
 export function useTheme() {
     const theme = usePreferencesStore((state) => state.theme);
@@ -19,10 +18,14 @@ export function useTheme() {
     const systemTheme = useSyncExternalStore(subscribeSystemTheme, getSystemTheme, () => "dark" as const);
     const resolvedTheme: ResolvedTheme = resolveTheme(theme, systemTheme);
 
-    return { theme, resolvedTheme, setTheme } satisfies {
+    return {
+        theme,
+        resolvedTheme,
+        setTheme: (nextTheme: Theme, options?: ThemeApplyOptions) => setTheme(nextTheme, options),
+    } satisfies {
         theme: Theme;
         resolvedTheme: ResolvedTheme;
-        setTheme: (theme: Theme) => void;
+        setTheme: (theme: Theme, options?: ThemeApplyOptions) => void;
     };
 }
 

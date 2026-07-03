@@ -17,7 +17,7 @@ export default function SiteFooter() {
     return (
         <footer className="border-t border-accent/25">
             <div className="mx-auto max-w-6xl px-6 py-12">
-                <h2 className="font-sans text-xs uppercase tracking-[0.35em] text-muted">
+                <h2 className="font-sans text-xs uppercase tracking-[0.1em] text-muted">
                     {t(updatesLabels.title)}
                 </h2>
                 <ul className="mt-6 space-y-3">
@@ -28,14 +28,14 @@ export default function SiteFooter() {
                         >
                             <time
                                 dateTime={update.date}
-                                className="font-sans shrink-0 text-xs uppercase tracking-[0.15em] text-subtle"
+                                className="font-sans shrink-0 text-xs uppercase tracking-[0.05em] text-subtle"
                             >
                                 {formatUpdateDate(update.date, language)}
                             </time>
                             <a
                                 href={commitUrl(update.commit)}
                                 target="_blank"
-                                rel="noreferrer"
+                                rel="noopener noreferrer"
                                 className="text-muted transition-colors hover:text-accent-soft"
                             >
                                 {t(update.message)}

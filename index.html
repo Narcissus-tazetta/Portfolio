@@ -33,24 +33,47 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Ephesis&family=Kiwi+Maru&family=Orbitron:wght@400..900&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Ephesis&family=JetBrains+Mono:wght@400;500;600&family=Kiwi+Maru&display=swap"
         />
         <link rel="icon" href="%BASE_URL%icons.svg" type="image/svg+xml" />
         <script>
             (function () {
-                var storageKey = "portfolio-theme";
-                var stored = localStorage.getItem(storageKey);
-                var theme = stored === "light" || stored === "dark" || stored === "system" ? stored : "system";
-                var resolved =
-                    theme === "system"
-                        ? window.matchMedia("(prefers-color-scheme: dark)").matches
-                            ? "dark"
-                            : "light"
-                        : theme;
-                document.documentElement.classList.remove("light", "dark");
-                document.documentElement.classList.add(resolved);
-                if (localStorage.getItem("portfolio-accent-purple") === "1") {
-                    document.documentElement.classList.add("accent-purple");
+                try {
+                    var persisted = localStorage.getItem("portfolio-preferences");
+                    var state = persisted ? JSON.parse(persisted).state : null;
+                    var theme =
+                        state && (state.theme === "light" || state.theme === "dark" || state.theme === "system")
+                            ? state.theme
+                            : null;
+                    if (!theme) {
+                        var legacyTheme = localStorage.getItem("portfolio-theme");
+                        theme =
+                            legacyTheme === "light" || legacyTheme === "dark" || legacyTheme === "system"
+                                ? legacyTheme
+                                : "system";
+                    }
+                    var resolved =
+                        theme === "system"
+                            ? window.matchMedia("(prefers-color-scheme: dark)").matches
+                                ? "dark"
+                                : "light"
+                            : theme;
+                    document.documentElement.classList.remove("light", "dark");
+                    document.documentElement.classList.add(resolved);
+                    var language = state && state.language === "en" ? "en" : "ja";
+                    if (!state) {
+                        var legacyLanguage = localStorage.getItem("portfolio-language");
+                        if (legacyLanguage === "en" || legacyLanguage === "ja") {
+                            language = legacyLanguage;
+                        }
+                    }
+                    document.documentElement.lang = language;
+                    var accentPurple = state ? Boolean(state.accentPurple) : localStorage.getItem("portfolio-accent-purple") === "1";
+                    if (accentPurple) {
+                        document.documentElement.classList.add("accent-purple");
+                    }
+                } catch (error) {
+                    document.documentElement.classList.add("dark");
                 }
             })();
         </script>
@@ -79,7 +102,7 @@
             }
 
             html.light #initial-loader {
-                background: #f0f0f0;
+                background: #f8fafc;
             }
 
             .initial-loader__content {
@@ -124,7 +147,7 @@
 
             .initial-loader__percent {
                 min-width: 3.25rem;
-                font-family: "Orbitron", ui-sans-serif, system-ui, sans-serif;
+                font-family: "JetBrains Mono", ui-monospace, monospace;
                 font-size: 0.75rem;
                 letter-spacing: 0.15em;
                 text-align: right;
@@ -137,7 +160,7 @@
 
             .initial-loader__label {
                 margin: 0;
-                font-family: "Orbitron", ui-sans-serif, system-ui, sans-serif;
+                font-family: "JetBrains Mono", ui-monospace, monospace;
                 font-size: 0.65rem;
                 letter-spacing: 0.28em;
                 text-align: center;
@@ -206,6 +229,20 @@
                 28% {
                     transform: translateY(-0.45em);
                     opacity: 1;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                #initial-loader {
+                    transition: none;
+                }
+
+                .initial-loader__bar {
+                    transition: none;
+                }
+
+                #initial-loader.initial-loader--wave .initial-loader__dots span {
+                    animation: none;
                 }
             }
         </style>

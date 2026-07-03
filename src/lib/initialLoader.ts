@@ -6,6 +6,10 @@ let slowLoadTimer: number | undefined;
 let initialLoaderHidden = false;
 const initialLoaderHiddenListeners = new Set<() => void>();
 
+function prefersReducedMotion() {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 export function isInitialLoaderHidden(): boolean {
     return initialLoaderHidden || document.getElementById("initial-loader") === null;
 }
@@ -63,6 +67,11 @@ export function setLoaderProgress(percent: number) {
 }
 
 function animateProgress(from: number, to: number, durationMs: number) {
+    if (prefersReducedMotion()) {
+        setLoaderProgress(to);
+        return Promise.resolve();
+    }
+
     const start = performance.now();
 
     return new Promise<void>((resolve) => {
@@ -92,6 +101,10 @@ function waitForPaint() {
 }
 
 function startSlowLoadAnimation() {
+    if (prefersReducedMotion()) {
+        return;
+    }
+
     slowLoadTimer = window.setTimeout(() => {
         document.getElementById("initial-loader")?.classList.add("initial-loader--wave");
     }, SLOW_LOAD_MS);
@@ -116,10 +129,19 @@ export function hideInitialLoader() {
     loader.setAttribute("aria-busy", "false");
     loader.setAttribute("aria-valuenow", "100");
     notifyInitialLoaderHidden();
-    window.setTimeout(() => loader.remove(), 400);
+
+    const removeDelay = prefersReducedMotion() ? 0 : 400;
+    window.setTimeout(() => loader.remove(), removeDelay);
 }
 
 export async function bootstrapApp(render: () => void) {
+    if (prefersReducedMotion()) {
+        setLoaderProgress(100);
+        render();
+        hideInitialLoader();
+        return;
+    }
+
     startSlowLoadAnimation();
     setLoaderProgress(5);
 

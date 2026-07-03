@@ -9,7 +9,7 @@ export function useLanguage() {
 
     return { language, setLanguage, t } satisfies {
         language: Language;
-        setLanguage: (language: Language) => void;
+        setLanguage: (language: Language, options?: { animate?: boolean }) => void;
         t: (text: LocalizedText) => string;
     };
 }

@@ -24,7 +24,7 @@ export default function WorksSection({
 
     return (
         <ScrollReveal as="section" variant="subtle" className={sectionClassName(showBorder)}>
-            <h2 className="font-sans text-base uppercase tracking-[0.35em] text-heading/75 md:text-lg">
+            <h2 className="font-sans text-base uppercase tracking-[0.1em] text-heading/75 md:text-lg">
                 {t(title)}
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-muted md:text-base">{t(intro)}</p>
