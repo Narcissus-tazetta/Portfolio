@@ -208,6 +208,52 @@ export const projects: Project[] = [
         category: "app",
     },
     {
+        id: "ceyrad",
+        title: "Ceyrad",
+        description: {
+            ja: "Apple Music で再生中の曲を Discord のステータス（Rich Presence）に表示する macOS メニューバーアプリ",
+            en: "A macOS menu bar app that shows your Apple Music track as Discord Rich Presence.",
+        },
+        context: {
+            ja: "同じようなことをする既存のアプリがなぜかエネルギー使用率が高かったので、軽量な代替として自作した。",
+            en: "Other apps that did the same thing used surprisingly high energy for some reason, so I built a lighter alternative.",
+        },
+        href: "https://github.com/Narcissus-tazetta/Ceyrad",
+        detailLayout: "github-release",
+        links: {
+            github: "https://github.com/Narcissus-tazetta/Ceyrad",
+            release: "https://github.com/Narcissus-tazetta/Ceyrad/releases",
+        },
+        tags: ["Desktop", "macOS", "Discord"],
+        impact: {
+            ja: "ポーリングなしのイベント駆動設計で、低負荷なままステータスを同期",
+            en: "Event-driven design keeps status in sync without polling or heavy energy use",
+        },
+        techStack: ["Swift", "AppKit", "AppleScript", "Discord RPC", "Sparkle"],
+        features: [
+            {
+                ja: "曲名・アーティスト・アルバムアートと再生進捗バーを表示",
+                en: "Shows title, artist, album art, and a playback progress bar",
+            },
+            {
+                ja: "最大2つのボタンを設置（曲 / アーティスト / アルバムページ、カスタム URL、リポジトリ）",
+                en: "Up to 2 configurable buttons (song / artist / album page, custom URL, repository)",
+            },
+            {
+                ja: "Apple Music が起動していないときは何もしない、ポーリングなしの完全イベント駆動",
+                en: "Does nothing when Apple Music isn't running — fully event-driven, no polling",
+            },
+            {
+                ja: "Sparkle によるアプリ内自動アップデート",
+                en: "In-app auto-updates via Sparkle",
+            },
+        ],
+        thumbnail: "/works/ceyrad.png",
+        thumbnailAspect: "870 / 328",
+        kind: "personal",
+        category: "app",
+    },
+    {
         id: "youtube-discord-bot",
         title: "YouTube-Notification-Discord-bot",
         description: {
