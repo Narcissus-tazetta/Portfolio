@@ -249,7 +249,7 @@ export const projects: Project[] = [
             },
         ],
         thumbnail: "/works/ceyrad.png",
-        thumbnailAspect: "870 / 328",
+        thumbnailAspect: "800 / 523",
         kind: "personal",
         category: "app",
     },
@@ -307,12 +307,16 @@ export function projectHasMedia(project: Project): boolean {
     return project.thumbnail.startsWith("/works/");
 }
 
+const personalProjectOrder = ["live-wallpaper", "ceyrad"];
 export const personalProjects = projects
     .filter((project) => project.kind === "personal")
     .sort((a, b) => {
-        if (a.id === "live-wallpaper") return -1;
-        if (b.id === "live-wallpaper") return 1;
-        return 0;
+        const aIndex = personalProjectOrder.indexOf(a.id);
+        const bIndex = personalProjectOrder.indexOf(b.id);
+        if (aIndex === -1 && bIndex === -1) return 0;
+        if (aIndex === -1) return 1;
+        if (bIndex === -1) return -1;
+        return aIndex - bIndex;
     });
 export const commissionedProjects = projects.filter((project) => project.kind === "commissioned");
 

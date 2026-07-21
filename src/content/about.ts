@@ -4,7 +4,6 @@ export type AboutBuildItem = {
     id: "web" | "extension" | "bot" | "desktop";
     label: LocalizedText;
     description: LocalizedText;
-    appIcon?: string;
 };
 
 export type AboutSection = {
@@ -90,7 +89,6 @@ export const aboutPage = {
                         ja: "LiveWallPaper など、macOS 向けのアプリ",
                         en: "macOS apps such as LiveWallPaper",
                     },
-                    appIcon: "/livewallpaper-icon.png",
                 },
             ],
         },
