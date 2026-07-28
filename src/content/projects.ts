@@ -211,8 +211,8 @@ export const projects: Project[] = [
         id: "ceyrad",
         title: "Ceyrad",
         description: {
-            ja: "Apple Music で再生中の曲を Discord のステータス（Rich Presence）に表示する macOS メニューバーアプリ",
-            en: "A macOS menu bar app that shows your Apple Music track as Discord Rich Presence.",
+            ja: "Apple Music で再生中の曲を Discord のステータス（Rich Presence）に表示する macOS / Windows 対応デスクトップアプリ",
+            en: "A desktop app for macOS and Windows that shows your Apple Music track as Discord Rich Presence.",
         },
         context: {
             ja: "同じようなことをする既存のアプリがなぜかエネルギー使用率が高かったので、軽量な代替として自作した。",
@@ -224,13 +224,17 @@ export const projects: Project[] = [
             github: "https://github.com/Narcissus-tazetta/Ceyrad",
             release: "https://github.com/Narcissus-tazetta/Ceyrad/releases",
         },
-        tags: ["Desktop", "macOS", "Discord"],
+        tags: ["Desktop", "macOS", "Windows", "Discord"],
         impact: {
             ja: "ポーリングなしのイベント駆動設計で、低負荷なままステータスを同期",
             en: "Event-driven design keeps status in sync without polling or heavy energy use",
         },
-        techStack: ["Swift", "AppKit", "AppleScript", "Discord RPC", "Sparkle"],
+        techStack: ["Swift", "Rust", "AppKit", "AppleScript", "Discord RPC", "Sparkle"],
         features: [
+            {
+                ja: "macOS / Windows の両方で動作",
+                en: "Runs on both macOS and Windows",
+            },
             {
                 ja: "曲名・アーティスト・アルバムアートと再生進捗バーを表示",
                 en: "Shows title, artist, album art, and a playback progress bar",

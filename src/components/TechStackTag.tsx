@@ -36,6 +36,25 @@ function SwiftIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
     );
 }
 
+function RustIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
+    return (
+        <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="11" fill="#CE422B" />
+            <text
+                x="12"
+                y="15.2"
+                fill="#FFF"
+                textAnchor="middle"
+                fontSize="10.5"
+                fontWeight="700"
+                fontFamily="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
+            >
+                R
+            </text>
+        </svg>
+    );
+}
+
 function BunIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
     return (
         <svg className={`${className} text-accent-soft`} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -139,6 +158,7 @@ const tagIcons: Record<string, ComponentType<{ className?: string }>> = {
     React: ReactIcon,
     Swift: SwiftIcon,
     SwiftUI: SwiftIcon,
+    Rust: RustIcon,
     "Tailwind CSS": TailwindIcon,
     Vite: ViteIcon,
     "Browser Extensions": ExtensionIcon,

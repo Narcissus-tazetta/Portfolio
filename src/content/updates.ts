@@ -19,6 +19,22 @@ export function commitUrl(sha: string): string {
 
 export const siteUpdates: SiteUpdate[] = [
     {
+        date: "2026-07-28",
+        commit: "PENDING",
+        message: {
+            ja: "ceyrad の技術スタックに Rust を追加し、表示を更新",
+            en: "Added Rust to ceyrad tech stack and updated its display",
+        },
+    },
+    {
+        date: "2026-07-28",
+        commit: "PENDING",
+        message: {
+            ja: "ceyrad の対応OSに Windows を追加",
+            en: "Added Windows support to ceyrad platform listing",
+        },
+    },
+    {
         date: "2026-07-21",
         commit: "PENDING",
         message: {
