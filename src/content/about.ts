@@ -86,15 +86,15 @@ export const aboutPage = {
                     id: "desktop",
                     label: { ja: "Desktop", en: "Desktop" },
                     description: {
-                        ja: "LiveWallPaper など、macOS 向けのアプリ",
-                        en: "macOS apps such as LiveWallPaper",
+                        ja: "LiveWallPaper（macOS）や ceyrad（macOS / Windows）などのアプリ",
+                        en: "Apps such as LiveWallPaper (macOS) and ceyrad (macOS / Windows)",
                     },
                 },
             ],
         },
         {
             title: { ja: "技術スタック", en: "Tech stack" } satisfies LocalizedText,
-            tags: ["TypeScript", "React", "Swift", "Tailwind CSS", "Vite", "Browser Extensions"],
+            tags: ["TypeScript", "React", "Swift", "Rust", "Tailwind CSS", "Vite", "Browser Extensions"],
         },
     ] satisfies AboutSection[],
 } as const;

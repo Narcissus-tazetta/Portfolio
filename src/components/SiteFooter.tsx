@@ -23,7 +23,7 @@ export default function SiteFooter() {
                 <ul className="mt-6 space-y-3">
                     {siteUpdates.map((update) => (
                         <li
-                            key={update.commit}
+                            key={`${update.date}-${update.message.en}`}
                             className="flex flex-col gap-1 text-sm leading-relaxed sm:flex-row sm:items-baseline sm:gap-4"
                         >
                             <time

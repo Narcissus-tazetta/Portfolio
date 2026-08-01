@@ -20,7 +20,7 @@ export function commitUrl(sha: string): string {
 export const siteUpdates: SiteUpdate[] = [
     {
         date: "2026-07-28",
-        commit: "PENDING",
+        commit: "701b024ce3625bd8064bb6288f603d7a37e08272",
         message: {
             ja: "ceyrad の技術スタックに Rust を追加し、表示を更新",
             en: "Added Rust to ceyrad tech stack and updated its display",
@@ -28,7 +28,7 @@ export const siteUpdates: SiteUpdate[] = [
     },
     {
         date: "2026-07-28",
-        commit: "PENDING",
+        commit: "701b024ce3625bd8064bb6288f603d7a37e08272",
         message: {
             ja: "ceyrad の対応OSに Windows を追加",
             en: "Added Windows support to ceyrad platform listing",
@@ -36,7 +36,7 @@ export const siteUpdates: SiteUpdate[] = [
     },
     {
         date: "2026-07-21",
-        commit: "PENDING",
+        commit: "afd95fc58d576f569e8838334c06f9fc2a4245db",
         message: {
             ja: "Desktop アイコンの表示を調整し、Personal 作品の並び順を変更",
             en: "Adjusted the Desktop icon display and reordered personal projects",
