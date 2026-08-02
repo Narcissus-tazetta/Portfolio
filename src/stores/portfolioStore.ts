@@ -27,6 +27,14 @@ function isLanguage(value: unknown): value is Language {
     return value === "ja" || value === "en";
 }
 
+function getBrowserDefaultLanguage(): Language {
+    if (typeof navigator === "undefined") {
+        return "ja";
+    }
+    const preferred = navigator.languages?.[0] ?? navigator.language ?? "";
+    return preferred.toLowerCase().startsWith("ja") ? "ja" : "en";
+}
+
 function isTheme(value: unknown): value is Theme {
     return value === "light" || value === "dark" || value === "system";
 }
@@ -45,7 +53,7 @@ function readPersistedState(): { language: Language; theme: Theme; accentPurple:
         }
 
         return {
-            language: isLanguage(state.language) ? state.language : "ja",
+            language: isLanguage(state.language) ? state.language : getBrowserDefaultLanguage(),
             theme: isTheme(state.theme) ? state.theme : "system",
             accentPurple: Boolean(state.accentPurple),
         };
@@ -59,7 +67,7 @@ function readLegacyState(): { language: Language; theme: Theme; accentPurple: bo
     const theme = localStorage.getItem(LEGACY_THEME_KEY);
 
     return {
-        language: isLanguage(language) ? language : "ja",
+        language: isLanguage(language) ? language : getBrowserDefaultLanguage(),
         theme: isTheme(theme) ? theme : "system",
         accentPurple: localStorage.getItem(LEGACY_ACCENT_KEY) === "1",
     };

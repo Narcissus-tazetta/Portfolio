@@ -60,11 +60,14 @@
                             : theme;
                     document.documentElement.classList.remove("light", "dark");
                     document.documentElement.classList.add(resolved);
-                    var language = state && state.language === "en" ? "en" : "ja";
-                    if (!state) {
+                    var language = state && (state.language === "en" || state.language === "ja") ? state.language : null;
+                    if (language === null) {
                         var legacyLanguage = localStorage.getItem("portfolio-language");
                         if (legacyLanguage === "en" || legacyLanguage === "ja") {
                             language = legacyLanguage;
+                        } else {
+                            var preferred = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+                            language = preferred.toLowerCase().indexOf("ja") === 0 ? "ja" : "en";
                         }
                     }
                     document.documentElement.lang = language;
