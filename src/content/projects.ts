@@ -150,6 +150,7 @@ export const projects: Project[] = [
             ja: "使い方をわかりやすく案内",
             en: "Clear user onboarding",
         },
+        techStack: ["Svelte"],
         thumbnail: "/works/music-autoplay-manual.png",
         kind: "commissioned",
         category: "web",
