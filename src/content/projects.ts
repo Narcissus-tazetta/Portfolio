@@ -302,6 +302,33 @@ export const projects: Project[] = [
         kind: "personal",
         category: "bot",
     },
+    {
+        id: "zzz-discord-reminder",
+        title: "zzz-discord-reminder",
+        description: {
+            ja: "ゼンレスゾーンゼロのデイリー任務未消化をDiscordに通知するBot",
+            en: "Discord bot that reminds you about unfinished Zenless Zone Zero daily missions.",
+        },
+        context: {
+            ja: "ZZZのデイリー忘れがちなので、通知するbotを作った。",
+            en: "I kept forgetting my ZZZ dailies, so I built a bot that notifies me.",
+        },
+        href: "https://github.com/Narcissus-tazetta/zzz-discord-reminder",
+        detailLayout: "github-only",
+        links: {
+            github: "https://github.com/Narcissus-tazetta/zzz-discord-reminder",
+        },
+        tags: ["Bot", "Discord", "Automation"],
+        impact: {
+            ja: "任務の消化忘れを自動で検知して通知",
+            en: "Automatically flags missed missions before reset",
+        },
+        techStack: ["Python", "GitHub Actions", "Discord Webhook"],
+        thumbnail: "/works/zzz-discord-reminder.png",
+        thumbnailAspect: "538 / 134",
+        kind: "personal",
+        category: "bot",
+    },
 ];
 
 export function getProjectById(id: string): Project | undefined {
