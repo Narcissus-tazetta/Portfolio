@@ -7,12 +7,13 @@ export type ProjectCategory = "app" | "extension" | "web" | "bot";
 
 export type ProjectKind = "personal" | "commissioned";
 
-export type ProjectDetailLayout = "external" | "github-only" | "github-demo" | "github-release";
+export type ProjectDetailLayout = "external" | "github-only" | "github-demo" | "github-release" | "github-invite";
 
 export type ProjectLinks = {
     github: string;
     demo?: string;
     release?: string;
+    invite?: string;
 };
 
 export type Project = {

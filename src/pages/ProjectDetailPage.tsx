@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowUpRight, Globe, Package } from "lucide-react";
+import { ArrowUpRight, Bot, Globe, Package } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import GithubIcon from "../components/icons/GithubIcon";
 import ProjectLinkCard from "../components/ProjectLinkCard";
@@ -121,6 +121,16 @@ export default function ProjectDetailPage() {
                         label={t(projectDetailLabels.release)}
                         description={t(projectDetailLabels.releaseDescription)}
                         meta={project.links.release.replace("https://", "")}
+                    />
+                ) : null}
+
+                {project.detailLayout === "github-invite" && project.links.invite ? (
+                    <ProjectLinkCard
+                        href={project.links.invite}
+                        icon={<Bot className="h-5 w-5 text-accent-soft" strokeWidth={1.75} />}
+                        label={t(projectDetailLabels.invite)}
+                        description={t(projectDetailLabels.inviteDescription)}
+                        meta="Discord"
                     />
                 ) : null}
             </div>

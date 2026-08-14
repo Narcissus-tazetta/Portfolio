@@ -270,7 +270,10 @@ export const projects: Project[] = [
             en: "Built for people who wanted YouTube notifications in Discord.",
         },
         href: "https://github.com/Narcissus-tazetta/YouTube-Notification-Discord-bot",
-        detailLayout: "external",
+        detailLayout: "github-only",
+        links: {
+            github: "https://github.com/Narcissus-tazetta/YouTube-Notification-Discord-bot",
+        },
         tags: ["Bot", "Discord"],
         impact: {
             ja: "チャンネルへリアルタイム通知",
@@ -292,7 +295,11 @@ export const projects: Project[] = [
             en: "Built my own after other bots made servers too heavy to be practical.",
         },
         href: "https://discord.com/oauth2/authorize?client_id=1487820490822254723&permissions=19923984&integration_type=0&scope=bot+applications.commands",
-        detailLayout: "external",
+        detailLayout: "github-invite",
+        links: {
+            github: "https://github.com/Narcissus-tazetta/Discord-VC-Bot",
+            invite: "https://discord.com/oauth2/authorize?client_id=1487820490822254723&permissions=19923984&integration_type=0&scope=bot+applications.commands",
+        },
         tags: ["Bot", "Voice"],
         impact: {
             ja: "VC を即座に作成",
