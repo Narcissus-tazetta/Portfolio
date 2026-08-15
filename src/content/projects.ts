@@ -332,7 +332,6 @@ export const projects: Project[] = [
         },
         techStack: ["Python", "GitHub Actions", "Discord Webhook"],
         thumbnail: "/works/zzz-discord-reminder.png",
-        thumbnailAspect: "538 / 134",
         kind: "personal",
         category: "bot",
     },
