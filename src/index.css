@@ -3,7 +3,7 @@
 
 @theme inline {
   --font-sans: "JetBrains Mono", ui-monospace, monospace;
-  --font-brand: "Ephesis", cursive;
+  --font-brand: "Pixelify Sans", sans-serif;
   --font-body: "Kiwi Maru", serif;
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
