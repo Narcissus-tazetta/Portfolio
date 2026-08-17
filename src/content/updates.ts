@@ -19,6 +19,62 @@ export function commitUrl(sha: string): string {
 
 export const siteUpdates: SiteUpdate[] = [
     {
+        date: "2026-08-16",
+        commit: "fa64f0eddf8e4df4118cfc23381d4efe43dec01f",
+        message: {
+            ja: "ロゴのフォントを Ephesis から Pixelify Sans に変更",
+            en: "Changed the logo font from Ephesis to Pixelify Sans",
+        },
+    },
+    {
+        date: "2026-08-15",
+        commit: "db71c0d6fa13c2f2e4795adfb42795b4139f37c5",
+        message: {
+            ja: "zzz-discord-reminder の画像を中央寄せに変更",
+            en: "Centered the zzz-discord-reminder image",
+        },
+    },
+    {
+        date: "2026-08-14",
+        commit: "4a94603d0cb41542bb2df79f0f4c0282c91a71bf",
+        message: {
+            ja: "youtube-discord-bot と discord-vc-bot に個別ページを追加",
+            en: "Added dedicated pages for youtube-discord-bot and discord-vc-bot",
+        },
+    },
+    {
+        date: "2026-08-13",
+        commit: "ed63373e43b221406e4aa023610dc8c7ae4aba1b",
+        message: {
+            ja: "zzz-discord-reminder を Works に追加",
+            en: "Added zzz-discord-reminder to Works",
+        },
+    },
+    {
+        date: "2026-08-12",
+        commit: "a33462f727e9b5b8c65fd74bb7d4214d95b6531e",
+        message: {
+            ja: "music-autoplay-instruction-manual の技術スタックに Svelte を追加",
+            en: "Added Svelte to the music-autoplay-instruction-manual tech stack",
+        },
+    },
+    {
+        date: "2026-08-02",
+        commit: "e972c6b9d5470af874e3b5a4cb6e28fa3401a38e",
+        message: {
+            ja: "言語設定をブラウザの言語設定に追従するように変更",
+            en: "Made the language setting follow the browser's language",
+        },
+    },
+    {
+        date: "2026-08-01",
+        commit: "ec6872d5a2ff7e7102532828ed3c80fdde742f7e",
+        message: {
+            ja: "About の技術スタックに Rust を追加し、Desktop の説明に ceyrad を追加",
+            en: "Added Rust to the About tech stack and ceyrad to the Desktop description",
+        },
+    },
+    {
         date: "2026-07-28",
         commit: "701b024ce3625bd8064bb6288f603d7a37e08272",
         message: {
