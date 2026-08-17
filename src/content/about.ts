@@ -94,7 +94,19 @@ export const aboutPage = {
         },
         {
             title: { ja: "技術スタック", en: "Tech stack" } satisfies LocalizedText,
-            tags: ["TypeScript", "React", "Swift", "Rust", "Tailwind CSS", "Vite", "Browser Extensions"],
+            tags: [
+                "TypeScript",
+                "React",
+                "Swift",
+                "Rust",
+                "Python",
+                "Java",
+                "Zig",
+                "Tailwind CSS",
+                "Vite",
+                "Bun",
+                "Browser Extensions",
+            ],
         },
     ] satisfies AboutSection[],
 } as const;
