@@ -4,27 +4,6 @@
 
 **公開 URL:** https://narcissus-tazetta.github.io/Portfolio/
 
-## 技術スタック
-
-- React 19 + TypeScript + Vite 8
-- Tailwind CSS 4
-- React Router 7
-- Zustand（テーマ・言語・アクセント・UI 状態）
-- Lucide React
-
-GitHub Pages（`base: /Portfolio/`）へデプロイしています。
-
-## 機能
-
-- 日本語 / 英語の切り替え（選択を記憶）
-- ライト / ダーク / システムテーマ
-- 作品詳細ページ（`/works/:id`）— GitHub・Demo・Release リンク
-- カスタム 404 ページ
-- OGP メタタグ + `public/og.png`
-- 初回ローディングバー（`?loaderMs=3000` でプレビュー）
-- 隠しアクセント（ロゴを3回クリック）
-- フッターの更新履歴（GitHub のコミットへリンク）
-
 ## 開発
 
 ```bash
@@ -32,12 +11,12 @@ bun install
 bun run dev
 ```
 
-| コマンド | 説明 |
-|---------|------|
-| `bun run build` | 本番ビルド → `dist/` |
+| コマンド          | 説明                   |
+| ----------------- | ---------------------- |
+| `bun run build`   | 本番ビルド → `dist/`   |
 | `bun run preview` | ビルド結果のプレビュー |
-| `bun run tsc` | 型チェック |
-| `bun run lint` | Oxlint |
+| `bun run tsc`     | 型チェック             |
+| `bun run lint`    | Oxlint                 |
 
 ローダーのプレビュー: URL に `?loaderMs=3000` を付ける。
 
