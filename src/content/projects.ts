@@ -304,6 +304,7 @@ export const projects: Project[] = [
             },
         ],
         thumbnail: "/works/xaeronav.png",
+        thumbnailAspect: "796 / 662",
         kind: "personal",
         category: "extension",
     },
