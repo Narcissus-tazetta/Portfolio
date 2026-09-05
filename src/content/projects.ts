@@ -259,6 +259,55 @@ export const projects: Project[] = [
         category: "app",
     },
     {
+        id: "xaeronav",
+        title: "XaeroNav",
+        description: {
+            ja: "Xaero's World Map / Minimap 上に、実際に歩ける経路を描く Minecraft クライアント MOD",
+            en: "A Minecraft client mod that draws a walkable route on Xaero's World Map and Minimap.",
+        },
+        context: {
+            ja: "ほしいと思ったから！",
+            en: "I wanted it for myself!",
+        },
+        href: "https://github.com/Narcissus-tazetta/XaeroNav",
+        detailLayout: "github-release",
+        links: {
+            github: "https://github.com/Narcissus-tazetta/XaeroNav",
+            release: "https://github.com/Narcissus-tazetta/XaeroNav/releases",
+        },
+        tags: ["Minecraft", "Mod", "Pathfinding"],
+        impact: {
+            ja: "地形を実際に辿るA*探索で、地図上に最短ルートを可視化",
+            en: "A* search over real terrain visualizes the shortest walkable route on the map",
+        },
+        techStack: ["Java", "Minecraft", "Fabric", "NeoForge"],
+        features: [
+            {
+                ja: "歩く・登る・泳ぐ・梯子・隙間跳び・掘削・設置橋渡しまで含めたA*経路探索",
+                en: "A* pathfinding covering walking, climbing, swimming, ladders, gap jumps, digging, and block bridging",
+            },
+            {
+                ja: "経路をワールド内・Xaero's World Map・Xaero's Minimapの3箇所に描画",
+                en: "Renders the route in-world, on Xaero's World Map, and on Xaero's Minimap",
+            },
+            {
+                ja: "遠距離は粗いルート探索と詳細探索を組み合わせた3段階解決",
+                en: "Long-distance routes resolve in three stages, from coarse map data down to detailed exploration",
+            },
+            {
+                ja: "エリトラ滑空中は地形を避ける3D空中経路に自動切り替え",
+                en: "Automatically switches to a 3D flight route that avoids terrain while gliding with an elytra",
+            },
+            {
+                ja: "溶岩隣接・水没・落下ダメージなどの危険区間を色分け表示",
+                en: "Highlights hazardous sections like lava-adjacent digs, flooding, and fall damage in distinct colors",
+            },
+        ],
+        thumbnail: "/works/xaeronav.png",
+        kind: "personal",
+        category: "extension",
+    },
+    {
         id: "youtube-discord-bot",
         title: "YouTube-Notification-Discord-bot",
         description: {

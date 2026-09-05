@@ -1,4 +1,4 @@
-import { Clapperboard, Puzzle, Sparkles, Terminal } from "lucide-react";
+import { Blocks, Clapperboard, Hammer, Layers, Puzzle, Sparkles, Terminal } from "lucide-react";
 import type { ComponentType } from "react";
 
 function ReactIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
@@ -180,6 +180,18 @@ function AVFoundationIcon({ className = "h-3.5 w-3.5" }: { className?: string })
     return <Clapperboard className={`${className} text-accent-soft`} strokeWidth={2} aria-hidden="true" />;
 }
 
+function MinecraftIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
+    return <Blocks className={`${className} text-accent-soft`} strokeWidth={2} aria-hidden="true" />;
+}
+
+function FabricIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
+    return <Layers className={`${className} text-accent-soft`} strokeWidth={2} aria-hidden="true" />;
+}
+
+function NeoForgeIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
+    return <Hammer className={`${className} text-accent-soft`} strokeWidth={2} aria-hidden="true" />;
+}
+
 const tagIcons: Record<string, ComponentType<{ className?: string }>> = {
     TypeScript: TypeScriptIcon,
     Bun: BunIcon,
@@ -201,6 +213,9 @@ const tagIcons: Record<string, ComponentType<{ className?: string }>> = {
     "Discord RPC": DiscordIcon,
     Sparkle: SparkleIcon,
     AVFoundation: AVFoundationIcon,
+    Minecraft: MinecraftIcon,
+    Fabric: FabricIcon,
+    NeoForge: NeoForgeIcon,
 };
 
 export default function TechStackTag({ name }: { name: string }) {
