@@ -156,6 +156,51 @@ export const projects: Project[] = [
         category: "web",
     },
     {
+        id: "questionnaire",
+        title: "Questionnaire",
+        description: {
+            ja: "Discordサーバーで、アンケート担当者を毎日ランダムに1人選出するBot",
+            en: "Discord bot that randomly picks one daily questionnaire-duty person.",
+        },
+        context: {
+            ja: "必要そうだったので作った。",
+            en: "It seemed like something we needed, so I made it.",
+        },
+        href: "https://github.com/Narcissus-tazetta/Questionnaire",
+        detailLayout: "github-only",
+        links: {
+            github: "https://github.com/Narcissus-tazetta/Questionnaire",
+        },
+        tags: ["Bot", "Discord", "Automation"],
+        impact: {
+            ja: "抽選から担当ロール付与、告知までを自動化",
+            en: "Automates the daily draw, role assignment, and announcement",
+        },
+        techStack: ["TypeScript", "Bun", "Cloudflare", "Discord"],
+        features: [
+            {
+                ja: "前日に募った参加者から、指定時刻に自動で1人抽選",
+                en: "Automatically draws one person at a set time from those who entered the day before",
+            },
+            {
+                ja: "当選者に担当ロールを付与し、告知チャンネルへ結果を投稿",
+                en: "Grants the duty role to the winner and posts the result to an announcement channel",
+            },
+            {
+                ja: "毎日自動参加できる/autoモードや、担当者のやり直し(/reroll)に対応",
+                en: "Supports an auto-entry mode and a /reroll command to redo the draw",
+            },
+            {
+                ja: "Cloudflare Workers + D1 + Durable Object アラームで定刻実行",
+                en: "Runs on schedule via Cloudflare Workers, D1, and a Durable Object alarm",
+            },
+        ],
+        thumbnail: "/works/questionnaire.png",
+        thumbnailAspect: "886 / 126",
+        kind: "commissioned",
+        category: "bot",
+    },
+    {
         id: "live-wallpaper",
         title: "LiveWallPaper",
         description: {
