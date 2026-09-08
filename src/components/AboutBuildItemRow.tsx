@@ -1,4 +1,4 @@
-import { AppWindow, Bot, Monitor, Puzzle, type LucideIcon } from "lucide-react";
+import { AppWindow, Bot, Monitor, Pickaxe, Puzzle, type LucideIcon } from "lucide-react";
 import type { AboutBuildItem } from "../content/about";
 import { useLanguage } from "../contexts/LanguageContext";
 
@@ -7,6 +7,7 @@ const categoryIcons: Record<AboutBuildItem["id"], LucideIcon> = {
     extension: Puzzle,
     bot: Bot,
     desktop: Monitor,
+    mod: Pickaxe,
 };
 
 const iconBoxClassName =

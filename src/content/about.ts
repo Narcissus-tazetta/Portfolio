@@ -1,7 +1,7 @@
 import type { LocalizedText } from "./types";
 
 export type AboutBuildItem = {
-    id: "web" | "extension" | "bot" | "desktop";
+    id: "web" | "extension" | "bot" | "desktop" | "mod";
     label: LocalizedText;
     description: LocalizedText;
 };
@@ -88,6 +88,14 @@ export const aboutPage = {
                     description: {
                         ja: "LiveWallPaper（macOS）や ceyrad（macOS / Windows）などのアプリ",
                         en: "Apps such as LiveWallPaper (macOS) and ceyrad (macOS / Windows)",
+                    },
+                },
+                {
+                    id: "mod",
+                    label: { ja: "Minecraft Mod", en: "Minecraft Mods" },
+                    description: {
+                        ja: "Xaero's Map 上に経路を描く XaeroNav などのクライアント MOD",
+                        en: "Client mods such as XaeroNav that draw routes on Xaero's Map",
                     },
                 },
             ],

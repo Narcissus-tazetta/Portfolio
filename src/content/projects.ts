@@ -196,7 +196,7 @@ export const projects: Project[] = [
             },
         ],
         thumbnail: "/works/questionnaire.png",
-        thumbnailAspect: "886 / 126",
+        thumbnailAspect: "800 / 523",
         kind: "commissioned",
         category: "bot",
     },
@@ -453,6 +453,6 @@ export const personalProjects = projects
     });
 export const commissionedProjects = projects.filter((project) => project.kind === "commissioned");
 
-export const homeHighlights = ["live-wallpaper", "music-autoplay"]
+export const homeHighlights = ["live-wallpaper", "xaeronav"]
     .map((id) => projects.find((project) => project.id === id))
     .filter((project): project is Project => project !== undefined);
