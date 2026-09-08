@@ -19,6 +19,30 @@ export function commitUrl(sha: string): string {
 
 export const siteUpdates: SiteUpdate[] = [
     {
+        date: "2026-09-08",
+        commit: "8513a0a2dbb795175f2c1063c56911d7e390a36a",
+        message: {
+            ja: "注目の作品を LiveWallPaper と XaeroNav に差し替え",
+            en: "Swapped the featured works to LiveWallPaper and XaeroNav",
+        },
+    },
+    {
+        date: "2026-09-08",
+        commit: "8513a0a2dbb795175f2c1063c56911d7e390a36a",
+        message: {
+            ja: "About の「作っているもの」に Minecraft Mod を追加",
+            en: "Added Minecraft Mods to the About \"What I build\" list",
+        },
+    },
+    {
+        date: "2026-09-08",
+        commit: "8513a0a2dbb795175f2c1063c56911d7e390a36a",
+        message: {
+            ja: "Questionnaire のサムネイル比率を他の作品に合わせて調整",
+            en: "Aligned the Questionnaire thumbnail aspect ratio with the other works",
+        },
+    },
+    {
         date: "2026-08-16",
         commit: "fa64f0eddf8e4df4118cfc23381d4efe43dec01f",
         message: {
