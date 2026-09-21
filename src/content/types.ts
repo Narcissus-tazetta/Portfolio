@@ -27,6 +27,7 @@ export type Project = {
     tags: string[];
     impact: LocalizedText;
     thumbnail: string;
+    thumbnailEn?: string;
     thumbnailAnimated?: string;
     animateOnHover?: boolean;
     thumbnailAspect?: string;

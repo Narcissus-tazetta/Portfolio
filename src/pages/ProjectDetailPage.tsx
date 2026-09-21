@@ -13,11 +13,11 @@ import { projectImageAlt } from "../lib/projectImageAlt";
 
 export default function ProjectDetailPage() {
     const { projectId } = useParams();
-    const { t } = useLanguage();
+    const { language, t } = useLanguage();
     const project = projectId ? getProjectById(projectId) : undefined;
     const editorial = showcase.find(entry => entry.id === projectId);
     const [isHovered, setIsHovered] = useState(false);
-    useDocumentMeta(project ? { title: {ja:`${project.title} — Prason`,en:`${project.title} — Prason`}, description: project.description, path:`works/${project.id}`, image:project.thumbnail } : {title:site.title});
+    useDocumentMeta(project ? { title: {ja:`${project.title} — Prason`,en:`${project.title} — Prason`}, description: project.description, path:`works/${project.id}`, image:language === "en" && project.thumbnailEn ? project.thumbnailEn : project.thumbnail } : {title:site.title});
     if (!project || project.detailLayout === "external" || !project.links) return <Navigate to="/works" replace />;
     const ordered = [...showcase.map(entry => getProjectById(entry.id)!), ...projects.filter(item => !showcase.some(entry => entry.id === item.id))];
     const next = ordered[(ordered.findIndex(item => item.id === project.id)+1)%ordered.length];

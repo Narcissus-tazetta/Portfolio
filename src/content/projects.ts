@@ -297,6 +297,7 @@ export const projects: Project[] = [
             },
         ],
         thumbnail: "/works/ceyrad.webp",
+        thumbnailEn: "/works/ceyrad_en.png",
         kind: "personal",
         category: "app",
     },

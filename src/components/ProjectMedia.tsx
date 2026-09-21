@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { projectHasMedia } from "../content/projects";
 import type { Project } from "../content/types";
+import { useLanguage } from "../contexts/LanguageContext";
 import { assetUrl } from "../lib/assetUrl";
 import { getReducedMotionPreference, subscribeReducedMotion } from "../lib/subscribeSystemTheme";
 import ProjectCategoryIcon from "./ProjectCategoryIcon";
@@ -24,6 +25,7 @@ export default function ProjectMedia({
     loading = "lazy",
     active,
 }: ProjectMediaProps) {
+    const { language } = useLanguage();
     const [localActive, setLocalActive] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
     const reducedMotion = useSyncExternalStore(subscribeReducedMotion, getReducedMotionPreference, () => true);
@@ -33,7 +35,7 @@ export default function ProjectMedia({
 
     const hasMedia = projectHasMedia(project);
     const objectClass = project.thumbnailFit === "cover" ? "object-cover" : "object-contain";
-    const posterSrc = assetUrl(project.thumbnail);
+    const posterSrc = assetUrl(language === "en" && project.thumbnailEn ? project.thumbnailEn : project.thumbnail);
     const animatedSrc =
         project.animateOnHover && project.thumbnailAnimated ? assetUrl(project.thumbnailAnimated) : null;
     const animatedIsVideo = animatedSrc ? isVideoSource(animatedSrc) : false;
