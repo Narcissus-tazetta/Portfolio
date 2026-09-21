@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Layout from "./components/Layout";
-import AboutPage from "./pages/AboutPage";
-import ContactPage from "./pages/ContactPage";
 import HomePage from "./pages/HomePage";
-import NotFoundPage from "./pages/NotFoundPage";
-import ProjectDetailPage from "./pages/ProjectDetailPage";
-import WorksPage from "./pages/WorksPage";
 import { useUiStore } from "./stores/portfolioStore";
+
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const ContactPage = lazy(() => import("./pages/ContactPage"));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
+const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage"));
+const WorksPage = lazy(() => import("./pages/WorksPage"));
 
 const PAGE_FADE_MS = 180;
 
@@ -44,16 +45,18 @@ function App() {
                 .filter(Boolean)
                 .join(" ")}
         >
-            <Routes location={displayLocation}>
-                <Route element={<Layout />}>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/about" element={<AboutPage />} />
-                    <Route path="/works" element={<WorksPage />} />
-                    <Route path="/works/:projectId" element={<ProjectDetailPage />} />
-                    <Route path="/contact" element={<ContactPage />} />
-                    <Route path="*" element={<NotFoundPage />} />
-                </Route>
-            </Routes>
+            <Suspense fallback={null}>
+                <Routes location={displayLocation}>
+                    <Route element={<Layout />}>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/about" element={<AboutPage />} />
+                        <Route path="/works" element={<WorksPage />} />
+                        <Route path="/works/:projectId" element={<ProjectDetailPage />} />
+                        <Route path="/contact" element={<ContactPage />} />
+                        <Route path="*" element={<NotFoundPage />} />
+                    </Route>
+                </Routes>
+            </Suspense>
         </div>
     );
 }
