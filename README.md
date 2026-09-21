@@ -2,7 +2,7 @@
 
 [Prason (Narcissus-tazetta)](https://github.com/Narcissus-tazetta) の個人ポートフォリオサイトです。
 
-**公開 URL:** https://narcissus-tazetta.github.io/Portfolio/
+**公開 URL:** https://prason.dev/
 
 ## 開発
 

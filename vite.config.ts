@@ -3,9 +3,6 @@ import { join } from "node:path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-const repo = process.env.GITHUB_REPOSITORY ? process.env.GITHUB_REPOSITORY.split("/")[1] : "";
-const base = repo ? `/${repo}/` : "/";
-
 function copy404Plugin() {
     return {
         name: "copy-404",
@@ -23,7 +20,7 @@ function copy404Plugin() {
 }
 
 export default defineConfig({
-    base,
+    base: "/",
     plugins: [react(), copy404Plugin()],
     server: { port: 8204 },
 });

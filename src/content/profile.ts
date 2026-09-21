@@ -9,7 +9,7 @@ export const site = {
         ja: "Prason (Narcissus-tazetta) のポートフォリオ。music-autoplay をはじめとする作品を掲載しています。",
         en: "Portfolio of Prason (Narcissus-tazetta), featuring projects such as music-autoplay.",
     } satisfies LocalizedText,
-    url: "https://narcissus-tazetta.github.io/Portfolio/",
+    url: "https://prason.dev/",
     lang: "ja",
 } as const;
 
