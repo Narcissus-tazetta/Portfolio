@@ -1,4 +1,5 @@
 import type { LocalizedText } from "./types";
+import { getEmailAddress } from "../lib/obfuscatedEmail";
 
 export const site = {
     title: {
@@ -35,14 +36,16 @@ export const profile = {
     } satisfies LocalizedText,
 } as const;
 
+const emailAddress = getEmailAddress();
+
 export const social = {
     github: {
         url: "https://github.com/Narcissus-tazetta",
         label: "https://github.com/Narcissus-tazetta",
     },
     email: {
-        url: "mailto:ibaragiakira2007@gmail.com?subject=Hello&body=",
-        label: "ibaragiakira2007@gmail.com",
+        url: `mailto:${emailAddress}?subject=Hello&body=`,
+        label: emailAddress,
     },
 } as const;
 
