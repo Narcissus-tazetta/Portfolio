@@ -16,7 +16,7 @@ export const site = {
 export const profile = {
     displayName: "Prason",
     handle: "Narcissus-tazetta",
-    avatar: "/icon.jpeg",
+    avatar: "/icon.webp",
     hero: {
         ja: "Prasonの\nポートフォリオ",
         en: "Prason's\nPortfolio",
