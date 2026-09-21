@@ -73,8 +73,16 @@ function readLegacyState(): { language: Language; theme: Theme; accentPurple: bo
     };
 }
 
+function readLanguageFromUrl(): Language | null {
+    const requested = new URLSearchParams(window.location.search).get("lang");
+    return isLanguage(requested) ? requested : null;
+}
+
 function readInitialPreferences() {
-    return readPersistedState() ?? readLegacyState();
+    const preferences = readPersistedState() ?? readLegacyState();
+    const requested = readLanguageFromUrl();
+
+    return requested ? { ...preferences, language: requested } : preferences;
 }
 
 function clearLegacyPreferenceKeys() {
@@ -157,6 +165,14 @@ export const usePreferencesStore = create<PreferencesState>()(
                 theme: state.theme,
                 accentPurple: state.accentPurple,
             }),
+            // A ?lang= link states the visitor's intent for this visit, so it has
+            // to survive rehydration from a previously stored preference.
+            merge: (persisted, current) => {
+                const merged = { ...current, ...(persisted as Partial<PreferencesState>) };
+                const requested = readLanguageFromUrl();
+
+                return requested ? { ...merged, language: requested } : merged;
+            },
             onRehydrateStorage: () => (state) => {
                 clearLegacyPreferenceKeys();
 

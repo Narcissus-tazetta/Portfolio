@@ -60,7 +60,13 @@
                             : theme;
                     document.documentElement.classList.remove("light", "dark");
                     document.documentElement.classList.add(resolved);
-                    var language = state && (state.language === "en" || state.language === "ja") ? state.language : null;
+                    var requested = new URLSearchParams(window.location.search).get("lang");
+                    var language =
+                        requested === "en" || requested === "ja"
+                            ? requested
+                            : state && (state.language === "en" || state.language === "ja")
+                              ? state.language
+                              : null;
                     if (language === null) {
                         var legacyLanguage = localStorage.getItem("portfolio-language");
                         if (legacyLanguage === "en" || legacyLanguage === "ja") {
