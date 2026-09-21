@@ -1,7 +1,6 @@
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import HeroProjectPreview from "../components/HeroProjectPreview";
-import PrasonMark from "../components/PrasonMark";
+import HeroPathfinding from "../components/HeroPathfinding";
 import ProfileAvatar from "../components/ProfileAvatar";
 import ScrollReveal from "../components/ScrollReveal";
 import ShowcaseProject from "../components/ShowcaseProject";
@@ -18,14 +17,14 @@ export default function HomePage() {
         <div className="portfolio-home">
             <section className="atelier-hero" aria-labelledby="home-title">
                 <div className="hero-grid" aria-hidden="true" />
+                <HeroPathfinding />
                 <div className="site-shell hero-inner">
                     <div className="hero-copy">
                     <div className="hero-byline micro-label"><span className="tiny-cross" aria-hidden="true" />{profile.displayName} / Independent developer</div>
                     <h1 id="home-title" className="atelier-title"><span>Curiosity,</span><span>made <em>useful.</em></span></h1>
                     <div className="hero-note"><span className="micro-label">Algorithms. Systems. Everyday experience.</span><p>{t({ ja: "アルゴリズムから、使う人の体験まで。\n「こうだったら便利」を、仕組みからつくる。", en: "From algorithms to the experience of using them.\nBuilding the systems behind “this could be better.”" })}</p></div>
                     </div>
-                    <HeroProjectPreview />
-                    <div className="hero-bottom"><a href="#selected-work" className="scroll-cue"><span className="scroll-circle"><ArrowDown size={18} /></span><span className="micro-label">Explore selected work</span></a><span className="hero-index micro-label">Native apps / Web systems / Creative tools</span></div>
+                    <div className="hero-bottom"><a href="#selected-work" className="scroll-cue"><span className="scroll-circle"><ArrowDown size={18} /></span><span className="micro-label">Explore selected work</span></a><span className="hero-index micro-label">Interfaces / Native / Automation</span></div>
                 </div>
             </section>
 
@@ -43,7 +42,7 @@ export default function HomePage() {
 
             <section className="capabilities-section" aria-labelledby="capabilities-title">
                 <div className="site-shell capabilities-layout">
-                    <div className="capabilities-intro"><p className="micro-label chapter-kicker">02 — The way I build</p><h2 id="capabilities-title">Different tools.<br /><em>One mindset.</em></h2><p>{t({ja: "見た目だけでなく、仕組みも心地よく。\nつくるものに合わせて、技術を選びます。", en: "Thoughtful on the surface. Thoughtful underneath.\nThe right tools for the thing being built."})}</p><PrasonMark className="capability-mark" /></div>
+                    <div className="capabilities-intro"><p className="micro-label chapter-kicker">02 — The way I build</p><h2 id="capabilities-title">Different tools.<br /><em>One mindset.</em></h2><p>{t({ja: "見た目だけでなく、仕組みも心地よく。\nつくるものに合わせて、技術を選びます。", en: "Thoughtful on the surface. Thoughtful underneath.\nThe right tools for the thing being built."})}</p></div>
                     <div className="capability-list">{capabilities.map(item => <ScrollReveal key={item.number} as="article" className="capability-item"><span className="micro-label">/{item.number}</span><div><h3>{item.name}</h3><p>{t(item.description)}</p><span className="capability-skills micro-label">{item.skills}</span></div></ScrollReveal>)}</div>
                 </div>
             </section>
