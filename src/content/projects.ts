@@ -9,7 +9,7 @@ export const projects: Project[] = [
             en: "Full-stack YouTube music request and auto-play — web app, server, and Chrome extension.",
         },
         context: {
-            ja: "キャンパスのキャンパス長が作って欲しいと言っていたので作った。自分でもあった方がいいとも思った。",
+            ja: "キャンパス長が作って欲しいと言っていたので作った。自分でもあった方がいいとも思った。",
             en: "The campus leader asked me to build it, and I thought it would be useful for me too.",
         },
         href: "https://music-auto-play.onrender.com",

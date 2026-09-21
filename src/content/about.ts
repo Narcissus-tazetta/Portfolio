@@ -15,18 +15,9 @@ export type AboutSection = {
 
 export const aboutPage = {
     title: { ja: "About", en: "About" } satisfies LocalizedText,
-    roleLine: { ja: "学生 / デベロッパー", en: "Student / Developer" } satisfies LocalizedText,
     tagline: {
         ja: "適当にプログラミングしている人",
         en: "Someone who programs in their spare time.",
-    } satisfies LocalizedText,
-    contactBefore: {
-        ja: "お仕事などのお問い合わせは",
-        en: "For work and other inquiries, visit the",
-    } satisfies LocalizedText,
-    contactAfter: {
-        ja: "から",
-        en: "page.",
     } satisfies LocalizedText,
     sections: [
         {
