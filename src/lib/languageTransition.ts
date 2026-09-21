@@ -2,7 +2,7 @@ import type { Language } from "../stores/portfolioStore";
 import { useUiStore } from "../stores/portfolioStore";
 import { getReducedMotionPreference } from "./subscribeSystemTheme";
 
-export const LANGUAGE_FADE_MS = 560;
+export const LANGUAGE_FADE_MS = 220;
 
 let languageTransitionToken = 0;
 

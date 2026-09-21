@@ -1,5 +1,5 @@
 const INTERSECTION_THRESHOLD = 0.08;
-const INTERSECTION_ROOT_MARGIN = "12% 0px 8% 0px";
+const INTERSECTION_ROOT_MARGIN = "12% 0px 25% 0px";
 
 type ScrollRevealListener = (visible: boolean) => void;
 

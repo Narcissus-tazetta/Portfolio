@@ -84,9 +84,9 @@
 @layer utilities {
   :root {
     --motion-page-fade: 180ms;
-    --motion-language-fade: 560ms;
+    --motion-language-fade: 220ms;
     --motion-page-ease: cubic-bezier(0.4, 0, 0.2, 1);
-    --motion-reveal-in: 560ms;
+    --motion-reveal-in: 420ms;
     --motion-reveal-out: 320ms;
     --motion-reveal-ease-in: cubic-bezier(0.16, 1, 0.3, 1);
     --motion-reveal-ease-out: cubic-bezier(0.4, 0, 1, 1);
