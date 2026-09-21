@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { projectHasMedia } from "../content/projects";
 import type { Project } from "../content/types";
 import { assetUrl } from "../lib/assetUrl";
+import { getReducedMotionPreference, subscribeReducedMotion } from "../lib/subscribeSystemTheme";
 import ProjectCategoryIcon from "./ProjectCategoryIcon";
 
 function isVideoSource(src: string) {
@@ -25,7 +26,9 @@ export default function ProjectMedia({
 }: ProjectMediaProps) {
     const [localActive, setLocalActive] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
-    const isActive = active ?? localActive;
+    const reducedMotion = useSyncExternalStore(subscribeReducedMotion, getReducedMotionPreference, () => true);
+    const [videoReady, setVideoReady] = useState(false);
+    const isActive = !reducedMotion && (active ?? localActive);
     const useLocalPointer = active === undefined;
 
     const hasMedia = projectHasMedia(project);
@@ -34,6 +37,8 @@ export default function ProjectMedia({
     const animatedSrc =
         project.animateOnHover && project.thumbnailAnimated ? assetUrl(project.thumbnailAnimated) : null;
     const animatedIsVideo = animatedSrc ? isVideoSource(animatedSrc) : false;
+
+    const showAnimation = isActive && (!animatedIsVideo || videoReady);
 
     useEffect(() => {
         if (!animatedSrc || animatedIsVideo) {
@@ -51,7 +56,7 @@ export default function ProjectMedia({
         }
 
         if (isActive) {
-            void video.play().catch(() => undefined);
+            void video.play().catch(() => setVideoReady(false));
             return;
         }
 
@@ -65,7 +70,7 @@ export default function ProjectMedia({
         return (
             <div
                 className={`${mediaClassName} flex items-center justify-center`}
-                style={{ aspectRatio: project.thumbnailAspect ?? "16 / 9" }}
+                style={{ aspectRatio: project.thumbnailAspect ?? "800 / 523" }}
             >
                 <ProjectCategoryIcon category={project.category} />
             </div>
@@ -75,7 +80,7 @@ export default function ProjectMedia({
     return (
         <div
             className={mediaClassName}
-            style={{ aspectRatio: project.thumbnailAspect ?? "16 / 9" }}
+            style={{ aspectRatio: project.thumbnailAspect ?? "800 / 523" }}
             onMouseEnter={useLocalPointer ? () => setLocalActive(true) : undefined}
             onMouseLeave={useLocalPointer ? () => setLocalActive(false) : undefined}
         >
@@ -86,20 +91,22 @@ export default function ProjectMedia({
                         alt={imageAlt}
                         loading={loading}
                         className={`h-full w-full ${objectClass} transition-opacity duration-300 ${
-                            isActive ? "opacity-0" : "opacity-100"
+                            showAnimation ? "opacity-0" : "opacity-100"
                         }`}
                     />
                     {animatedIsVideo ? (
                         <video
                             ref={videoRef}
                             src={animatedSrc}
+                            onPlaying={() => setVideoReady(true)}
+                            onError={() => setVideoReady(false)}
                             muted
                             loop
                             playsInline
                             preload="metadata"
                             aria-hidden="true"
                             className={`absolute inset-0 h-full w-full ${objectClass} transition-opacity duration-300 ${
-                                isActive ? "opacity-100" : "opacity-0"
+                                showAnimation ? "opacity-100" : "opacity-0"
                             }`}
                         />
                     ) : (
@@ -108,7 +115,7 @@ export default function ProjectMedia({
                             alt=""
                             aria-hidden="true"
                             className={`absolute inset-0 h-full w-full ${objectClass} transition-opacity duration-300 ${
-                                isActive ? "opacity-100" : "opacity-0"
+                                showAnimation ? "opacity-100" : "opacity-0"
                             }`}
                         />
                     )}

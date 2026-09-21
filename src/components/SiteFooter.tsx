@@ -1,49 +1,27 @@
+import { ArrowUpRight } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import { commitUrl, siteUpdates, updatesLabels } from "../content/updates";
+import { contactPage } from "../content/contact";
+import { profile, social } from "../content/profile";
+import { uiLabels } from "../content/ui";
 import { useLanguage } from "../contexts/LanguageContext";
 
-function formatUpdateDate(date: string, language: "ja" | "en"): string {
-    const parsed = new Date(`${date}T00:00:00`);
-
-    return new Intl.DateTimeFormat(language === "ja" ? "ja-JP" : "en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-    }).format(parsed);
-}
-
 export default function SiteFooter() {
-    const { language, t } = useLanguage();
-
+    const { t } = useLanguage();
+    const isContactPage = useLocation().pathname === "/contact";
     return (
-        <footer className="border-t border-accent/25">
-            <div className="mx-auto max-w-6xl px-6 py-12">
-                <h2 className="font-sans text-xs uppercase tracking-[0.1em] text-muted">
-                    {t(updatesLabels.title)}
-                </h2>
-                <ul className="mt-6 space-y-3">
-                    {siteUpdates.map((update) => (
-                        <li
-                            key={`${update.date}-${update.message.en}`}
-                            className="flex flex-col gap-1 text-sm leading-relaxed sm:flex-row sm:items-baseline sm:gap-4"
-                        >
-                            <time
-                                dateTime={update.date}
-                                className="font-sans shrink-0 text-xs uppercase tracking-[0.05em] text-subtle"
-                            >
-                                {formatUpdateDate(update.date, language)}
-                            </time>
-                            <a
-                                href={commitUrl(update.commit)}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-muted transition-colors hover:text-accent-soft"
-                            >
-                                {t(update.message)}
-                                <span className="sr-only"> — {t(updatesLabels.commitLink)}</span>
-                            </a>
-                        </li>
-                    ))}
-                </ul>
+        <footer className="site-footer">
+            <div className="site-shell footer-contact-inner">
+                {!isContactPage && <>
+                <div className="footer-topline"><p className="micro-label">Have something in mind?</p><p>{t(contactPage.intro)}</p></div>
+                <Link to="/contact" className="footer-contact-link"><span>Let's <em>talk.</em></span><ArrowUpRight strokeWidth={1} aria-hidden="true" /></Link>
+                </>}
+                <div className="footer-bottom">
+                    <Link to="/" className="footer-brand">{profile.displayName}.</Link>
+                    <span className="micro-label footer-handle">{profile.handle}</span>
+                    <div className="footer-socials"><a href={social.github.url} target="_blank" rel="noopener noreferrer">{t(uiLabels.github)}<ArrowUpRight size={15} aria-hidden="true" /></a><a href={social.email.url}>{t(uiLabels.email)}<ArrowUpRight size={15} aria-hidden="true" /></a></div>
+                </div>
+                <details className="footer-journal"><summary className="micro-label">{t(updatesLabels.title)} / Changelog</summary><ul>{siteUpdates.map(update => <li key={`${update.date}-${update.message.en}`} className="update-row"><time className="micro-label" dateTime={update.date}>{update.date.replaceAll("-", ".")}</time><a href={commitUrl(update.commit)} target="_blank" rel="noopener noreferrer">{t(update.message)}<span className="sr-only"> — {t(updatesLabels.commitLink)}</span></a></li>)}</ul></details>
             </div>
         </footer>
     );

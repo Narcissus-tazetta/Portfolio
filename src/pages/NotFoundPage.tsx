@@ -24,8 +24,10 @@ export default function NotFoundPage() {
     }, []);
 
     return (
-        <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-2xl flex-col justify-center px-6 py-16">
-            <h1 className="font-sans text-xl leading-relaxed text-foreground md:text-2xl">{t(notFoundPage.title)}</h1>
+        <div className="site-shell not-found-page">
+            <p className="micro-label">A small detour.</p>
+            <div className="not-found-number" aria-hidden="true">4<em>0</em>4</div>
+            <h1 className="text-2xl leading-relaxed text-foreground">{t(notFoundPage.title)}</h1>
             <p className="mt-4 text-sm leading-relaxed text-muted md:text-base">{t(notFoundPage.description)}</p>
 
             <div className="mt-10">
@@ -42,7 +44,7 @@ export default function NotFoundPage() {
                 </div>
                 <Link
                     to="/"
-                    className="font-sans mt-10 inline-flex items-center gap-2 text-xs uppercase tracking-[0.06em] text-muted transition-colors hover:text-accent-soft"
+                    className="font-sans mt-10 inline-flex items-center gap-2 text-sm uppercase tracking-[0.06em] text-muted transition-colors hover:text-accent-soft"
                 >
                     {t(notFoundPage.backHome)} →
                 </Link>

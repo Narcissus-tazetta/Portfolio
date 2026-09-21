@@ -1,145 +1,73 @@
 import { useEffect, useRef, useState } from "react";
-import { Menu, X } from "lucide-react";
-import GithubIcon from "./icons/GithubIcon";
+import { ArrowUpRight, Menu, X } from "lucide-react";
+import { NavLink, useLocation } from "react-router-dom";
+import PrasonMark from "./PrasonMark";
 import ThemeToggle from "./ThemeToggle";
-import { NavLink } from "react-router-dom";
 import { navigation } from "../content/navigation";
+import { projects } from "../content/projects";
 import { profile, social } from "../content/profile";
 import { uiLabels } from "../content/ui";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useLogoAccentToggle } from "../hooks/useLogoAccentToggle";
 
-function navLinkClassName({ isActive }: { isActive: boolean }) {
-    return [
-        "font-sans text-xs uppercase tracking-[0.06em] transition-colors",
-        isActive ? "text-accent-soft" : "text-muted hover:text-accent-soft",
-    ].join(" ");
-}
+const desktopNavigation = [navigation[2], navigation[1], navigation[3]];
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
+    const triggerRef = useRef<HTMLButtonElement>(null);
+    const { pathname } = useLocation();
     const { language, setLanguage, t } = useLanguage();
     const { handleLogoClick } = useLogoAccentToggle();
 
+    useEffect(() => { setMenuOpen(false); }, [pathname]);
     useEffect(() => {
-        if (!menuOpen) {
-            return;
-        }
-
+        if (!menuOpen) return;
         const previousOverflow = document.body.style.overflow;
         document.body.style.overflow = "hidden";
-
+        const getFocusable = () => [...(menuRef.current?.querySelectorAll<HTMLElement>("a[href],button") ?? [])];
+        getFocusable()[0]?.focus();
         const onKeyDown = (event: KeyboardEvent) => {
-            if (event.key === "Escape") {
-                setMenuOpen(false);
-            }
+            if (event.key === "Escape") { setMenuOpen(false); return; }
+            if (event.key !== "Tab") return;
+            const items = getFocusable();
+            const first = items[0], last = items[items.length-1];
+            if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+            else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
         };
-
+        const breakpoint = window.matchMedia("(min-width: 768px)");
+        const onResize = () => { if (breakpoint.matches) setMenuOpen(false); };
         document.addEventListener("keydown", onKeyDown);
-        menuRef.current?.querySelector<HTMLElement>("a,button")?.focus();
-
+        breakpoint.addEventListener("change", onResize);
+        const trigger = triggerRef.current;
         return () => {
             document.body.style.overflow = previousOverflow;
             document.removeEventListener("keydown", onKeyDown);
+            breakpoint.removeEventListener("change", onResize);
+            trigger?.focus();
         };
     }, [menuOpen]);
 
     return (
-        <header className="fixed inset-x-0 top-0 z-50 border-b border-accent/25 bg-nav/80 backdrop-blur-md">
-            <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-                <NavLink
-                    to="/"
-                    onClick={handleLogoClick}
-                    className="font-brand text-2xl leading-none text-foreground select-none"
-                >
-                    {profile.displayName}
-                </NavLink>
-
-                <nav className="hidden items-center gap-6 md:flex" aria-label="Main">
-                    {navigation.map((item) => (
-                        <NavLink key={item.path} to={item.path} className={navLinkClassName}>
-                            {t(item.label)}
-                        </NavLink>
-                    ))}
-                </nav>
-
-                <div className="flex items-center gap-3">
-                    <a
-                        href={social.github.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={t(uiLabels.github)}
-                        className="text-muted transition-colors hover:text-foreground"
-                    >
-                        <GithubIcon className="h-4 w-4" />
-                    </a>
-
-                    <ThemeToggle />
-
-                    <div className="flex items-center rounded-full border border-accent/25 p-0.5 text-xs" role="group" aria-label="Language">
-                        <button
-                            type="button"
-                            onClick={() => setLanguage("ja", { animate: true })}
-                            aria-pressed={language === "ja"}
-                            aria-label={t(uiLabels.languageJa)}
-                            className={`rounded-full px-2 py-1 transition-colors ${
-                                language === "ja"
-                                    ? "bg-accent-muted text-accent-soft"
-                                    : "text-muted hover:text-accent-soft"
-                            }`}
-                        >
-                            JA
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => setLanguage("en", { animate: true })}
-                            aria-pressed={language === "en"}
-                            aria-label={t(uiLabels.languageEn)}
-                            className={`rounded-full px-2 py-1 transition-colors ${
-                                language === "en"
-                                    ? "bg-accent-muted text-accent-soft"
-                                    : "text-muted hover:text-accent-soft"
-                            }`}
-                        >
-                            EN
-                        </button>
+        <>
+            <header className="site-nav fixed inset-x-0 top-0 z-50 bg-nav/90 backdrop-blur-md">
+                <div className="site-shell nav-inner">
+                    <NavLink to="/" onClick={handleLogoClick} className="site-logo"><PrasonMark />{profile.displayName}</NavLink>
+                    <nav className="desktop-nav" aria-label={t({ja:"メインナビゲーション",en:"Main navigation"})}>{desktopNavigation.map(item => <NavLink key={item.path} to={item.path} className="nav-link">{t(item.label)}{item.path === "/works" && <sup>{String(projects.length).padStart(2,"0")}</sup>}</NavLink>)}</nav>
+                    <div className="nav-preferences">
+                        <ThemeToggle />
+                        <div className="language-switch" role="group" aria-label="Language">
+                            <button type="button" onClick={() => setLanguage("ja", {animate:true})} aria-pressed={language === "ja"} aria-label={t(uiLabels.languageJa)}>JA</button><span aria-hidden="true">/</span><button type="button" onClick={() => setLanguage("en", {animate:true})} aria-pressed={language === "en"} aria-label={t(uiLabels.languageEn)}>EN</button>
+                        </div>
+                        <button type="button" ref={triggerRef} className="mobile-menu-trigger" aria-expanded={menuOpen} aria-controls="mobile-nav" aria-label={t(uiLabels.openMenu)} onClick={() => setMenuOpen(true)}><Menu size={20} /></button>
                     </div>
-
-                    <button
-                        type="button"
-                        aria-expanded={menuOpen}
-                        aria-controls="mobile-nav"
-                        aria-label={menuOpen ? t(uiLabels.closeMenu) : t(uiLabels.openMenu)}
-                        onClick={() => setMenuOpen((open) => !open)}
-                        className="text-muted transition-colors hover:text-foreground md:hidden"
-                    >
-                        {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-                    </button>
                 </div>
-            </div>
-
-            {menuOpen ? (
-                <nav
-                    id="mobile-nav"
-                    ref={menuRef}
-                    className="border-t border-accent/25 px-6 py-4 md:hidden"
-                    aria-label="Main"
-                >
-                    <div className="flex flex-col gap-4">
-                        {navigation.map((item) => (
-                            <NavLink
-                                key={item.path}
-                                to={item.path}
-                                className={navLinkClassName}
-                                onClick={() => setMenuOpen(false)}
-                            >
-                                {t(item.label)}
-                            </NavLink>
-                        ))}
-                    </div>
-                </nav>
-            ) : null}
-        </header>
+            </header>
+            {menuOpen && <div id="mobile-nav" ref={menuRef} className="mobile-menu" role="dialog" aria-modal="true" aria-label={t({ja:"ナビゲーション",en:"Navigation"})}>
+                <div className="mobile-menu-top"><span className="micro-label">Explore / Prason</span><button type="button" aria-label={t(uiLabels.closeMenu)} onClick={() => setMenuOpen(false)}><X size={24} /></button></div>
+                <nav aria-label={t({ja:"メインナビゲーション",en:"Main navigation"})}>{navigation.map((item,index) => <NavLink key={item.path} to={item.path} onClick={() => setMenuOpen(false)}><span className="micro-label">0{index+1}</span><span>{t(item.label)}</span><ArrowUpRight strokeWidth={1} /></NavLink>)}</nav>
+                <div className="mobile-menu-bottom"><p className="micro-label">{profile.handle}</p><a href={social.github.url} target="_blank" rel="noopener noreferrer">GitHub<ArrowUpRight size={15} /></a><a href={social.email.url}>{t(uiLabels.email)}<ArrowUpRight size={15} /></a></div>
+            </div>}
+        </>
     );
 }

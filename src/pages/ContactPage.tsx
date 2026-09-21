@@ -1,4 +1,4 @@
-import { Mail } from "lucide-react";
+import { ArrowUpRight, Mail } from "lucide-react";
 import GithubIcon from "../components/icons/GithubIcon";
 import { contactPage } from "../content/contact";
 import { social } from "../content/profile";
@@ -8,52 +8,13 @@ import { useDocumentMeta } from "../hooks/useDocumentMeta";
 
 export default function ContactPage() {
     const { t } = useLanguage();
-
-    useDocumentMeta({
-        title: contactPage.title,
-        description: contactPage.intro,
-        path: "contact",
-    });
-
+    useDocumentMeta({title:contactPage.title,description:contactPage.intro,path:"contact"});
     return (
-        <div className="mx-auto max-w-2xl px-6 py-16">
-            <header className="border-b border-accent/25 pb-10">
-                <h1 className="font-sans text-sm uppercase tracking-[0.1em] text-heading/75">
-                    {t(contactPage.title)}
-                </h1>
-                <p className="mt-4 text-sm leading-relaxed text-muted md:text-base">{t(contactPage.intro)}</p>
-            </header>
-
-            <div className="mt-12 space-y-4">
-                <a
-                    href={social.github.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-start gap-4 rounded-xl border border-border/15 p-6 transition-colors hover:border-accent/40"
-                >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border/15 bg-surface-muted/5">
-                        <GithubIcon className="h-5 w-5 text-accent-soft" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                        <p className="font-sans text-sm text-foreground">{t(uiLabels.github)}</p>
-                        <p className="mt-1 text-sm text-subtle">{t(contactPage.githubDescription)}</p>
-                        <p className="mt-2 truncate text-xs text-subtle">{social.github.label}</p>
-                    </div>
-                </a>
-
-                <a
-                    href={social.email.url}
-                    className="group flex items-start gap-4 rounded-xl border border-border/15 p-6 transition-colors hover:border-accent/40"
-                >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border/15 bg-surface-muted/5">
-                        <Mail className="h-5 w-5 text-accent-soft" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                        <p className="font-sans text-sm text-foreground">{t(uiLabels.email)}</p>
-                        <p className="mt-1 text-sm text-subtle">{t(contactPage.emailDescription)}</p>
-                        <p className="mt-2 truncate text-xs text-subtle">{social.email.label}</p>
-                    </div>
-                </a>
+        <div className="site-shell interior-page contact-page">
+            <header className="contact-heading"><p className="micro-label chapter-kicker">A conversation is a good start.</p><h1 className="display-title">Say <em>hello.</em><span className="contact-star" aria-hidden="true">✳</span></h1><p className="page-intro">{t(contactPage.intro)}</p></header>
+            <div className="contact-directory">
+                <a href={social.email.url} className="contact-directory-row"><span className="contact-directory-icon"><Mail strokeWidth={1.4} /></span><span><span className="micro-label">01 / {t(uiLabels.email)}</span><strong>{social.email.label.split("@")[0]}<wbr />@{social.email.label.split("@")[1]}</strong><span className="contact-directory-description">{t(contactPage.emailDescription)}</span></span><ArrowUpRight className="contact-directory-arrow" strokeWidth={1} /></a>
+                <a href={social.github.url} target="_blank" rel="noopener noreferrer" className="contact-directory-row"><span className="contact-directory-icon"><GithubIcon /></span><span><span className="micro-label">02 / GitHub</span><strong>Narcissus-tazetta</strong><span className="contact-directory-description">{t(contactPage.githubDescription)}</span></span><ArrowUpRight className="contact-directory-arrow" strokeWidth={1} /></a>
             </div>
         </div>
     );

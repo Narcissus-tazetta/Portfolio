@@ -1,92 +1,56 @@
-import { ArrowUpRight, Mail } from "lucide-react";
-import GithubIcon from "../components/icons/GithubIcon";
-import ProfileAvatar from "../components/ProfileAvatar";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { homeHighlights } from "../content/projects";
-import { profile, sectionLabels, site, social } from "../content/profile";
-import { uiLabels } from "../content/ui";
-import WorkHighlight from "../components/WorkHighlight";
+import HeroProjectPreview from "../components/HeroProjectPreview";
+import PrasonMark from "../components/PrasonMark";
+import ProfileAvatar from "../components/ProfileAvatar";
 import ScrollReveal from "../components/ScrollReveal";
+import ShowcaseProject from "../components/ShowcaseProject";
+import { projects } from "../content/projects";
+import { capabilities, showcase } from "../content/showcase";
+import { profile, site } from "../content/profile";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useDocumentMeta } from "../hooks/useDocumentMeta";
 
 export default function HomePage() {
     const { t } = useLanguage();
-
-    useDocumentMeta({
-        title: site.title,
-        description: site.description,
-    });
-
+    useDocumentMeta({ title: site.title, description: site.description });
     return (
-        <div className="mx-auto max-w-6xl px-6 py-16">
-            <section className="max-w-2xl border-b border-accent/25 pb-16">
-                <div className="flex items-start gap-5">
-                    <ProfileAvatar className="h-24 w-24 shrink-0 rounded-2xl border border-border/15 object-cover md:h-28 md:w-28" />
-
-                    <div className="min-w-0">
-                        <p className="font-sans text-xs uppercase tracking-[0.1em] text-subtle">
-                            {t(profile.tagline)} · {profile.handle}
-                        </p>
-                        <h1 className="font-brand mt-3 text-6xl leading-none text-foreground md:text-7xl">
-                            {profile.displayName}
-                        </h1>
+        <div className="portfolio-home">
+            <section className="atelier-hero" aria-labelledby="home-title">
+                <div className="hero-grid" aria-hidden="true" />
+                <div className="site-shell hero-inner">
+                    <div className="hero-copy">
+                    <div className="hero-byline micro-label"><span className="tiny-cross" aria-hidden="true" />{profile.displayName} / Independent developer</div>
+                    <h1 id="home-title" className="atelier-title"><span>Curiosity,</span><span>made <em>useful.</em></span></h1>
+                    <div className="hero-note"><span className="micro-label">Algorithms. Systems. Everyday experience.</span><p>{t({ ja: "アルゴリズムから、使う人の体験まで。\n「こうだったら便利」を、仕組みからつくる。", en: "From algorithms to the experience of using them.\nBuilding the systems behind “this could be better.”" })}</p></div>
                     </div>
-                </div>
-
-                <blockquote className="mt-6 border-l-[3px] border-accent-soft pl-4 text-sm leading-relaxed text-muted md:text-base">
-                    {t(profile.catchphrase)}
-                </blockquote>
-                <p className="mt-3 text-sm leading-relaxed text-muted md:text-base">{t(profile.bio)}</p>
-
-                <div className="mt-8 flex flex-wrap items-center gap-3">
-                    <a
-                        href={social.github.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-sans inline-flex items-center gap-2 text-xs uppercase tracking-[0.06em] text-muted transition-colors hover:text-foreground"
-                    >
-                        <GithubIcon className="h-4 w-4" />
-                        {t(uiLabels.github)}
-                    </a>
-                    <span className="h-3.5 w-px shrink-0 bg-foreground/15" aria-hidden="true" />
-                    <a
-                        href={social.email.url}
-                        className="font-sans inline-flex items-center gap-2 text-xs uppercase tracking-[0.06em] text-muted transition-colors hover:text-foreground"
-                    >
-                        <Mail className="h-4 w-4" />
-                        {t(uiLabels.email)}
-                    </a>
-                    <span className="h-3.5 w-px shrink-0 bg-foreground/15" aria-hidden="true" />
-                    <Link
-                        to="/about"
-                        className="font-sans inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.06em] text-muted transition-colors hover:text-foreground"
-                    >
-                        {t(uiLabels.aboutLink)}
-                        <ArrowUpRight className="h-3.5 w-3.5" />
-                    </Link>
+                    <HeroProjectPreview />
+                    <div className="hero-bottom"><a href="#selected-work" className="scroll-cue"><span className="scroll-circle"><ArrowDown size={18} /></span><span className="micro-label">Explore selected work</span></a><span className="hero-index micro-label">Native apps / Web systems / Creative tools</span></div>
                 </div>
             </section>
 
-            <ScrollReveal as="section" variant="subtle" className="scroll-reveal-stagger-grid mt-16">
-                <div className="mb-6 flex items-end justify-between gap-4 border-b border-accent/25 pb-4">
-                    <h2 className="font-sans text-xs font-medium uppercase tracking-[0.1em] text-muted">
-                        {t(sectionLabels.highlights)}
-                    </h2>
-                    <Link
-                        to="/works"
-                        className="font-sans text-xs uppercase tracking-[0.06em] text-muted transition-colors hover:text-foreground"
-                    >
-                        {t(sectionLabels.viewAllWorks)} →
-                    </Link>
-                </div>
+            <section id="selected-work" className="site-shell work-chapter" aria-labelledby="selected-title">
+                <ScrollReveal as="div" className="chapter-heading">
+                    <div><p className="micro-label chapter-kicker">01 — Selected projects</p><h2 id="selected-title">Works with<br /><em>a purpose.</em></h2></div>
+                    <div className="chapter-aside"><span className="chapter-count">(04)</span><p>{t({ ja: "小さな不便を見つけて、仕組みから考える。\n発想と技術をかたちにした、4つのプロジェクト。", en: "Finding the small frictions. Rethinking the system.\nFour projects that turn ideas into something useful." })}</p></div>
+                </ScrollReveal>
+                <div className="case-studies">{showcase.map(entry => {
+                    const project = projects.find(item => item.id === entry.id);
+                    return project ? <ScrollReveal key={entry.id} as="div" variant="subtle"><ShowcaseProject project={project} entry={entry} /></ScrollReveal> : null;
+                })}</div>
+                <Link to="/works" className="all-projects-link"><span>{t({ja: "すべてのプロジェクト", en: "The full collection"})}<sup>{String(projects.length).padStart(2,"0")}</sup></span><ArrowUpRight strokeWidth={1.25} /></Link>
+            </section>
 
-                <div className="scroll-reveal-grid grid gap-6 md:grid-cols-2">
-                    {homeHighlights.map((project) => (
-                        <WorkHighlight key={project.id} project={project} />
-                    ))}
+            <section className="capabilities-section" aria-labelledby="capabilities-title">
+                <div className="site-shell capabilities-layout">
+                    <div className="capabilities-intro"><p className="micro-label chapter-kicker">02 — The way I build</p><h2 id="capabilities-title">Different tools.<br /><em>One mindset.</em></h2><p>{t({ja: "見た目だけでなく、仕組みも心地よく。\nつくるものに合わせて、技術を選びます。", en: "Thoughtful on the surface. Thoughtful underneath.\nThe right tools for the thing being built."})}</p><PrasonMark className="capability-mark" /></div>
+                    <div className="capability-list">{capabilities.map(item => <ScrollReveal key={item.number} as="article" className="capability-item"><span className="micro-label">/{item.number}</span><div><h3>{item.name}</h3><p>{t(item.description)}</p><span className="capability-skills micro-label">{item.skills}</span></div></ScrollReveal>)}</div>
                 </div>
-            </ScrollReveal>
+            </section>
+
+            <section className="site-shell about-chapter" aria-labelledby="about-title">
+                <ScrollReveal as="div" className="about-editorial"><div className="about-photo"><ProfileAvatar className="editorial-portrait" /><span className="photo-caption micro-label">Away from the keyboard.</span></div><div className="about-editorial-copy"><p className="micro-label chapter-kicker">03 — Behind the code</p><h2 id="about-title">Always curious.<br /><em>Still exploring.</em></h2><p>{t({ja: "Prason。コードを書いたり、ゲームをしたり。\n雪山を滑ったり、バイクに乗ったり。", en: "Prason. Writing code, playing games.\nSkiing down a mountain, or out on a bike."})}</p><p className="about-secondary">{t({ja: "「こうだったらいいのに」を、自分の手でつくる。そんな小さな好奇心が、次のプロジェクトの始まりです。", en: "That little thought — “what if this worked differently?” — is usually where the next project begins."})}</p><Link to="/about" className="underlined-link">{t({ja: "もう少し、自己紹介", en: "A little more about me"})}<ArrowUpRight size={18} /></Link></div></ScrollReveal>
+            </section>
         </div>
     );
 }

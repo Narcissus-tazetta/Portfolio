@@ -1,118 +1,27 @@
-import { Mail } from "lucide-react";
-import GithubIcon from "../components/icons/GithubIcon";
-import ProfileAvatar from "../components/ProfileAvatar";
+import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import AboutBuildItemRow from "../components/AboutBuildItemRow";
+import ProfileAvatar from "../components/ProfileAvatar";
 import ScrollReveal from "../components/ScrollReveal";
+import AboutBuildItemRow from "../components/AboutBuildItemRow";
 import TechStackTag from "../components/TechStackTag";
 import { aboutPage } from "../content/about";
-import { profile, social } from "../content/profile";
-import { uiLabels } from "../content/ui";
+import { profile } from "../content/profile";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useDocumentMeta } from "../hooks/useDocumentMeta";
 
-function sectionClassName(index: number, hasItems: boolean) {
-    const classes = [index > 0 ? "border-t border-accent/25 pt-10 mt-10" : "", hasItems ? "scroll-reveal-stagger-list" : ""];
-    return classes.filter(Boolean).join(" ") || undefined;
-}
-
 export default function AboutPage() {
     const { t } = useLanguage();
-
-    useDocumentMeta({
-        title: aboutPage.title,
-        description: aboutPage.tagline,
-        path: "about",
-    });
-
+    useDocumentMeta({title:aboutPage.title,description:aboutPage.tagline,path:"about"});
     return (
-        <div className="mx-auto max-w-2xl px-6 py-16">
-            <header className="border-b border-accent/25 pb-10">
-                <div className="flex items-start justify-between gap-5">
-                    <div className="min-w-0">
-                        <h1 className="font-brand text-5xl leading-none text-foreground md:text-6xl">
-                            {profile.displayName}
-                        </h1>
-                        <p className="font-sans mt-4 text-sm tracking-[0.05em] text-muted">{t(aboutPage.roleLine)}</p>
-                    </div>
-
-                    <ProfileAvatar className="h-24 w-24 shrink-0 rounded-2xl border border-border/15 object-cover md:h-28 md:w-28" />
-                </div>
-
-                <p className="mt-3 text-sm leading-relaxed text-muted md:text-base">{t(aboutPage.tagline)}</p>
-                <p className="mt-4 text-sm leading-relaxed text-muted md:text-base">
-                    {t(aboutPage.contactBefore)}{" "}
-                    <Link
-                        to="/contact"
-                        className="text-foreground underline decoration-foreground/40 underline-offset-4 transition-colors hover:decoration-foreground"
-                    >
-                        {t(uiLabels.contact)}
-                    </Link>
-                    {t(aboutPage.contactAfter) ? ` ${t(aboutPage.contactAfter)}` : null}
-                </p>
-            </header>
-
-            <div className="mt-12">
-                {aboutPage.sections.map((section, index) => (
-                    <ScrollReveal
-                        key={section.title.en}
-                        as="section"
-                        variant="subtle"
-                        className={sectionClassName(index, Boolean(section.items))}
-                    >
-                        <h2 className="font-sans text-sm uppercase tracking-[0.1em] text-heading/75">
-                            {t(section.title)}
-                        </h2>
-
-                        {section.paragraphs ? (
-                            <div className="mt-4 space-y-4">
-                                {section.paragraphs.map((paragraph) => (
-                                    <p key={paragraph.en} className="text-sm leading-relaxed text-muted md:text-base">
-                                        {t(paragraph)}
-                                    </p>
-                                ))}
-                            </div>
-                        ) : null}
-
-                        {section.items ? (
-                            <ul className="mt-4 space-y-4">
-                                {section.items.map((item) => (
-                                    <li key={item.id} className="border-b border-accent/15 pb-4 last:border-0">
-                                        <AboutBuildItemRow item={item} />
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : null}
-
-                        {section.tags ? (
-                            <ul className="mt-4 flex flex-wrap gap-2">
-                                {section.tags.map((tag) => (
-                                    <TechStackTag key={tag} name={tag} />
-                                ))}
-                            </ul>
-                        ) : null}
-                    </ScrollReveal>
-                ))}
-            </div>
-
-            <div className="mt-14 flex flex-wrap gap-4 border-t border-accent/25 pt-10">
-                <a
-                    href={social.github.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-sans inline-flex items-center gap-2 text-xs uppercase tracking-[0.06em] text-muted transition-colors hover:text-foreground"
-                >
-                    <GithubIcon className="h-4 w-4" />
-                    {t(uiLabels.github)}
-                </a>
-                <a
-                    href={social.email.url}
-                    className="font-sans inline-flex items-center gap-2 text-xs uppercase tracking-[0.06em] text-muted transition-colors hover:text-foreground"
-                >
-                    <Mail className="h-4 w-4" />
-                    {t(uiLabels.email)}
-                </a>
-            </div>
+        <div className="site-shell interior-page about-page">
+            <header className="about-masthead"><div><p className="micro-label chapter-kicker">A person behind the projects</p><h1 className="display-title">Hi, I'm<br /><em>{profile.displayName}.</em></h1><p className="about-handle micro-label">@{profile.handle}</p></div><div className="about-masthead-photo"><ProfileAvatar className="about-portrait" /><span className="micro-label">Code / Games / Skiing / Motorcycles</span></div></header>
+            <div className="about-introduction"><span className="micro-label">About me</span><p>{t({ja:"日常の「面倒」を、\nコードで少し楽にする。",en:"Making everyday hassles\na little easier with code."})}</p></div>
+            <div className="about-sections">{aboutPage.sections.map((section,index) => <ScrollReveal key={section.title.en} as="section" variant="subtle" className="about-section"><h2><span className="micro-label">0{index+1}</span>{t(section.title)}</h2><div>
+                {section.paragraphs && <div className="about-paragraphs">{section.paragraphs.map(paragraph => <p key={paragraph.en}>{t(paragraph)}</p>)}</div>}
+                {section.items && <ul className="about-build-list">{section.items.map(item => <li key={item.id}><AboutBuildItemRow item={item} /></li>)}</ul>}
+                {section.tags && <ul className="flex flex-wrap gap-2">{section.tags.map(tag => <TechStackTag key={tag} name={tag} />)}</ul>}
+            </div></ScrollReveal>)}</div>
+            <Link to="/works" className="all-projects-link"><span>{t({ja:"つくってきたものを見る",en:"See what I've been making"})}</span><ArrowUpRight strokeWidth={1.25} /></Link>
         </div>
     );
 }

@@ -149,7 +149,10 @@ export async function bootstrapApp(render: () => void) {
     if (delay > 0) {
         await animateProgress(5, 70, delay);
     } else {
-        await animateProgress(5, 55, 180);
+        render();
+        document.getElementById("initial-loader")?.remove();
+        hideInitialLoader();
+        return;
     }
 
     render();

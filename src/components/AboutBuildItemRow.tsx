@@ -11,7 +11,7 @@ const categoryIcons: Record<AboutBuildItem["id"], LucideIcon> = {
 };
 
 const iconBoxClassName =
-    "flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border/15 bg-surface-muted/5";
+    "flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden border border-border/15 bg-surface-muted/5";
 
 export default function AboutBuildItemRow({ item }: { item: AboutBuildItem }) {
     const { t } = useLanguage();
@@ -24,8 +24,8 @@ export default function AboutBuildItemRow({ item }: { item: AboutBuildItem }) {
             </div>
 
             <div className="min-w-0">
-                <p className="font-sans text-sm text-foreground">{t(item.label)}</p>
-                <p className="mt-1 text-sm leading-relaxed text-muted">{t(item.description)}</p>
+                <p className="font-sans text-base font-medium text-foreground">{t(item.label)}</p>
+                <p className="mt-2 text-base leading-8 text-muted">{t(item.description)}</p>
             </div>
         </div>
     );

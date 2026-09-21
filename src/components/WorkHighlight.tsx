@@ -6,11 +6,9 @@ import type { Project } from "../content/types";
 import { useLanguage } from "../contexts/LanguageContext";
 import ProjectMedia from "./ProjectMedia";
 
-const cardClassName =
-    "group block overflow-hidden rounded-xl border border-border/15 transition-colors hover:border-accent/40";
-
 export default function WorkHighlight({ project }: { project: Project }) {
     const { t } = useLanguage();
+    const cardClassName = "work-highlight group";
     const [isHovered, setIsHovered] = useState(false);
     const isDetailPage = project.detailLayout !== "external";
     const imageAlt = projectImageAlt(project, t(project.description));
@@ -24,16 +22,18 @@ export default function WorkHighlight({ project }: { project: Project }) {
 
     const content = (
         <>
-            <ProjectMedia project={project} imageAlt={imageAlt} active={isHovered} />
-            <article className="flex items-start justify-between gap-4 p-5">
-                <div className="space-y-1.5">
-                    <h3 className="font-sans text-lg font-medium text-foreground">{project.title}</h3>
-                    <p className="text-sm text-muted">{t(project.description)}</p>
-                    <p className="border-l-2 border-accent/40 pl-3 text-xs leading-relaxed text-subtle">
-                        {t(project.context)}
-                    </p>
+            <div className="work-image">
+                <ProjectMedia project={project} imageAlt={imageAlt} active={isHovered} />
+                <span className="work-open" aria-hidden="true"><ArrowUpRight size={24} /></span>
+            </div>
+            <article className="work-copy">
+                <div className="work-topline micro-label">
+                    <span>{project.tags.slice(0, 2).join(" / ")}</span>
+                    <span>{t(project.kind === "personal" ? { ja: "個人開発", en: "Personal" } : { ja: "依頼制作", en: "Commissioned" })}</span>
                 </div>
-                <ArrowUpRight className="h-5 w-5 shrink-0 text-subtle transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
+                <h3>{project.title}</h3>
+                <p className="work-description">{t(project.description)}</p>
+                <p className="work-context">{t(project.impact)}</p>
             </article>
         </>
     );

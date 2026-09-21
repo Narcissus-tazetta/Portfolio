@@ -14,7 +14,10 @@ function getSharedObserver(): IntersectionObserver {
     sharedObserver = new IntersectionObserver(
         (entries) => {
             for (const entry of entries) {
-                listeners.get(entry.target)?.(entry.isIntersecting);
+                if (entry.isIntersecting) {
+                    listeners.get(entry.target)?.(true);
+                    sharedObserver?.unobserve(entry.target);
+                }
             }
         },
         {

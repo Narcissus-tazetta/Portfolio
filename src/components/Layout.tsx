@@ -8,7 +8,7 @@ export default function Layout() {
         <div className="min-h-screen font-body text-foreground">
             <SkipLink />
             <Navbar />
-            <main id="main-content" className="pt-16" tabIndex={-1}>
+            <main id="main-content" className="pt-[88px]" tabIndex={-1}>
                 <Outlet />
             </main>
             <SiteFooter />

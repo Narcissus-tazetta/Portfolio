@@ -1,14 +1,12 @@
 import { useState } from "react";
-import { ArrowUpRight, Bot, Globe, Package } from "lucide-react";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import GithubIcon from "../components/icons/GithubIcon";
-import ProjectLinkCard from "../components/ProjectLinkCard";
 import ProjectMedia from "../components/ProjectMedia";
 import TechStackTag from "../components/TechStackTag";
 import { projectDetailLabels } from "../content/projectDetail";
-import { getProjectById } from "../content/projects";
+import { getProjectById, projects } from "../content/projects";
+import { showcase } from "../content/showcase";
 import { site } from "../content/profile";
-import { uiLabels } from "../content/ui";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useDocumentMeta } from "../hooks/useDocumentMeta";
 import { projectImageAlt } from "../lib/projectImageAlt";
@@ -17,133 +15,23 @@ export default function ProjectDetailPage() {
     const { projectId } = useParams();
     const { t } = useLanguage();
     const project = projectId ? getProjectById(projectId) : undefined;
+    const editorial = showcase.find(entry => entry.id === projectId);
     const [isHovered, setIsHovered] = useState(false);
-
-    useDocumentMeta(
-        project
-            ? {
-                  title: {
-                      ja: `${project.title} — ${uiLabels.titleSuffix.ja}`,
-                      en: `${project.title} — ${uiLabels.titleSuffix.en}`,
-                  },
-                  description: project.description,
-                  path: `works/${project.id}`,
-                  image: project.thumbnail,
-              }
-            : {
-                  title: site.title,
-              },
-    );
-
-    if (!project || project.detailLayout === "external" || !project.links) {
-        return <Navigate to="/works" replace />;
-    }
-
-    const imageAlt = projectImageAlt(project, t(project.description));
-
+    useDocumentMeta(project ? { title: {ja:`${project.title} — Prason`,en:`${project.title} — Prason`}, description: project.description, path:`works/${project.id}`, image:project.thumbnail } : {title:site.title});
+    if (!project || project.detailLayout === "external" || !project.links) return <Navigate to="/works" replace />;
+    const ordered = [...showcase.map(entry => getProjectById(entry.id)!), ...projects.filter(item => !showcase.some(entry => entry.id === item.id))];
+    const next = ordered[(ordered.findIndex(item => item.id === project.id)+1)%ordered.length];
+    const secondaryLink = project.links.demo ?? project.links.release ?? project.links.invite;
+    const secondaryLabel = project.links.demo ? {ja:"サイトを見る",en:"Live site"} : project.links.release ? {ja:"リリースを見る",en:"Releases"} : {ja:"Discord に追加",en:"Add to Discord"};
     return (
-        <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-2xl flex-col px-6 py-16">
-            <div
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-            >
-                <ProjectMedia
-                    project={project}
-                    imageAlt={imageAlt}
-                    loading="eager"
-                    active={isHovered}
-                    className="mb-8 rounded-xl border border-border/15"
-                />
-            </div>
-
-            <header className="border-b border-accent/25 pb-8">
-                <h1 className="font-sans text-xl font-medium text-foreground md:text-2xl">{project.title}</h1>
-                <p className="mt-3 text-sm leading-relaxed text-muted md:text-base">{t(project.description)}</p>
-                <p className="mt-3 border-l-2 border-accent/40 pl-3 text-sm leading-relaxed text-subtle">
-                    {t(project.context)}
-                </p>
-            </header>
-
-            {project.techStack?.length ? (
-                <section className="mt-8">
-                    <h2 className="font-sans text-xs uppercase tracking-[0.06em] text-muted">
-                        {t(projectDetailLabels.tech)}
-                    </h2>
-                    <ul className="mt-4 flex flex-wrap gap-2">
-                        {project.techStack.map((name) => (
-                            <TechStackTag key={name} name={name} />
-                        ))}
-                    </ul>
-                </section>
-            ) : null}
-
-            {project.features?.length ? (
-                <section className="mt-8">
-                    <h2 className="font-sans text-xs uppercase tracking-[0.06em] text-muted">
-                        {t(projectDetailLabels.features)}
-                    </h2>
-                    <ul className="mt-4 space-y-2">
-                        {project.features.map((feature) => (
-                            <li
-                                key={feature.en}
-                                className="border-l-2 border-accent/25 pl-3 text-sm leading-relaxed text-subtle"
-                            >
-                                {t(feature)}
-                            </li>
-                        ))}
-                    </ul>
-                </section>
-            ) : null}
-
-            <div className="mt-8 space-y-4">
-                <ProjectLinkCard
-                    href={project.links.github}
-                    icon={<GithubIcon className="h-5 w-5 text-accent-soft" />}
-                    label={t(projectDetailLabels.github)}
-                    description={t(projectDetailLabels.githubDescription)}
-                    meta={project.links.github.replace("https://", "")}
-                />
-
-                {project.detailLayout === "github-demo" && project.links.demo ? (
-                    <ProjectLinkCard
-                        href={project.links.demo}
-                        icon={<Globe className="h-5 w-5 text-accent-soft" strokeWidth={1.75} />}
-                        label={t(projectDetailLabels.demo)}
-                        description={t(projectDetailLabels.demoDescription)}
-                        meta={project.links.demo.replace("https://", "")}
-                    />
-                ) : null}
-
-                {project.detailLayout === "github-release" && project.links.release ? (
-                    <ProjectLinkCard
-                        href={project.links.release}
-                        icon={<Package className="h-5 w-5 text-accent-soft" strokeWidth={1.75} />}
-                        label={t(projectDetailLabels.release)}
-                        description={t(projectDetailLabels.releaseDescription)}
-                        meta={project.links.release.replace("https://", "")}
-                    />
-                ) : null}
-
-                {project.detailLayout === "github-invite" && project.links.invite ? (
-                    <ProjectLinkCard
-                        href={project.links.invite}
-                        icon={<Bot className="h-5 w-5 text-accent-soft" strokeWidth={1.75} />}
-                        label={t(projectDetailLabels.invite)}
-                        description={t(projectDetailLabels.inviteDescription)}
-                        meta="Discord"
-                    />
-                ) : null}
-            </div>
-
-            <div className="mt-auto border-t border-accent/25 pt-10">
-                <Link
-                    to="/works"
-                    className="font-sans inline-flex items-center gap-2 text-xs uppercase tracking-[0.06em] text-muted transition-colors hover:text-accent-soft"
-                >
-                    {t(projectDetailLabels.backToWorks)}
-                    <ArrowUpRight className="h-4 w-4" />
-                </Link>
-            </div>
+        <div className="site-shell interior-page project-page">
+            <Link to="/works" className="project-back micro-label"><ArrowLeft size={14} />{t(projectDetailLabels.backToWorks)}</Link>
+            <header className="project-heading"><p className="micro-label">{editorial?.discipline ?? project.tags.join(" / ")}</p><h1 className="project-title">{project.title}</h1><div className="project-heading-bottom"><p>{t(project.description)}</p><div className="project-actions"><a href={project.links.github} target="_blank" rel="noopener noreferrer" className="underlined-link">GitHub<ArrowUpRight size={16} /></a>{secondaryLink && <a href={secondaryLink} target="_blank" rel="noopener noreferrer" className="underlined-link">{t(secondaryLabel)}<ArrowUpRight size={16} /></a>}</div></div></header>
+            <div className={`project-visual project-visual--${editorial?.tone ?? "silver"}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}><ProjectMedia project={project} imageAlt={projectImageAlt(project,t(project.description))} loading="eager" active={isHovered} /></div>
+            <div className="project-overview"><div><p className="micro-label">01 / Overview</p><h2>{t(editorial?.headline ?? project.impact)}</h2></div><div><p className="project-overview-lead">{t(editorial?.summary ?? project.impact)}</p><p className="project-origin">{t(project.context)}</p>{editorial && <p className="project-engineering">{t(editorial.engineering)}</p>}</div></div>
+            {project.techStack?.length ? <section className="project-technical"><h2 className="micro-label">02 / {t(projectDetailLabels.tech)}</h2><ul className="flex flex-wrap gap-2">{project.techStack.map(name => <TechStackTag key={name} name={name} />)}</ul></section> : null}
+            {project.features?.length ? <section className="project-technical"><h2 className="micro-label">03 / {t(projectDetailLabels.features)}</h2><ul className="project-feature-list">{project.features.map((feature,index) => <li key={feature.en}><span className="micro-label">{String(index+1).padStart(2,"0")}</span><p>{t(feature)}</p></li>)}</ul></section> : null}
+            <Link to={`/works/${next.id}`} className="next-project"><span><span className="micro-label">{t({ja:"次のプロジェクト",en:"Next project"})}</span><strong>{next.title}</strong></span><ArrowUpRight strokeWidth={1} /></Link>
         </div>
     );
 }
