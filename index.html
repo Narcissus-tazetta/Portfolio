@@ -1,34 +1,34 @@
 <!DOCTYPE html>
-<html lang="ja" class="dark">
+<html lang="en" class="dark">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
             name="description"
-            content="Prason (Narcissus-tazetta) のポートフォリオ。music-autoplay をはじめとする作品を掲載しています。"
+            content="Portfolio of Prason (Narcissus-tazetta), featuring projects such as music-autoplay."
         />
         <link rel="canonical" href="https://prason.dev/" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Prason Portfolio" />
         <meta property="og:url" content="https://prason.dev/" />
-        <meta property="og:title" content="Prasonのポートフォリオ — Narcissus-tazetta" />
+        <meta property="og:title" content="Prason's Portfolio — Narcissus-tazetta" />
         <meta
             property="og:description"
-            content="Prason (Narcissus-tazetta) のポートフォリオ。Webアプリ、ブラウザ拡張、Discord Bot などの作品を掲載しています。"
+            content="Portfolio of Prason (Narcissus-tazetta), featuring web apps, browser extensions, Discord bots, and more."
         />
         <meta property="og:image" content="https://prason.dev/og.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:locale" content="ja_JP" />
-        <meta property="og:locale:alternate" content="en_US" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:locale:alternate" content="ja_JP" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Prasonのポートフォリオ — Narcissus-tazetta" />
+        <meta name="twitter:title" content="Prason's Portfolio — Narcissus-tazetta" />
         <meta
             name="twitter:description"
-            content="Prason (Narcissus-tazetta) のポートフォリオ。Webアプリ、ブラウザ拡張、Discord Bot などの作品を掲載しています。"
+            content="Portfolio of Prason (Narcissus-tazetta), featuring web apps, browser extensions, Discord bots, and more."
         />
         <meta name="twitter:image" content="https://prason.dev/og.png" />
-        <title>Prasonのポートフォリオ — Narcissus-tazetta</title>
+        <title>Prason's Portfolio — Narcissus-tazetta</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -72,8 +72,7 @@
                         if (legacyLanguage === "en" || legacyLanguage === "ja") {
                             language = legacyLanguage;
                         } else {
-                            var preferred = (navigator.languages && navigator.languages[0]) || navigator.language || "";
-                            language = preferred.toLowerCase().indexOf("ja") === 0 ? "ja" : "en";
+                            language = "en";
                         }
                     }
                     document.documentElement.lang = language;

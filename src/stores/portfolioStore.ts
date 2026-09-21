@@ -27,12 +27,8 @@ function isLanguage(value: unknown): value is Language {
     return value === "ja" || value === "en";
 }
 
-function getBrowserDefaultLanguage(): Language {
-    if (typeof navigator === "undefined") {
-        return "ja";
-    }
-    const preferred = navigator.languages?.[0] ?? navigator.language ?? "";
-    return preferred.toLowerCase().startsWith("ja") ? "ja" : "en";
+function getDefaultLanguage(): Language {
+    return "en";
 }
 
 function isTheme(value: unknown): value is Theme {
@@ -53,7 +49,7 @@ function readPersistedState(): { language: Language; theme: Theme; accentPurple:
         }
 
         return {
-            language: isLanguage(state.language) ? state.language : getBrowserDefaultLanguage(),
+            language: isLanguage(state.language) ? state.language : getDefaultLanguage(),
             theme: isTheme(state.theme) ? state.theme : "system",
             accentPurple: Boolean(state.accentPurple),
         };
@@ -67,7 +63,7 @@ function readLegacyState(): { language: Language; theme: Theme; accentPurple: bo
     const theme = localStorage.getItem(LEGACY_THEME_KEY);
 
     return {
-        language: isLanguage(language) ? language : getBrowserDefaultLanguage(),
+        language: isLanguage(language) ? language : getDefaultLanguage(),
         theme: isTheme(theme) ? theme : "system",
         accentPurple: localStorage.getItem(LEGACY_ACCENT_KEY) === "1",
     };

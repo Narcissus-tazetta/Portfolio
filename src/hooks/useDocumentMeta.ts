@@ -66,9 +66,9 @@ export function useDocumentMeta({ title, description, path = "", image = "/og.pn
     const pageTitle = t(title);
     const resolvedTitle = pageTitle.includes(suffix) ? pageTitle : `${pageTitle} — ${suffix}`;
     const resolvedDescription = description ? t(description) : t(site.description);
-    const jaUrl = buildAbsoluteUrl(path);
-    const enUrl = `${jaUrl}?lang=en`;
-    const pageUrl = language === "ja" ? jaUrl : enUrl;
+    const enUrl = buildAbsoluteUrl(path);
+    const jaUrl = `${enUrl}?lang=ja`;
+    const pageUrl = language === "en" ? enUrl : jaUrl;
     const imageUrl = buildImageUrl(image);
 
     useEffect(() => {
@@ -91,6 +91,6 @@ export function useDocumentMeta({ title, description, path = "", image = "/og.pn
         upsertLink("canonical", pageUrl);
         upsertLink("alternate", jaUrl, "ja");
         upsertLink("alternate", enUrl, "en");
-        upsertLink("alternate", jaUrl, "x-default");
+        upsertLink("alternate", enUrl, "x-default");
     }, [resolvedTitle, resolvedDescription, pageUrl, jaUrl, enUrl, imageUrl, language]);
 }

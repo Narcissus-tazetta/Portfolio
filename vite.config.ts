@@ -36,8 +36,8 @@ function renderHead(template: string, route: RouteMeta) {
             /<link rel="canonical" href="[^"]*" \/>/,
             [
                 `<link rel="canonical" href="${pageUrl}" />`,
-                `<link rel="alternate" hreflang="ja" href="${pageUrl}" />`,
-                `<link rel="alternate" hreflang="en" href="${escapeAttribute(`${pageUrl}?lang=en`)}" />`,
+                `<link rel="alternate" hreflang="ja" href="${escapeAttribute(`${pageUrl}?lang=ja`)}" />`,
+                `<link rel="alternate" hreflang="en" href="${pageUrl}" />`,
                 `<link rel="alternate" hreflang="x-default" href="${pageUrl}" />`,
             ].join("\n        "),
         );
@@ -77,32 +77,32 @@ async function collectRoutes(): Promise<RouteMeta[]> {
         const { aboutPage } = await server.ssrLoadModule("/src/content/about.ts");
         const { contactPage } = await server.ssrLoadModule("/src/content/contact.ts");
 
-        const ja = (text: LocalizedText) => text.ja;
+        const en = (text: LocalizedText) => text.en;
         const withSuffix = (title: string) => (title.includes("Prason") ? title : `${title} — Prason`);
 
         const routes: RouteMeta[] = [
             {
                 path: "",
-                title: withSuffix(ja(site.title)),
-                description: ja(site.description),
+                title: withSuffix(en(site.title)),
+                description: en(site.description),
                 image: "/og.png",
             },
             {
                 path: "about",
-                title: withSuffix(ja(aboutPage.title)),
-                description: ja(aboutPage.tagline),
+                title: withSuffix(en(aboutPage.title)),
+                description: en(aboutPage.tagline),
                 image: "/og.png",
             },
             {
                 path: "works",
                 title: withSuffix("Works"),
-                description: ja(sectionLabels.worksIntro),
+                description: en(sectionLabels.worksIntro),
                 image: "/og.png",
             },
             {
                 path: "contact",
-                title: withSuffix(ja(contactPage.title)),
-                description: ja(contactPage.intro),
+                title: withSuffix(en(contactPage.title)),
+                description: en(contactPage.intro),
                 image: "/og.png",
             },
         ];
@@ -115,8 +115,8 @@ async function collectRoutes(): Promise<RouteMeta[]> {
             routes.push({
                 path: `works/${project.id}`,
                 title: `${project.title} — Prason`,
-                description: ja(project.description),
-                image: project.thumbnail,
+                description: en(project.description),
+                image: project.thumbnailEn ?? project.thumbnail,
             });
         }
 
