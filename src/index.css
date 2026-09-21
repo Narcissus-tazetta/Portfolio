@@ -228,21 +228,6 @@
     transition-delay: calc(var(--motion-stagger-step) * 5);
   }
 
-  .not-found-bike {
-    left: 0;
-    transition: left 2.8s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .not-found-bike--parked {
-    left: calc(100% - 1.25rem);
-  }
-
-  @media (min-width: 768px) {
-    .not-found-bike--parked {
-      left: calc(100% - 1.5rem);
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .page-transition {
       transition: none;
@@ -261,14 +246,6 @@
       opacity: 1;
       transform: none;
       transition: none;
-    }
-
-    .not-found-bike {
-      transition: none;
-    }
-
-    .not-found-bike--parked {
-      left: calc(100% - 1.25rem);
     }
 
     .theme-toggle-icon__glyph {
@@ -683,7 +660,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
 .not-found-page { max-width: 800px; padding-block: 4rem 6rem; }
 .not-found-page > .micro-label { color: var(--subtle); }
 .not-found-number { font-size: clamp(8rem, 25vw, 20rem); letter-spacing: -.09em; line-height: 1.1; margin-block: 1rem 2rem; }
-.not-found-number em { font-family: var(--font-editorial); color: var(--accent); }
+.not-found-number { color: var(--accent); font-weight: 400; }
+.not-found-actions { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
 .nav-preferences > .theme-toggle { width: 32px; display: grid; place-items: center; }
 .language-switch { gap: .25rem; }
 .language-switch button { min-width: 28px; min-height: 36px; }
