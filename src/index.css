@@ -411,9 +411,16 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
 .capabilities-section { background: #161727; color: #efedf8; padding-block: 7rem; }
 .capabilities-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; }
 .capabilities-section .chapter-kicker { color: #babbd5; }
-.capabilities-intro { position: sticky; top: calc(var(--nav-height) + 4rem); align-self: start; }
+.capabilities-intro { align-self: start; }
 .capabilities-intro h2 { font-size: clamp(3rem, 4.2vw, 4.5rem); }
 .capabilities-intro > p:not(.micro-label) { color: #c5c3d8; margin-top: 2rem; font-size: .9375rem; line-height: 2; white-space: pre-line; }
+.build-process { margin-top: 3.5rem; border-top: 1px solid #b9b8d333; }
+.build-process > .micro-label { padding-block: 1.25rem; color: #afadcc; }
+.build-process ol { border-bottom: 1px solid #b9b8d333; }
+.build-process li { display: grid; grid-template-columns: 32px 1fr; gap: 1rem; padding-block: 1rem; border-top: 1px solid #b9b8d31f; }
+.build-process li > .micro-label { padding-top: .2rem; color: var(--accent-soft); font-size: .5625rem; }
+.build-process strong { display: block; font-size: .875rem; font-weight: 500; letter-spacing: -.01em; }
+.build-process li p { margin-top: .35rem; color: #afadcc; font-size: .75rem; line-height: 1.7; }
 .capability-item { display: grid; grid-template-columns: 32px 1fr; gap: 1rem; padding-block: 2rem; border-top: 1px solid #b9b8d333; }
 .capability-item > .micro-label { color: var(--accent-soft); padding-top: .4rem; }
 .capability-item h3 { font-size: 1.6rem; font-weight: 400; letter-spacing: -.045em; }
@@ -714,15 +721,22 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
   border-bottom: 1px solid var(--rule);
 }
 @media (max-width: 1023px) {
-  /* The single-column hero leaves no room the search could occupy without sitting under the copy. */
-  .hero-visual { display: none; }
+  .hero-visual {
+    display: block;
+    inset: auto 2.5rem 4.75rem;
+    height: clamp(150px, 24vw, 210px);
+    opacity: .72;
+    mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+  }
+  .hero-copy { padding-bottom: calc(clamp(150px, 24vw, 210px) + 2rem); }
   .atelier-title { font-size: clamp(3rem, 12vw, 7.5rem); margin-top: 1.75rem; }
   .hero-note { grid-template-columns: minmax(0, 1fr); gap: .75rem; margin-top: 1.75rem; }
   .hero-note > .micro-label { display: none; }
   .hero-bottom { padding-block: 0 1.5rem; }
 }
 @media (max-width: 480px) {
-  .hero-copy { padding-block: 2rem; }
+  .hero-visual { inset-inline: 1.25rem; height: 150px; }
+  .hero-copy { padding-block: 2rem 180px; }
   .atelier-title { font-size: clamp(2.5rem, 16vw, 4.5rem); }
   .hero-note p { font-size: .875rem; }
 }
@@ -741,5 +755,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
 .light .capabilities-section { background: #eeebf6; color: var(--foreground); }
 .light .capabilities-section .chapter-kicker, .light .capabilities-intro > p:not(.micro-label), .light .capability-item p, .light .capability-skills { color: var(--muted); }
 .light .capability-item { border-color: var(--rule); }
+.light .build-process, .light .build-process ol, .light .build-process li { border-color: var(--rule); }
+.light .build-process > .micro-label, .light .build-process li p { color: var(--muted); }
 .dark .atelier-hero { background: radial-gradient(ellipse at 85% 20%, #8d63d00b, transparent 65%); }
 .light { --hero-visual-opacity: .6; }

@@ -12,6 +12,11 @@ import { useDocumentMeta } from "../hooks/useDocumentMeta";
 
 export default function HomePage() {
     const { t } = useLanguage();
+    const process = [
+        { number: "01", label: "Observe", description: { ja: "まず、使う人と小さな不便を見る。", en: "Start with the person and the friction." } },
+        { number: "02", label: "Shape", description: { ja: "必要な技術だけで、仕組みを組み立てる。", en: "Shape the system with only what it needs." } },
+        { number: "03", label: "Refine", description: { ja: "触り心地と中身を、同じ熱量で磨く。", en: "Refine the experience and the internals alike." } },
+    ];
     useDocumentMeta({ title: site.title, description: site.description });
     return (
         <div className="portfolio-home">
@@ -42,7 +47,15 @@ export default function HomePage() {
 
             <section className="capabilities-section" aria-labelledby="capabilities-title">
                 <div className="site-shell capabilities-layout">
-                    <div className="capabilities-intro"><p className="micro-label chapter-kicker">02 — The way I build</p><h2 id="capabilities-title">Different tools.<br /><em>One mindset.</em></h2><p>{t({ja: "見た目だけでなく、仕組みも心地よく。\nつくるものに合わせて、技術を選びます。", en: "Thoughtful on the surface. Thoughtful underneath.\nThe right tools for the thing being built."})}</p></div>
+                    <div className="capabilities-intro">
+                        <p className="micro-label chapter-kicker">02 — The way I build</p>
+                        <h2 id="capabilities-title">Different tools.<br /><em>One mindset.</em></h2>
+                        <p>{t({ja: "見た目だけでなく、仕組みも心地よく。\nつくるものに合わせて、技術を選びます。", en: "Thoughtful on the surface. Thoughtful underneath.\nThe right tools for the thing being built."})}</p>
+                        <div className="build-process" aria-label={t({ja: "制作プロセス", en: "Build process"})}>
+                            <p className="micro-label">How I approach a build</p>
+                            <ol>{process.map(step => <li key={step.number}><span className="micro-label">{step.number}</span><div><strong>{step.label}</strong><p>{t(step.description)}</p></div></li>)}</ol>
+                        </div>
+                    </div>
                     <div className="capability-list">{capabilities.map(item => <ScrollReveal key={item.number} as="article" className="capability-item"><span className="micro-label">/{item.number}</span><div><h3>{item.name}</h3><p>{t(item.description)}</p><span className="capability-skills micro-label">{item.skills}</span></div></ScrollReveal>)}</div>
                 </div>
             </section>
