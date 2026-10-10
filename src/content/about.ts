@@ -69,8 +69,8 @@ export const aboutPage = {
                     id: "bot",
                     label: { ja: "Discord Bot", en: "Discord Bots" },
                     description: {
-                        ja: "通知や VC 作成など、Discord 上で動く Bot",
-                        en: "Bots for notifications, voice channels, and more on Discord",
+                        ja: "AI への質問や通知、VC 作成など、Discord 上で動く Bot",
+                        en: "Bots for AI answers, notifications, voice channels, and more on Discord",
                     },
                 },
                 {

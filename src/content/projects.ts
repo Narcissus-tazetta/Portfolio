@@ -427,6 +427,54 @@ export const projects: Project[] = [
         kind: "personal",
         category: "bot",
     },
+    {
+        id: "ai-for-discord",
+        title: "AI-for-Discord",
+        description: {
+            ja: "GPT・Claude・Gemini を Discord から呼び出し、質問に合わせてモデルを自動で選ぶ AI Bot",
+            en: "Discord bot that calls GPT, Claude, and Gemini and picks the right model for each question.",
+        },
+        context: {
+            ja: "Discord で会話の流れのまま AI に聞きたかったので、モデル選びと費用管理まで含めて自分用に作った。",
+            en: "I wanted to ask AI without leaving the conversation on Discord, so I built my own with model routing and cost tracking.",
+        },
+        href: "https://github.com/Narcissus-tazetta/AI-for-Discord",
+        detailLayout: "github-only",
+        links: {
+            github: "https://github.com/Narcissus-tazetta/AI-for-Discord",
+        },
+        tags: ["Bot", "Discord", "AI"],
+        impact: {
+            ja: "質問の難しさと費用を見て、最適なモデルで回答",
+            en: "Answers with the best-fit model for difficulty and cost",
+        },
+        techStack: ["TypeScript", "Bun", "Cloudflare", "Discord"],
+        features: [
+            {
+                ja: "Auto モードが質問の難しさ・添付・検索の要否・費用から回答モデルを自動選択",
+                en: "Auto mode picks the model from question difficulty, attachments, search needs, and cost",
+            },
+            {
+                ja: "回答を書かれた分から順に表示し、Discord のレート制限に合わせて滑らかに更新",
+                en: "Streams answers as they are written, updating as smoothly as Discord's rate limits allow",
+            },
+            {
+                ja: "右クリックから会話の続きの質問や回答の再生成ができ、画像・PDF・Web 検索にも対応",
+                en: "Follow-up questions and regeneration from the context menu, with image, PDF, and web search support",
+            },
+            {
+                ja: "回答ごとに使用モデルと確定費用を表示し、月の予算を管理",
+                en: "Shows the model and confirmed cost on every answer, with a monthly budget",
+            },
+            {
+                ja: "Cloudflare Workers + Durable Objects で動き、User Install と許可リストで利用者を限定",
+                en: "Runs on Cloudflare Workers and Durable Objects, limited to allowed users via User Install",
+            },
+        ],
+        thumbnail: "/works/ai-for-discord.webp",
+        kind: "personal",
+        category: "bot",
+    },
 ];
 
 export function getProjectById(id: string): Project | undefined {
