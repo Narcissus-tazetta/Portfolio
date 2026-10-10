@@ -19,6 +19,14 @@ export function commitUrl(sha: string): string {
 
 export const siteUpdates: SiteUpdate[] = [
     {
+        date: "2026-10-10",
+        commit: "ef7cc59bbed0a7a673decbf52cfbea6d70d58a2a",
+        message: {
+            ja: "AI-for-Discord を Works に追加",
+            en: "Added AI-for-Discord to Works",
+        },
+    },
+    {
         date: "2026-09-08",
         commit: "8513a0a2dbb795175f2c1063c56911d7e390a36a",
         message: {
