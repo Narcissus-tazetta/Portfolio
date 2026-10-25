@@ -19,11 +19,43 @@ export function commitUrl(sha: string): string {
 
 export const siteUpdates: SiteUpdate[] = [
     {
+        date: "2026-10-22",
+        commit: "8242dec4c3bdd708cda00aef69f2fc7f5b058496",
+        message: {
+            ja: "連絡先メールアドレスを contact@prason.dev に変更",
+            en: "Changed contact email to contact@prason.dev",
+        },
+    },
+    {
         date: "2026-10-10",
         commit: "ef7cc59bbed0a7a673decbf52cfbea6d70d58a2a",
         message: {
             ja: "AI-for-Discord を Works に追加",
             en: "Added AI-for-Discord to Works",
+        },
+    },
+    {
+        date: "2026-09-22",
+        commit: "492d0dfe8daec3d3dc8d43369680350af94cec15",
+        message: {
+            ja: "ヒーローを A* 経路探索のライブ描画に差し替え",
+            en: "Replaced the hero with live A* pathfinding canvas",
+        },
+    },
+    {
+        date: "2026-09-22",
+        commit: "44c5bdbdb63ea12a6f27c5631435ab9a630b9a64",
+        message: {
+            ja: "ルートごとの静的HTML出力と多言語URLに対応",
+            en: "Added static HTML generation per route and localized URLs",
+        },
+    },
+    {
+        date: "2026-09-21",
+        commit: "bc9386c164e355fc0020308c363017891ef35148",
+        message: {
+            ja: "サイト全体のデザインをリニューアル",
+            en: "Redesigned the entire site",
         },
     },
     {
