@@ -214,6 +214,7 @@ export const projects: Project[] = [
         detailLayout: "github-release",
         links: {
             github: "https://github.com/Narcissus-tazetta/LiveWallpaper",
+            demo: "https://livewallpaper.prason.dev",
             release: "https://github.com/Narcissus-tazetta/LiveWallpaper/releases",
         },
         tags: ["Desktop", "macOS", "Media"],

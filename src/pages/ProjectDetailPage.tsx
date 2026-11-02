@@ -21,12 +21,15 @@ export default function ProjectDetailPage() {
     if (!project || project.detailLayout === "external" || !project.links) return <Navigate to="/works" replace />;
     const ordered = [...showcase.map(entry => getProjectById(entry.id)!), ...projects.filter(item => !showcase.some(entry => entry.id === item.id))];
     const next = ordered[(ordered.findIndex(item => item.id === project.id)+1)%ordered.length];
-    const secondaryLink = project.links.demo ?? project.links.release ?? project.links.invite;
-    const secondaryLabel = project.links.demo ? {ja:"サイトを見る",en:"Live site"} : project.links.release ? {ja:"リリースを見る",en:"Releases"} : {ja:"Discord に追加",en:"Add to Discord"};
+    const secondaryLinks = [
+        project.links.demo && { href: project.links.demo, label: { ja: "サイトを見る", en: "Live site" } },
+        project.links.release && { href: project.links.release, label: { ja: "リリースを見る", en: "Releases" } },
+        project.links.invite && { href: project.links.invite, label: { ja: "Discord に追加", en: "Add to Discord" } },
+    ].filter(link => !!link);
     return (
         <div className="site-shell interior-page project-page">
             <Link to="/works" className="project-back micro-label"><ArrowLeft size={14} />{t(projectDetailLabels.backToWorks)}</Link>
-            <header className="project-heading"><p className="micro-label">{editorial?.discipline ?? project.tags.join(" / ")}</p><h1 className="project-title">{project.title}</h1><div className="project-heading-bottom"><p>{t(project.description)}</p><div className="project-actions"><a href={project.links.github} target="_blank" rel="noopener noreferrer" className="underlined-link">GitHub<ArrowUpRight size={16} /></a>{secondaryLink && <a href={secondaryLink} target="_blank" rel="noopener noreferrer" className="underlined-link">{t(secondaryLabel)}<ArrowUpRight size={16} /></a>}</div></div></header>
+            <header className="project-heading"><p className="micro-label">{editorial?.discipline ?? project.tags.join(" / ")}</p><h1 className="project-title">{project.title}</h1><div className="project-heading-bottom"><p>{t(project.description)}</p><div className="project-actions"><a href={project.links.github} target="_blank" rel="noopener noreferrer" className="underlined-link">GitHub<ArrowUpRight size={16} /></a>{secondaryLinks.map(link => <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="underlined-link">{t(link.label)}<ArrowUpRight size={16} /></a>)}</div></div></header>
             <div className={`project-visual project-visual--${editorial?.tone ?? "silver"}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}><ProjectMedia project={project} imageAlt={projectImageAlt(project,t(project.description))} loading="eager" active={isHovered} /></div>
             <div className="project-overview"><div><p className="micro-label">01 / Overview</p><h2>{t(editorial?.headline ?? project.impact)}</h2></div><div><p className="project-overview-lead">{t(editorial?.summary ?? project.impact)}</p><p className="project-origin">{t(project.context)}</p>{editorial && <p className="project-engineering">{t(editorial.engineering)}</p>}</div></div>
             {project.techStack?.length ? <section className="project-technical"><h2 className="micro-label">02 / {t(projectDetailLabels.tech)}</h2><ul className="flex flex-wrap gap-2">{project.techStack.map(name => <TechStackTag key={name} name={name} />)}</ul></section> : null}
