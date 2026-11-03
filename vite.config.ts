@@ -1,6 +1,6 @@
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { createServer, defineConfig, type Plugin } from "vite";
+import { createServer, defineConfig, type Plugin, type ViteDevServer } from "vite";
 import react from "@vitejs/plugin-react";
 import type { LocalizedText, Project } from "./src/content/types";
 
@@ -59,8 +59,8 @@ function renderHead(template: string, route: RouteMeta) {
     return html;
 }
 
-async function collectRoutes(): Promise<RouteMeta[]> {
-    const server = await createServer({
+async function createPrerenderServer() {
+    return createServer({
         configFile: false,
         logLevel: "error",
         // A private cache keeps this throwaway server from invalidating the
@@ -70,60 +70,58 @@ async function collectRoutes(): Promise<RouteMeta[]> {
         server: { middlewareMode: true },
         appType: "custom",
     });
+}
 
-    try {
-        const { site, sectionLabels } = await server.ssrLoadModule("/src/content/profile.ts");
-        const { projects } = await server.ssrLoadModule("/src/content/projects.ts");
-        const { aboutPage } = await server.ssrLoadModule("/src/content/about.ts");
-        const { contactPage } = await server.ssrLoadModule("/src/content/contact.ts");
+async function collectRoutes(server: ViteDevServer): Promise<RouteMeta[]> {
+    const { site, sectionLabels } = await server.ssrLoadModule("/src/content/profile.ts");
+    const { projects } = await server.ssrLoadModule("/src/content/projects.ts");
+    const { aboutPage } = await server.ssrLoadModule("/src/content/about.ts");
+    const { contactPage } = await server.ssrLoadModule("/src/content/contact.ts");
 
-        const en = (text: LocalizedText) => text.en;
-        const withSuffix = (title: string) => (title.includes("Prason") ? title : `${title} — Prason`);
+    const en = (text: LocalizedText) => text.en;
+    const withSuffix = (title: string) => (title.includes("Prason") ? title : `${title} — Prason`);
 
-        const routes: RouteMeta[] = [
-            {
-                path: "",
-                title: withSuffix(en(site.title)),
-                description: en(site.description),
-                image: "/og.png",
-            },
-            {
-                path: "about",
-                title: withSuffix(en(aboutPage.title)),
-                description: en(aboutPage.tagline),
-                image: "/og.png",
-            },
-            {
-                path: "works",
-                title: withSuffix("Works"),
-                description: en(sectionLabels.worksIntro),
-                image: "/og.png",
-            },
-            {
-                path: "contact",
-                title: withSuffix(en(contactPage.title)),
-                description: en(contactPage.intro),
-                image: "/og.png",
-            },
-        ];
+    const routes: RouteMeta[] = [
+        {
+            path: "",
+            title: withSuffix(en(site.title)),
+            description: en(site.description),
+            image: "/og.png",
+        },
+        {
+            path: "about",
+            title: withSuffix(en(aboutPage.title)),
+            description: en(aboutPage.tagline),
+            image: "/og.png",
+        },
+        {
+            path: "works",
+            title: withSuffix("Works"),
+            description: en(sectionLabels.worksIntro),
+            image: "/og.png",
+        },
+        {
+            path: "contact",
+            title: withSuffix(en(contactPage.title)),
+            description: en(contactPage.intro),
+            image: "/og.png",
+        },
+    ];
 
-        for (const project of projects as Project[]) {
-            if (project.detailLayout === "external" || !project.links) {
-                continue;
-            }
-
-            routes.push({
-                path: `works/${project.id}`,
-                title: `${project.title} — Prason`,
-                description: en(project.description),
-                image: project.thumbnailEn ?? project.thumbnail,
-            });
+    for (const project of projects as Project[]) {
+        if (project.detailLayout === "external" || !project.links) {
+            continue;
         }
 
-        return routes;
-    } finally {
-        await server.close();
+        routes.push({
+            path: `works/${project.id}`,
+            title: `${project.title} — Prason`,
+            description: en(project.description),
+            image: project.thumbnailEn ?? project.thumbnail,
+        });
     }
+
+    return routes;
 }
 
 // GitHub Pages only serves static files, so every shareable route needs its own
@@ -140,16 +138,25 @@ function prerenderRoutesPlugin(): Plugin {
             }
 
             const template = readFileSync(indexPath, "utf8");
-            const routes = await collectRoutes();
+            const server = await createPrerenderServer();
 
-            for (const route of routes) {
-                const html = renderHead(template, route);
-                const target = route.path ? join(distDir, route.path, "index.html") : indexPath;
-                mkdirSync(dirname(target), { recursive: true });
-                writeFileSync(target, html);
+            try {
+                const { renderRoute } = await server.ssrLoadModule("/src/entry-server.tsx");
+                const routes = await collectRoutes(server);
+
+                for (const route of routes) {
+                    const body = await renderRoute(route.path ? `/${route.path}/` : "/");
+                    const html = renderHead(template, route).replace('<div id="root"></div>', () => `<div id="root">${body}</div>`);
+                    const target = route.path ? join(distDir, route.path, "index.html") : indexPath;
+                    mkdirSync(dirname(target), { recursive: true });
+                    writeFileSync(target, html);
+                }
+            } finally {
+                await server.close();
             }
 
-            copyFileSync(indexPath, join(distDir, "404.html"));
+            // Unknown URLs land here; shipping a route's body would make them look like that page.
+            writeFileSync(join(distDir, "404.html"), template);
         },
     };
 }

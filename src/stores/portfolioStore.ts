@@ -75,6 +75,11 @@ function readLanguageFromUrl(): Language | null {
 }
 
 function readInitialPreferences() {
+    // The build-time prerender evaluates this module in Node, where no browser storage exists.
+    if (typeof window === "undefined") {
+        return { language: getDefaultLanguage(), theme: "system" as Theme, accentPurple: false };
+    }
+
     const preferences = readPersistedState() ?? readLegacyState();
     const requested = readLanguageFromUrl();
 
