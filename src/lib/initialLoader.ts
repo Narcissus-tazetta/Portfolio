@@ -58,7 +58,7 @@ export function setLoaderProgress(percent: number) {
     }
 
     if (label) {
-        label.textContent = `${currentProgress}%`;
+        label.dataset.percent = `${currentProgress}%`;
     }
 
     if (loader) {
