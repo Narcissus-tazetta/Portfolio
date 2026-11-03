@@ -48,7 +48,7 @@ function buildAbsoluteUrl(path: string) {
         return `${base}/`;
     }
 
-    return `${base}/${path.replace(/^\//, "")}`;
+    return `${base}/${path.replace(/^\/|\/$/g, "")}/`;
 }
 
 function buildImageUrl(image: string) {

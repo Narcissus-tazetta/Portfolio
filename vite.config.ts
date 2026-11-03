@@ -14,7 +14,7 @@ type RouteMeta = {
 const SITE_ORIGIN = "https://prason.dev";
 
 function absoluteUrl(path: string) {
-    return path ? `${SITE_ORIGIN}/${path}` : `${SITE_ORIGIN}/`;
+    return path ? `${SITE_ORIGIN}/${path}/` : `${SITE_ORIGIN}/`;
 }
 
 function escapeAttribute(value: string) {
