@@ -303,6 +303,55 @@ export const projects: Project[] = [
         category: "app",
     },
     {
+        id: "curstyle",
+        title: "Curstyle",
+        description: {
+            ja: "Windows のカーソルテーマや Mousecape の .cape を取り込み、比較・調整して macOS に適用できるアプリ",
+            en: "A macOS app that imports Windows cursor themes and Mousecape .cape files, then lets you compare, tweak, and apply them.",
+        },
+        context: {
+            ja: "比較ができて軽量なものがないので自作した。",
+            en: "I couldn't find one that let me compare themes and stayed lightweight, so I built my own.",
+        },
+        href: "https://github.com/Narcissus-tazetta/Curstyle",
+        detailLayout: "github-release",
+        links: {
+            github: "https://github.com/Narcissus-tazetta/Curstyle",
+            release: "https://github.com/Narcissus-tazetta/Curstyle/releases",
+        },
+        tags: ["Desktop", "macOS", "Customization"],
+        impact: {
+            ja: "最大4テーマを並べて試し、納得してから適用できる",
+            en: "Try up to four themes side by side before applying one",
+        },
+        techStack: ["Swift", "SwiftUI", "AppKit", "Sparkle"],
+        features: [
+            {
+                ja: "Windows の .cur / .ani、Mousecape の .cape からテーマを取り込み",
+                en: "Import themes from Windows .cur / .ani files and Mousecape .cape files",
+            },
+            {
+                ja: "最大4テーマを同じテキスト・リンク・ボタン上で並べて試し、サイズも個別に調整",
+                en: "Try up to four themes side by side on the same text, links, and buttons, each with its own size",
+            },
+            {
+                ja: "ライブラリ内のカーソルや GIF / PNG を組み合わせ、ホットスポットとアニメーション速度も編集",
+                en: "Mix cursors from your library or GIF / PNG files, and edit hotspots and animation speed",
+            },
+            {
+                ja: "再起動やログインでテーマが戻っても自動で再適用し、デフォルトへの復元も可能",
+                en: "Reapplies automatically when a restart or login resets the theme, with one-step restore to defaults",
+            },
+            {
+                ja: "Sparkle によるアプリ内自動アップデート、Homebrew にも対応",
+                en: "In-app auto-updates via Sparkle, plus Homebrew installation",
+            },
+        ],
+        thumbnail: "/works/curstyle.webp",
+        kind: "personal",
+        category: "app",
+    },
+    {
         id: "xaeronav",
         title: "XaeroNav",
         description: {
@@ -486,7 +535,7 @@ export function projectHasMedia(project: Project): boolean {
     return project.thumbnail.startsWith("/works/");
 }
 
-const personalProjectOrder = ["live-wallpaper", "ceyrad"];
+const personalProjectOrder = ["live-wallpaper", "ceyrad", "curstyle"];
 export const personalProjects = projects
     .filter((project) => project.kind === "personal")
     .sort((a, b) => {

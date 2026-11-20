@@ -77,8 +77,8 @@ export const aboutPage = {
                     id: "desktop",
                     label: { ja: "Desktop", en: "Desktop" },
                     description: {
-                        ja: "LiveWallPaper（macOS）や ceyrad（macOS / Windows）などのアプリ",
-                        en: "Apps such as LiveWallPaper (macOS) and ceyrad (macOS / Windows)",
+                        ja: "LiveWallPaper・Curstyle（macOS）や ceyrad（macOS / Windows）などのアプリ",
+                        en: "Apps such as LiveWallPaper and Curstyle (macOS) and ceyrad (macOS / Windows)",
                     },
                 },
                 {
