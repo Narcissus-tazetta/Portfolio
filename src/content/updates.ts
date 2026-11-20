@@ -19,6 +19,14 @@ export function commitUrl(sha: string): string {
 
 export const siteUpdates: SiteUpdate[] = [
     {
+        date: "2026-11-20",
+        commit: "860b1b34cea80db924ca2f789eb071defdf3ad7e",
+        message: {
+            ja: "Curstyle を Works に追加",
+            en: "Added Curstyle to Works",
+        },
+    },
+    {
         date: "2026-10-22",
         commit: "8242dec4c3bdd708cda00aef69f2fc7f5b058496",
         message: {
