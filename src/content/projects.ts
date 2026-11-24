@@ -313,10 +313,11 @@ export const projects: Project[] = [
             ja: "比較ができて軽量なものがないので自作した。",
             en: "I couldn't find one that let me compare themes and stayed lightweight, so I built my own.",
         },
-        href: "https://github.com/Narcissus-tazetta/Curstyle",
+        href: "https://curstyle.prason.dev/",
         detailLayout: "github-release",
         links: {
             github: "https://github.com/Narcissus-tazetta/Curstyle",
+            demo: "https://curstyle.prason.dev/",
             release: "https://github.com/Narcissus-tazetta/Curstyle/releases",
         },
         tags: ["Desktop", "macOS", "Customization"],
